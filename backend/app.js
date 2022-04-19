@@ -3,6 +3,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const express = require('express');
 const path = require('path');
+const helmet = require('helmet');
 
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
@@ -43,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(helmet());
 
 app.use('/medias', express.static(path.join(__dirname, 'medias')));
 app.use('/api/users', userRoutes);
