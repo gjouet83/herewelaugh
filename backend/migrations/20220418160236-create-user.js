@@ -50,6 +50,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      admin: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
