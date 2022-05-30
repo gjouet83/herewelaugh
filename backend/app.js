@@ -1,34 +1,15 @@
-require('dotenv').config();
-
-const { Sequelize } = require('sequelize');
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
+const db = require('./models');
 
+const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 
-const app = express();
+db.sequelize.sync();
 
-// on connecte la bdd
-const sequelize = new Sequelize(
-  'herewelaugh',
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
-  {
-    dialect: 'mysql',
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-  }
-);
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connexion à la base de données: SUCCES !');
-  })
-  .catch((err) => {
-    console.log('Connexion à la base de données: ECHEC ', err);
-  });
+const app = express();
 
 // on paramètre les headers pour eviter les erreurs cors
 app.use((req, res, next) => {
@@ -47,6 +28,7 @@ app.use((req, res, next) => {
 app.use(helmet());
 
 app.use('/medias', express.static(path.join(__dirname, 'medias')));
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 

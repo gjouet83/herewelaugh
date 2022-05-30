@@ -37,8 +37,12 @@ const errorHandler = (error) => {
   }
 };
 // Certificate
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/www.herewelaugh.com/privkey.pem');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/www.herewelaugh.com/cert.pem');
+const privateKey = fs.readFileSync(
+  '/etc/letsencrypt/live/www.herewelaugh.com/privkey.pem'
+);
+const certificate = fs.readFileSync(
+  '/etc/letsencrypt/live/www.herewelaugh.com/cert.pem'
+);
 
 const credentials = {
   key: privateKey,
