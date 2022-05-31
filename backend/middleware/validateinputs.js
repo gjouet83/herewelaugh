@@ -17,7 +17,7 @@ exports.email = [
   },
 ];
 
-exports.newEmail = [
+exports.emailConfirmation = [
   body('newEmail')
     .not()
     .isEmpty()
@@ -58,13 +58,14 @@ exports.profil = [
     .escape()
     .isAlphanumeric('fr-FR', { ignore: ' -_' })
     .withMessage('Caractères invalides'),
-  body('job')
-    .if(body('job').exists())
+  body('firstname').if(body('firstname').exists()).trim().escape(),
+  body('lastname').if(body('lastname').exists()).trim().escape(),
+  body('birthdate').if(body('birthdate').exists().trim().isDate()),
+  body('describ')
+    .if(body('describ').exists())
     .isLength({ min: 3 })
     .trim()
-    .escape()
-    .isAlphanumeric('fr-FR', { ignore: ' -_' })
-    .withMessage('Caractères invalides'),
+    .escape(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -83,7 +84,7 @@ exports.password = [
   },
 ];
 
-exports.newPassword = [
+exports.passwordConfirmation = [
   body('newPassword').isLength({ min: 9 }).isAlphanumeric(),
   (req, res, next) => {
     const errors = validationResult(req);

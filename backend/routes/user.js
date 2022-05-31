@@ -2,7 +2,7 @@ const express = require('express');
 const userCtrl = require('../controllers/user');
 const auth = require('../middleware/auth');
 const validateInputs = require('../middleware/validateinputs');
-const multer = require('../middleware/multer');
+const multer = require('../middleware/multer-avatar');
 
 const router = express.router();
 
@@ -10,25 +10,14 @@ router.get('/get', auth, userCtrl.getUsers);
 router.get('/get/:id', auth, userCtrl.getUser);
 
 router.put(
-  '/update/profile/username/:id',
-  auth,
-  validateInputs.username,
-  userCtrl.updateUserProfile
-);
-router.put(
-  '/update/profile/describ/:id',
-  auth,
-  validateInputs.username,
-  userCtrl.updateUserProfile
-);
-router.put(
-  '/update/profile/avatar/:id',
+  '/update/:id',
   auth,
   multer,
-  validateInputs.username,
-  userCtrl.updateUserProfile
+  validateInputs.profil,
+  userCtrl.updateProfil
 );
+router.put('/update/avatar/:id', auth, multer, userCtrl.deleteAvatar);
 
-router.delete('/delete/:id', auth, userCtrl.deleteUserAccount);
+router.delete('/delete/:id', auth, userCtrl.deleteUser);
 
 module.exports = router;
