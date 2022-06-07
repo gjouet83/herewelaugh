@@ -17,7 +17,7 @@ exports.email = [
   },
 ];
 
-exports.emailConfirmation = [
+exports.newEmail = [
   body('newEmail')
     .not()
     .isEmpty()
@@ -84,7 +84,7 @@ exports.password = [
   },
 ];
 
-exports.passwordConfirmation = [
+exports.newPassword = [
   body('newPassword').isLength({ min: 9 }).isAlphanumeric(),
   (req, res, next) => {
     const errors = validationResult(req);

@@ -6,18 +6,18 @@ const multer = require('../middleware/multer-avatar');
 
 const router = express.router();
 
-router.get('/get', auth, userCtrl.getUsers);
-router.get('/get/:id', auth, userCtrl.getUser);
+router.get('/', auth, userCtrl.getUsers);
+router.get('/:userId', auth, userCtrl.getUser);
 
 router.put(
-  '/update/:id',
+  '/:userId',
   auth,
   multer,
   validateInputs.profil,
   userCtrl.updateProfil
 );
-router.put('/update/avatar/:id', auth, multer, userCtrl.deleteAvatar);
+router.put('/:userId/avatar', auth, multer, userCtrl.deleteAvatar);
 
-router.delete('/delete/:id', auth, userCtrl.deleteUser);
+router.delete('/:userId', auth, userCtrl.deleteUser);
 
 module.exports = router;

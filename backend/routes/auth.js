@@ -18,10 +18,19 @@ router.post(
   authCtrl.login
 );
 
-router.put('/login/:id', auth, validateInputs.email, authCtrl.updateLogin);
 router.put(
-  '/password/:id',
+  '/login/:userId',
+  auth,
+  validateInputs.email,
+  validateInputs.newEmail,
+  authCtrl.updateLogin
+);
+router.put(
+  '/password/:userId',
   auth,
   validateInputs.password,
+  validateInputs.newPassword,
   authCtrl.updatePassword
 );
+
+module.exports = router;

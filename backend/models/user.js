@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       birthdate: DataTypes.DATEONLY,
       describ: DataTypes.STRING,
       avatar: DataTypes.STRING,
+      admin: DataTypes.BOOLEAN,
     },
     {
       sequelize,
