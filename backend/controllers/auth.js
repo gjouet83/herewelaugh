@@ -14,15 +14,14 @@ exports.signup = (req, res, next) => {
     .hash(req.body.password, 10)
     .then((hash) => {
       //on crée un user en cryptant le mail et en ajoutant le hash
-      db.user
-        .create({
-          username: req.body.username,
-          email: CryptoJS.AES.encrypt(req.body.email, key, {
-            iv: iv,
-          }).toString(),
-          password: hash,
-          avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
-        })
+      db.User.create({
+        username: req.body.username,
+        email: CryptoJS.AES.encrypt(req.body.email, key, {
+          iv: iv,
+        }).toString(),
+        password: hash,
+        avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
+      })
         .then(() => {
           res.status(201).json({ message: 'Utilisateur créé avec succès' });
         })
@@ -39,12 +38,11 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   //on cherche le user avec le même email crypté
-  db.user
-    .findOne({
-      where: {
-        email: CryptoJS.AES.encrypt(req.body.email, key, { iv: iv }).toString(),
-      },
-    })
+  db.User.findOne({
+    where: {
+      email: CryptoJS.AES.encrypt(req.body.email, key, { iv: iv }).toString(),
+    },
+  })
     .then((user) => {
       if (!user) {
         return res
@@ -79,6 +77,76 @@ exports.login = (req, res, next) => {
           res
             .status(400)
             .json({ errno: error.parent.errno, errField: error.fields });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+exports.updateLogin = (req, res, next) => {
+  db.User.findOne({
+    where: {
+      email: CryptoJS.AES.encrypt(req.body.email, key, { iv: iv }).toString(),
+    },
+  })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({ error: 'Utilisateur non enregistré' });
+      }
+      db.User.update(
+        {
+          email: CryptoJS.AES.encrypt(req.body.newEmail, key, {
+            iv: iv,
+          }).toString(),
+        },
+        { where: { id: req.body.userId } }
+      )
+        .then(() => {
+          res.status(200).json({ message: 'Email modifié avec SUCCES !' });
+        })
+        .catch((error) => {
+          res
+            .status(400)
+            .json({ errno: error.parent.errno, errField: error.fields });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+exports.updatePassword = (req, res, next) => {
+  db.User.findOne({ where: { id: req.body.userId } })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({ error: 'Utilisateur non enregistré' });
+      }
+      bcrypt
+        //on compare le hash du password
+        .compare(req.body.password, user.password)
+        .then((passwordOk) => {
+          if (!passwordOk) {
+            return res.status(401).json({ error: 'Mot de passe incorrect' });
+          }
+          bcrypt
+            // on hash le mot de passe
+            .hash(req.body.newPassword, 10)
+            .then((hash) => {
+              db.User.update(
+                {
+                  password: hash,
+                },
+                { where: { id: req.body.userId } }
+              ).then(() => {
+                res
+                  .status(200)
+                  .json({ message: 'Password modifié avec succès' });
+              });
+            })
+            .catch((error) => {
+              res.status(400).json({ error });
+            });
         });
     })
     .catch((error) => {

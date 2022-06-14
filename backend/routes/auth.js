@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const authCtrl = require('../controllers/auth');
 const validateInputs = require('../middleware/validateinputs');
 
@@ -19,14 +20,14 @@ router.post(
 );
 
 router.put(
-  '/login/:userId',
+  '/login/:user_id',
   auth,
   validateInputs.email,
   validateInputs.newEmail,
   authCtrl.updateLogin
 );
 router.put(
-  '/password/:userId',
+  '/password/:user_id',
   auth,
   validateInputs.password,
   validateInputs.newPassword,

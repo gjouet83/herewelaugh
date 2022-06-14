@@ -1,15 +1,33 @@
+const { Sequelize } = require('sequelize');
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const db = require('./models');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 
-db.sequelize.sync();
-
 const app = express();
+
+const sequelize = new Sequelize(
+  'herewelaugh-dev',
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    dialect: 'mysql',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+  }
+);
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connexion à la base de données: SUCCES !');
+  })
+  .catch((err) => {
+    console.log('Connexion à la base de données: ECHEC ', err);
+  });
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

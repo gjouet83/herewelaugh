@@ -2,8 +2,7 @@ const db = require('../models/index');
 const fs = require('fs');
 
 exports.getUsers = (req, res, next) => {
-  db.user
-    .findAll()
+  db.User.findAll()
     .then((users) => {
       res.status(200).json({ users });
     })
@@ -13,8 +12,7 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  db.user
-    .findOne({ where: { id: req.query.id } })
+  db.User.findOne({ where: { id: req.query.id } })
     .then((user) => {
       res.status(200).json({ user });
     })
@@ -32,8 +30,7 @@ exports.updateProfil = (req, res, next) => {
         }/${req.file.filename}`,
       }
     : { ...req.body };
-  db.user
-    .update({ ...updatedProfil }, { where: { id: req.body.id } })
+  db.User.update({ ...updatedProfil }, { where: { id: req.body.id } })
     .then(() => {
       res.status(200).json({ message: 'Profil updated successful' });
     })
@@ -43,11 +40,10 @@ exports.updateProfil = (req, res, next) => {
 };
 
 exports.deleteAvatar = (req, res, next) => {
-  db.user
-    .update(
-      { avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg` },
-      { where: { id: req.body.userId } }
-    )
+  db.User.update(
+    { avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg` },
+    { where: { id: req.body.userId } }
+  )
     .then(() => {
       res.status(200).json({ message: 'Profil updated successful' });
     })
@@ -58,8 +54,7 @@ exports.deleteAvatar = (req, res, next) => {
 
 //on supprime un utilisateur
 exports.deleteUser = (req, res, next) => {
-  db.user
-    .findOne({ where: { id: req.query.userId } })
+  db.User.findOne({ where: { id: req.query.userId } })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
