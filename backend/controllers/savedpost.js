@@ -9,12 +9,12 @@ exports.getSavedPosts = (req, res, next) => {
       },
       {
         model: db.Post,
-        attributes: ['content', 'attachment', ['username', 'PostUsername']],
+        attributes: ['content', 'attachment'],
       },
     ],
   })
-    .then((posts) => {
-      res.status(200).json({ posts });
+    .then((savedPosts) => {
+      res.status(200).json(savedPosts);
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -36,7 +36,7 @@ exports.savePost = (req, res, next) => {
 };
 
 exports.deleteSavedPost = (req, res, next) => {
-  db.SavedPost.findOne({ where: { id: req.query.id } })
+  db.SavedPost.findOne({ where: { id: req.params.savedPost_id } })
     .then((savedPost) => {
       if (!savedPost) {
         return res.status(404).json({ error: 'Saved Post not found' });
