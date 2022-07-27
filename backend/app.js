@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
+const savedPostRoutes = require('./routes/savedpost');
 
 const app = express();
 
@@ -42,11 +43,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
 app.use(helmet());
 
 app.use('/medias', express.static(path.join(__dirname, 'medias')));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/savedposts', savedPostRoutes);
 
 module.exports = app;
