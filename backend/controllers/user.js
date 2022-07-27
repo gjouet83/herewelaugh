@@ -54,7 +54,7 @@ exports.deleteAvatar = (req, res, next) => {
 
 //on supprime un utilisateur
 exports.deleteUser = (req, res, next) => {
-  db.User.findOne({ where: { id: req.query.userId } })
+  db.User.findOne({ where: { id: req.params.user_id } })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });

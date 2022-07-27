@@ -17,15 +17,6 @@ module.exports = {
           key: 'id',
         },
       },
-      username: {
-        allowNull: false,
-        type: Sequelize.DataTypes.STRING(40),
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'username',
-        },
-      },
       content: {
         type: Sequelize.TEXT,
       },

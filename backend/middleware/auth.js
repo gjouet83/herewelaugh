@@ -8,9 +8,8 @@ module.exports = (req, res, next) => {
     //on récupère le userId de l'object décodedToken et on le test dans le if
     const userId = decodedToken.userId;
     const admin = decodedToken.admin;
-
-    if (req.body.userId && req.body.userId !== userId && !admin) {
-      res.status(403).json({ error: 'User Unregistred' });
+    if (!req.body.userId || (req.body.userId !== userId && !admin)) {
+      res.status(403).json({ error: 'User not allowed' });
     } else {
       next();
     }
