@@ -1,4 +1,4 @@
-const https = require('https');
+const http = require('http');
 const app = require('./app');
 const fs = require('fs');
 
@@ -37,7 +37,7 @@ const errorHandler = (error) => {
   }
 };
 // Certificate
-const privateKey = fs.readFileSync(
+/*const privateKey = fs.readFileSync(
   '/etc/letsencrypt/live/www.herewelaugh.com/privkey.pem'
 );
 const certificate = fs.readFileSync(
@@ -48,8 +48,8 @@ const credentials = {
   key: privateKey,
   cert: certificate,
 };
-
-const server = https.createServer(credentials, app);
+*/
+const server = http.createServer(/*credentials,*/ app);
 
 server.on('error', errorHandler);
 server.on('listening', () => {
