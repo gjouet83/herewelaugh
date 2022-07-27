@@ -6,7 +6,7 @@ const multer = require('../middleware/multer-avatar');
 
 const router = express.Router();
 
-router.get('/', userCtrl.getUsers);
+router.get('/', auth, userCtrl.getUsers);
 router.get('/:user_id', auth, userCtrl.getUser);
 
 router.put(
