@@ -61,7 +61,7 @@ exports.deleteUser = (req, res, next) => {
       }
       //on supprime le dossier du user correspondant
       const filename = 'userId-' + user.id;
-      fs.rmdir(`medias/${filename}`, { recursive: true }, () => {
+      fs.rm(`medias/${filename}`, { recursive: true }, () => {
         user
           .destroy()
           .then(() => {
