@@ -81,7 +81,7 @@ exports.getPostsByUser = (req, res, next) => {
   })
     .then((posts) => {
       if (!posts) {
-        return res.status(404).json({ error: 'posts non trouvés' });
+        return res.status(404).json({ error: 'posts not found' });
       }
       res.status(200).json(posts);
     })
@@ -91,25 +91,24 @@ exports.getPostsByUser = (req, res, next) => {
 };
 
 exports.searchPost = (req, res, next) => {
+  console.log(req.params);
   db.Post.findAll({
     include: [
       {
         model: db.User,
         attributes: ['username'],
       },
-      {
-        model: db.Post,
-        attributes: ['content'],
-      },
     ],
     where: {
-      username: { [Op.like]: `%${req.query}%` },
-      content: { [Op.like]: `%${req.query}%` },
+      [Op.or]: [
+        { content: { [Op.like]: `%${req.params.keywords}%` } },
+        { username: { [Op.like]: `%${req.params.keywords}%` } },
+      ],
     },
   })
     .then((result) => {
-      if (!result) {
-        return res.status(404).json({ error: 'posts non trouvés' });
+      if (Object.keys(result).length === 0) {
+        return res.status(404).json({ error: 'Nothing found' });
       }
       res.status(200).json(result);
     })
@@ -131,10 +130,10 @@ exports.createPost = (req, res, next) => {
       };
   db.Post.create({ ...newPost })
     .then(() => {
-      res.status(200).json({ message: 'Post crée avec SUCCES !' });
+      res.status(200).json({ message: 'Post created successful' });
     })
     .catch(() => {
-      res.status(400).json({ error: 'ECHEC de la création du post' });
+      res.status(400).json({ error: 'Fail to create post' });
     });
 };
 
@@ -149,10 +148,10 @@ exports.updatePost = (req, res, next) => {
     : { ...req.body };
   db.Post.update({ ...updatedPost }, { where: { id: req.query.id } })
     .then(() => {
-      res.status(200).json({ message: 'Post modifié avec SUCCES !' });
+      res.status(200).json({ message: 'Post updated successful' });
     })
     .catch(() => {
-      res.status(400).json({ error: 'ECHEC de la modification du post' });
+      res.status(400).json({ error: 'fail to update post' });
     });
 };
 
@@ -160,7 +159,7 @@ exports.deletePost = (req, res, next) => {
   db.Post.findOne({ where: { id: req.query.id } })
     .then((post) => {
       if (!post) {
-        return res.status(404).json({ error: 'Post non trouvé' });
+        return res.status(404).json({ error: 'Post not found' });
       }
       //on supprime le fichier
       if (post.attachment) {
@@ -168,13 +167,13 @@ exports.deletePost = (req, res, next) => {
           `medias/userId-${req.body.userId}`
         )[1];
         fs.unlink(`medias/userId-${req.body.userId}/${filename}`, () => {
-          console.log('image supprimée');
+          console.log('picture deleted');
         });
       }
       post
         .destroy()
         .then(() => {
-          res.status(200).json({ message: 'Post supprimé avec SUCCES !' });
+          res.status(200).json({ message: 'Post deleted successful' });
         })
         .catch((error) => {
           res.status(400).json({ error });
