@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Post.hasMany(models.Rate, { onDelete: 'cascade' });
+      Post.hasMany(models.SavedPost, { onDelete: 'cascade' });
       Post.belongsTo(models.User);
     }
   }
