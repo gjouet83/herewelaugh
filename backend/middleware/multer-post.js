@@ -48,7 +48,7 @@ const uploadMedia = multer({
         /\.(jpeg|jpg|tif|tiff|png|svg|gif|bmp|webp|avif|ico|3gp|3gp2|avi|mp4|mpeg|ogv|ts|webm|flv|mov|wmv)$/
       )
     ) {
-      return callback(new Error("Le fichier n'est pas valable."));
+      return callback(new Error('File is not valid'));
     }
     callback(undefined, true);
   },

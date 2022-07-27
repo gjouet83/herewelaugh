@@ -7,7 +7,7 @@ exports.email = [
     .trim()
     .normalizeEmail()
     .isEmail()
-    .withMessage('E-mail Invalide !')
+    .withMessage('invalid email!')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -24,7 +24,7 @@ exports.newEmail = [
     .trim()
     .normalizeEmail()
     .isEmail()
-    .withMessage('E-mail Invalide !')
+    .withMessage('invalid email !')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -37,11 +37,12 @@ exports.newEmail = [
 exports.username = [
   body('username')
     .isLength({ min: 2, max: 15 })
+    .withMessage('incorrect number of characters')
     .not()
     .isEmpty()
     .trim()
     .escape()
-    .withMessage('Caractères Invalides !'),
+    .withMessage('Invalid characters!'),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -54,10 +55,11 @@ exports.profil = [
   body('username')
     .if(body('username').exists())
     .isLength({ min: 2, max: 15 })
+    .withMessage('incorrect number of characters')
     .trim()
     .escape()
     .isAlphanumeric('fr-FR', { ignore: ' -_' })
-    .withMessage('Caractères invalides'),
+    .withMessage('Invalid characters'),
   body('firstname').if(body('firstname').exists()).trim().escape(),
   body('lastname').if(body('lastname').exists()).trim().escape(),
   body('birthdate').if(body('birthdate').exists().trim().isDate()),

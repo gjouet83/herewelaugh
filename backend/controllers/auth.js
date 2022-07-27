@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
         avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
       })
         .then(() => {
-          res.status(201).json({ message: 'Utilisateur créé avec succès' });
+          res.status(201).json({ message: 'user created successful' });
         })
         .catch((error) => {
           res
@@ -45,22 +45,18 @@ exports.login = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        return res
-          .status(401)
-          .json({ errorMail: 'Utilisateur non enregistré' });
+        return res.status(401).json({ errorMail: 'user unregistred' });
       }
       bcrypt
         //on compare le hash du password
         .compare(req.body.password, user.password)
         .then((passwordOk) => {
           if (!passwordOk) {
-            return res
-              .status(401)
-              .json({ errorPassword: 'Mot de passe incorrect' });
+            return res.status(401).json({ errorPassword: 'Wrong password' });
           }
           // creation d'un dossier user contenant touts ses photos
           const filename = 'userId-' + user.id;
-          fs.mkdir(`images/${filename}`, () => {
+          fs.mkdir(`medias/${filename}`, () => {
             res.status(200).json({
               userId: user.id,
               admin: user.admin,
@@ -92,7 +88,7 @@ exports.updateLogin = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non enregistré' });
+        return res.status(401).json({ error: 'User unregistred' });
       }
       db.User.update(
         {
@@ -103,7 +99,7 @@ exports.updateLogin = (req, res, next) => {
         { where: { id: req.body.userId } }
       )
         .then(() => {
-          res.status(200).json({ message: 'Email modifié avec SUCCES !' });
+          res.status(200).json({ message: 'Email updated successful' });
         })
         .catch((error) => {
           res
@@ -120,14 +116,14 @@ exports.updatePassword = (req, res, next) => {
   db.User.findOne({ where: { id: req.body.userId } })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non enregistré' });
+        return res.status(401).json({ error: 'User unregistred' });
       }
       bcrypt
         //on compare le hash du password
         .compare(req.body.password, user.password)
         .then((passwordOk) => {
           if (!passwordOk) {
-            return res.status(401).json({ error: 'Mot de passe incorrect' });
+            return res.status(401).json({ error: 'Wrong password' });
           }
           bcrypt
             // on hash le mot de passe
@@ -141,7 +137,7 @@ exports.updatePassword = (req, res, next) => {
               ).then(() => {
                 res
                   .status(200)
-                  .json({ message: 'Password modifié avec succès' });
+                  .json({ message: 'Password updated successful' });
               });
             })
             .catch((error) => {

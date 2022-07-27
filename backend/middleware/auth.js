@@ -10,11 +10,11 @@ module.exports = (req, res, next) => {
     const admin = decodedToken.admin;
 
     if (req.body.userId && req.body.userId !== userId && !admin) {
-      res.status(403).json({ error: 'Utilisateur non autorisé' });
+      res.status(403).json({ error: 'User Unregistred' });
     } else {
       next();
     }
   } catch {
-    res.status(403).json({ error: 'Utilisateur non autorisé' });
+    res.status(403).json({ error: 'User not allowed' });
   }
 };
