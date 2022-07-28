@@ -10,8 +10,8 @@ exports.getPosts = (req, res, next) => {
         attributes: ['username', 'avatar'],
       },
       {
-        model: db.Rate,
-        attributes: ['like', 'dislike'],
+        model: db.Like,
+        attributes: ['like'],
       },
     ],
     order: [['createdAt', 'DESC']],
@@ -20,7 +20,7 @@ exports.getPosts = (req, res, next) => {
       res.status(200).json(posts);
     })
     .catch((error) => {
-      res.satus(500).json({ error });
+      res.status(500).json({ error });
     });
 };
 
@@ -32,8 +32,8 @@ exports.getPostsSortByMostOld = (req, res, next) => {
         attributes: ['username', 'avatar'],
       },
       {
-        model: db.Rate,
-        attributes: ['like', 'dislike'],
+        model: db.Like,
+        attributes: ['like'],
       },
     ],
     order: [['createdAt', 'ASC']],
@@ -42,7 +42,7 @@ exports.getPostsSortByMostOld = (req, res, next) => {
       res.status(200).json(posts);
     })
     .catch((error) => {
-      res.satus(500).json({ error });
+      res.status(500).json({ error });
     });
 };
 
@@ -54,8 +54,8 @@ exports.getPostsSortByRate = (req, res, next) => {
         attributes: ['username', 'avatar'],
       },
       {
-        model: db.Rate,
-        attributes: ['like', 'dislike'],
+        model: db.Like,
+        attributes: ['like'],
       },
     ],
     order: [['like', 'DESC']],

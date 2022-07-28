@@ -7,6 +7,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const savedPostRoutes = require('./routes/savedpost');
+const likeRoutes = require('./routes/like');
 
 const app = express();
 
@@ -51,5 +52,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/savedposts', savedPostRoutes);
+app.use('/api/like', likeRoutes);
 
 module.exports = app;
