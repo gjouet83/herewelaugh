@@ -129,7 +129,7 @@ exports.createPost = (req, res, next) => {
       };
   db.Post.create({ ...newPost })
     .then(() => {
-      res.status(200).json({ message: 'Post created successful' });
+      res.status(201).json({ message: 'Post created successful' });
     })
     .catch(() => {
       res.status(400).json({ error: 'Fail to create post' });

@@ -28,7 +28,7 @@ exports.savePost = (req, res, next) => {
   };
   db.SavedPost.create({ ...newSavedPost })
     .then(() => {
-      res.status(200).json({ message: 'Post saved successful' });
+      res.status(201).json({ message: 'Post saved successful' });
     })
     .catch(() => {
       res.status(400).json({ error: 'Fail to save post' });

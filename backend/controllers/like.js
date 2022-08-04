@@ -46,7 +46,7 @@ exports.updateLike = (req, res, next) => {
     },
   })
     .then(() => {
-      res.status(201).json({ message: 'like updated' });
+      res.status(200).json({ message: 'like updated' });
     })
     .catch(() => {
       res.status(400).json({ error: 'failed to update like' });
