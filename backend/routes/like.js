@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.get('/', likeCtrl.getLikes);
 
-//router.post('/', auth, likeCtrl.createLike);
+router.post('/', auth, likeCtrl.createLike);
 
-//router.put('/:like_id', auth, likeCtrl);
+router.put('/:like_id', auth, likeCtrl.updateLike);
 
-//router.delete('/:like_id', auth, likeCtrl.deleteLike);
+
 
 module.exports = router;

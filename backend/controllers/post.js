@@ -91,7 +91,6 @@ exports.getPostsByUser = (req, res, next) => {
 };
 
 exports.searchPost = (req, res, next) => {
-  console.log(req.params);
   db.Post.findAll({
     include: [
       {
