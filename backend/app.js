@@ -52,6 +52,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/savedposts', savedPostRoutes);
-app.use('/api/like', likeRoutes);
+app.use('/api/likes', likeRoutes);
 
 module.exports = app;

@@ -19,36 +19,53 @@ exports.getLikes = (req, res, next) => {
 };
 
 exports.createLike = (req, res, next) => {
-  db.like
-    .findOne({ where: { postId: req.body.postId, userId: req.body.userId } })
-    .then((exist) => {
-      if (exist) {
-        return res.status(400).json({ exist });
-      } else {
-        db.Like.create({ ...req.body })
-          .then(() => {
-            res.status(201).json({ message: 'liked' });
-          })
-          .catch(() => {
-            res.status(400).json({ error: 'failed to create like' });
-          });
-      }
-    });
+  db.Like.findOne({
+    where: { postId: req.body.postId, userId: req.body.userId },
+  }).then((exist) => {
+    if (exist) {
+      return res.status(200).json({ exist });
+    }
+    db.Like.create({ ...req.body })
+      .then(() => {
+        res.status(201).json({ message: 'liked' });
+      })
+      .catch(() => {
+        res.status(400).json({ error: 'failed to create like' });
+      });
+  });
 };
 
 exports.updateLike = (req, res, next) => {
-  db.Like.update({
-    ...req.body.like,
+  db.Like.findOne({
     where: {
-      id: req.query.likeId,
       postId: req.body.postId,
       userId: req.body.userId,
     },
   })
-    .then(() => {
-      res.status(200).json({ message: 'like updated' });
+    .then((like) => {
+      if (!like) {
+        return res.status(404).json({ error: 'like not found' });
+      }
+      db.Like.update(
+        {
+          ...req.body,
+        },
+        {
+          where: {
+            id: req.params.like_id,
+            userId: req.body.userId,
+            postId: req.body.postId,
+          },
+        }
+      )
+        .then(() => {
+          res.status(200).json({ message: 'like updated' });
+        })
+        .catch(() => {
+          res.status(500).json({ error: 'failed to update like' });
+        });
     })
     .catch(() => {
-      res.status(400).json({ error: 'failed to update like' });
+      res.status(500).json({ error: 'failed to update like' });
     });
 };

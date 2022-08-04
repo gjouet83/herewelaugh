@@ -10,6 +10,4 @@ router.post('/', auth, likeCtrl.createLike);
 
 router.put('/:like_id', auth, likeCtrl.updateLike);
 
-
-
 module.exports = router;
