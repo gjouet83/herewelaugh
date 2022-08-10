@@ -2,12 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import Header from './layout/Header';
+import Posts from './pages/Posts';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Error from './pages/Error';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <Switch></Switch>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Posts />
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route>
+          <Error />
+        </Route>
+      </Switch>
     </Router>
   </React.StrictMode>
 );
