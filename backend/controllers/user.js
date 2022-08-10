@@ -30,7 +30,7 @@ exports.updateProfil = (req, res, next) => {
         }/${req.file.filename}`,
       }
     : { ...req.body };
-  db.User.update({ ...updatedProfil }, { where: { id: req.body.id } })
+  db.User.update({ ...updatedProfil }, { where: { id: req.query.id } })
     .then(() => {
       res.status(200).json({ message: 'Profil updated successful' });
     })
