@@ -23,17 +23,18 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, dirtyFields, touchedFields },
   } = useForm({
     resolver: yupResolver(validationSchema),
-    mode: 'onChange',
+    defaultValues: { email: '', password: '' },
+    mode: 'onBlur',
+    shouldFocusError: true,
   });
-
   const onSubmit = (data) => sendForm(data);
 
   const sendForm = (data) => {
     axios
-      .post('http://localhost:3000/api/auth/login', {
+      .post(`${process.env.REACT_APP_REQ_URL}/api/auth/login`, {
         email: data.email,
         password: data.password,
       })
@@ -56,6 +57,11 @@ const Login = () => {
       });
   };
 
+  console.log(isDirty);
+  console.log(dirtyFields);
+  console.log(touchedFields);
+  console.log(errors.email);
+
   return (
     <main>
       <section className="login">
@@ -67,22 +73,20 @@ const Login = () => {
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login__form__email">
             <label className="login__form__email__lbl">
-              E-mail:*
+              E-mail:
               <input
                 className={`login__form__email__input`}
                 autoComplete="username"
                 id="email"
                 name="email"
                 type="email"
+                placeholder="exemple@provider.com"
                 {...register('email')}
               />
-              <span className="login__form__email__info">
-                *exemple@provider.com
+              <span className="alerte">
+                {errors.email?.message}
+                {resBackErrLogin}
               </span>
-              <span className="alerte">{errors.email?.message}</span>
-              {resBackErrLogin && (
-                <span className="alerte">{resBackErrLogin}</span>
-              )}
             </label>
           </div>
           <div className="login__form__password">
@@ -100,8 +104,10 @@ const Login = () => {
                 *Au moins 9 Caractères dont 1 majuscule, 1 chiffre et pas de
                 caractères spéciaux
               </span>
-              <span className="alerte">{errors.password?.message}</span>
-              {resBackErrPwd && <span className="alerte">{resBackErrPwd}</span>}
+              <span className="alerte">
+                {errors.password?.message}
+                {resBackErrPwd}
+              </span>
             </label>
           </div>
           <input
