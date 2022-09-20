@@ -1,0 +1,16 @@
+.alerte {
+  display: block;
+  height: 1rem;
+  line-height: 1rem;
+  color: $customRed;
+  font-weight: 400;
+  font-size: 0.7rem;
+}
+.error {
+  background-color: $customLightRed;
+  color: $customRed;
+}
+.valid {
+  background-color: $customLightGreen;
+  color: $customGreen;
+}

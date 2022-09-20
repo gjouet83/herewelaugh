@@ -7,6 +7,7 @@ import Posts from './pages/Posts';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Error from './pages/Error';
+import './sass/style.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

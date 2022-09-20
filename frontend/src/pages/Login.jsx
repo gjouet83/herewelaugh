@@ -16,7 +16,7 @@ const Login = () => {
     password: Yup.string()
       .required('Mot de passe est obligatoire')
       .matches(/([0-9])/, 'Au moins un entier')
-      .min(8, 'Mot de passe doit être plus grand que 8 caractères')
+      .min(9, 'Mot de passe doit être plus grand que 8 caractères')
       .max(50, 'Mot de passe doit être plus petit que 50 caractères'),
   });
 
@@ -27,7 +27,7 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: { email: '', password: '' },
-    mode: 'onBlur',
+    mode: 'onChange',
     shouldFocusError: true,
   });
   const onSubmit = (data) => sendForm(data);
@@ -72,49 +72,60 @@ const Login = () => {
         </h2>
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login__form__email">
-            <label className="login__form__email__lbl">
-              E-mail:
-              <input
-                className={`login__form__email__input`}
-                autoComplete="username"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="exemple@provider.com"
-                {...register('email')}
-              />
-              <span className="alerte">
-                {errors.email?.message}
-                {resBackErrLogin}
-              </span>
-            </label>
+            <input
+              className={`login__form__email__input ${
+                errors.email ? 'error' : null
+              } ${dirtyFields.email && !errors.email ? 'valid' : null}`}
+              autoComplete="username"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="exemple@provider.com"
+              aria-label="e-mail"
+              {...register('email')}
+            />
+            <span className="alerte">
+              {errors.email?.message}
+              {resBackErrLogin}
+            </span>
           </div>
           <div className="login__form__password">
-            <label className="login__form__password__lbl">
-              Mot de passe:*
-              <input
-                className={`login__form__password__input`}
-                autoComplete="current-password"
-                id="password"
-                name="password"
-                type="password"
-                {...register('password')}
-              />
+            <input
+              className={`login__form__password__input ${
+                errors.password ? 'error' : null
+              } ${dirtyFields.password && !errors.password ? 'valid' : null}`}
+              autoComplete="current-password"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Mot de passe"
+              aria-label="Mot de passe"
+              {...register('password')}
+            />
+            {!dirtyFields.password && !errors.password && (
               <span className="login__form__password__info">
                 *Au moins 9 Caractères dont 1 majuscule, 1 chiffre et pas de
                 caractères spéciaux
               </span>
-              <span className="alerte">
-                {errors.password?.message}
-                {resBackErrPwd}
-              </span>
-            </label>
+            )}
+            <span className="alerte">
+              {errors.password?.message}
+              {resBackErrPwd}
+            </span>
           </div>
           <input
             className="login__form__validate"
             name="login"
             type="submit"
             value="Valider"
+            disabled={
+              errors.email ||
+              errors.password ||
+              !dirtyFields.password ||
+              (!touchedFields.email && !touchedFields.password)
+                ? true
+                : false
+            }
           />
         </form>
         <div className="login__signuplink">
