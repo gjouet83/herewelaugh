@@ -1,3 +1,4 @@
+import logo from '../assets/Logonew_transparent.webp';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -65,6 +66,13 @@ const Login = () => {
   return (
     <main>
       <section className="login">
+        <div className="login__logo">
+          <img
+            className="login__logo__img"
+            src={logo}
+            alt="emojoi qui pleur de rire"
+          />
+        </div>
         <h1 className="login__title">HereWeLaugh</h1>
         <h2 className="login__describ">
           Avec HereWeLaugh, prenez un petit moment pour vous détendre en lisant
@@ -80,7 +88,7 @@ const Login = () => {
               id="email"
               name="email"
               type="email"
-              placeholder="exemple@provider.com"
+              placeholder="Adresse e-mail"
               aria-label="e-mail"
               {...register('email')}
             />
@@ -98,17 +106,20 @@ const Login = () => {
               id="password"
               name="password"
               type="password"
-              placeholder="Mot de passe"
+              placeholder="Mot de passe*"
               aria-label="Mot de passe"
               {...register('password')}
             />
-            {!dirtyFields.password && !errors.password && (
-              <span className="login__form__password__info">
-                *Au moins 9 Caractères dont 1 majuscule, 1 chiffre et pas de
-                caractères spéciaux
-              </span>
-            )}
-            <span className="alerte">
+            <span
+              className={
+                dirtyFields.password || errors.password
+                  ? 'alerte'
+                  : 'login__form__password__info'
+              }
+            >
+              {!dirtyFields.password &&
+                !errors.password &&
+                '*Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
               {errors.password?.message}
               {resBackErrPwd}
             </span>
@@ -117,20 +128,21 @@ const Login = () => {
             className="login__form__validate"
             name="login"
             type="submit"
-            value="Valider"
+            value="Se connecter"
             disabled={
               errors.email ||
               errors.password ||
               !dirtyFields.password ||
+              !dirtyFields.email ||
               (!touchedFields.email && !touchedFields.password)
                 ? true
                 : false
             }
           />
         </form>
-        <div className="login__signuplink">
+        <div className="login__separate"></div>
+        <div className="login__signupLink">
           <span>
-            Si vous ne possedez pas de compte{' '}
             <Link to="/signup">Créer un compte</Link>
           </span>
         </div>

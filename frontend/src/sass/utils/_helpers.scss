@@ -1,16 +1,73 @@
 .alerte {
   display: block;
-  height: 1rem;
-  line-height: 1rem;
-  color: $customRed;
+  height: 50px;
+  width: 80vw;
   font-weight: 400;
-  font-size: 0.7rem;
+  text-align: center;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  color: $invalidColor;
 }
 .error {
-  background-color: $customLightRed;
-  color: $customRed;
+  background-color: $invalidField;
+  color: $invalidColor;
 }
 .valid {
-  background-color: $customLightGreen;
-  color: $customGreen;
+  background-color: $validatedField;
+  color: $validateColor;
+}
+
+@mixin formLoginPwd {
+  &__form {
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 40%), 0 8px 16px rgb(0 0 0 / 40%);
+    padding: 50px 20px 50px 20px;
+    background-color: rgb(87, 183, 200);
+    z-index: 2;
+    &__email,
+    &__password {
+      &__input {
+        width: 80vw;
+        text-align: center;
+        line-height: 3rem;
+        font-size: 1.5rem;
+        border: none;
+        border-radius: 5px;
+        &::placeholder {
+          font-size: 1.5rem;
+          line-height: 3rem;
+        }
+      }
+      &__info {
+        display: block;
+        min-height: 50px;
+        width: 85vw;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 0.9rem;
+      }
+    }
+    &__validate {
+      height: 3rem;
+      width: 80vw;
+      line-height: 3rem;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 5px;
+      background-color: $validateColor;
+      color: white;
+      &:disabled {
+        background-color: rgb(191, 187, 187);
+        color: grey;
+      }
+    }
+  }
+  &__separate {
+    border-top: 1px solid black;
+    height: 2rem;
+    width: 50vw;
+    margin-top: 50px;
+  }
 }
