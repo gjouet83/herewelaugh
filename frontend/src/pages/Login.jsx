@@ -73,11 +73,10 @@ const Login = () => {
             alt="emojoi qui pleur de rire"
           />
         </div>
-        <h1 className="login__title">HereWeLaugh</h1>
-        <h2 className="login__describ">
+        <h1 className="login__describ">
           Avec HereWeLaugh, prenez un petit moment pour vous détendre en lisant
           ou en partageant vos images, vidéos ou histoires drôles.
-        </h2>
+        </h1>
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login__form__email">
             <input
@@ -140,7 +139,6 @@ const Login = () => {
             }
           />
         </form>
-        <div className="login__separate"></div>
         <div className="login__signupLink">
           <span>
             <Link to="/signup">Créer un compte</Link>

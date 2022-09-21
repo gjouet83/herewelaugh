@@ -12,19 +12,15 @@
     &__img {
       max-width: 100vw;
       opacity: 0.5;
-      top: 0;
+      top: -50px;
       bottom: 0;
       position: absolute;
       z-index: 0;
     }
   }
-  &__title {
-    font-size: 2rem;
-    text-align: center;
-    color: white;
-  }
   &__describ {
     display: block;
+    margin-top: 80px;
     margin-bottom: 50px;
     font-weight: bold;
     text-align: center;
@@ -39,6 +35,7 @@
   }
   @include formLoginPwd;
   &__signupLink {
+    margin-top: 40px;
     width: 80vw;
     height: 3rem;
     border-radius: 5px;
