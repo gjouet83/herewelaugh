@@ -28,6 +28,7 @@
     z-index: 2;
     &__email,
     &__password {
+      position: relative;
       &__input {
         width: 80vw;
         text-align: center;
@@ -39,17 +40,31 @@
           font-size: 1.5rem;
           line-height: 3rem;
         }
+        &__switchButton {
+          cursor: pointer;
+          overflow: hidden;
+          position: absolute;
+          top: 0.9rem;
+          right: 5%;
+          &__hidePwd {
+            color: $validateColor;
+          }
+          &__showPwd {
+            color: $invalidColor;
+          }
+        }
       }
       &__info {
         display: block;
         min-height: 50px;
-        width: 85vw;
+        width: 80vw;
         text-align: center;
         padding-top: 10px;
         font-size: 0.9rem;
       }
     }
     &__validate {
+      cursor: pointer;
       height: 3rem;
       width: 80vw;
       line-height: 3rem;
@@ -59,6 +74,7 @@
       background-color: $validateColor;
       color: white;
       &:disabled {
+        cursor: inherit;
         background-color: rgb(191, 187, 187);
         color: grey;
       }

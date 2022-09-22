@@ -12,11 +12,18 @@
     &__img {
       max-width: 100vw;
       opacity: 0.5;
-      top: -50px;
+      top: -5vh;
       bottom: 0;
       position: absolute;
       z-index: 0;
     }
+  }
+  &__name {
+    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
+      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
+      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
+      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
+      0 0 2px white;
   }
   &__describ {
     display: block;
@@ -30,12 +37,12 @@
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white;
-
     z-index: 1;
   }
   @include formLoginPwd;
   &__signupLink {
     margin-top: 40px;
+    margin-bottom: 40px;
     width: 80vw;
     height: 3rem;
     border-radius: 5px;

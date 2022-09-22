@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
   const [resBackErrLogin, setResBackErrLogin] = useState('');
   const [resBackErrPwd, setResBackErrPwd] = useState('');
+  const [switchHidePwd, setswitchHidePwd] = useState('false');
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -77,6 +80,7 @@ const Login = () => {
           Avec HereWeLaugh, prenez un petit moment pour vous détendre en lisant
           ou en partageant vos images, vidéos ou histoires drôles.
         </h1>
+        <h2 className="login__name">Connexion</h2>
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login__form__email">
             <input
@@ -104,11 +108,27 @@ const Login = () => {
               autoComplete="current-password"
               id="password"
               name="password"
-              type="password"
+              type={switchHidePwd ? 'password' : 'text'}
               placeholder="Mot de passe*"
               aria-label="Mot de passe"
               {...register('password')}
             />
+            <div className="login__form__password__input__switchButton">
+              {!switchHidePwd && (
+                <FontAwesomeIcon
+                  className="login__form__password__input__switchButton__showPwd"
+                  icon={faEye}
+                  onClick={() => setswitchHidePwd(!switchHidePwd)}
+                />
+              )}
+              {switchHidePwd && (
+                <FontAwesomeIcon
+                  className="login__form__password__input__switchButton__hidePwd"
+                  icon={faEyeSlash}
+                  onClick={() => setswitchHidePwd(!switchHidePwd)}
+                />
+              )}
+            </div>
             <span
               className={
                 dirtyFields.password || errors.password
