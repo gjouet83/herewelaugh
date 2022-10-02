@@ -24,6 +24,7 @@
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white;
+    z-index: 1;
   }
   &__describ {
     display: block;
@@ -41,19 +42,32 @@
   }
   @import '../components/loginSignForm';
   &__signupLink {
-    margin-top: 40px;
+    cursor: pointer;
     margin-bottom: 40px;
     width: 80vw;
     height: 3rem;
     border-radius: 5px;
     background-color: $linkButton;
-    & a {
+    &__text {
       display: block;
       text-decoration: none;
       line-height: 3rem;
       font-size: 1.5rem;
       font-weight: 400;
       color: white;
+      text-align: center;
+    }
+  }
+  &__separate {
+    height: 2rem;
+    width: 100vw;
+    margin-top: 20px;
+    &__text {
+      display: block;
+      font-weight: 400;
+      color: black;
+      background-color: $primaryColor;
+      top: 20px;
       text-align: center;
     }
   }

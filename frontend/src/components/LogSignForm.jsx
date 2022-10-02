@@ -4,7 +4,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEyeSlash,
+  faEye,
+  faEnvelope,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons';
 
 const LogSignForm = ({ page }) => {
   const [resBackErrMail, setResBackErrMail] = useState('');
@@ -62,9 +67,15 @@ const LogSignForm = ({ page }) => {
         }
       });
   };
+
   return (
     <form className={`${page}__form`} onSubmit={handleSubmit(onSubmit)}>
       <div className={`${page}__form__email`}>
+        <FontAwesomeIcon
+          className={`${page}__form__email__icoMail`}
+          icon={faEnvelope}
+          aria-label="Icone qui représente une enveloppe"
+        ></FontAwesomeIcon>
         <input
           className={`${page}__form__email__input ${errors.email && 'error'} ${
             dirtyFields.email && !errors.email && 'valid'
@@ -83,6 +94,11 @@ const LogSignForm = ({ page }) => {
         </span>
       </div>
       <div className={`${page}__form__password`}>
+        <FontAwesomeIcon
+          className={`${page}__form__password__icoPwd`}
+          icon={faLock}
+          aria-label="Icone qui représente un cadena"
+        ></FontAwesomeIcon>
         <input
           className={`${page}__form__password__input ${
             errors.password && 'error'

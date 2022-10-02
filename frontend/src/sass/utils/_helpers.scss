@@ -11,8 +11,10 @@
 .error {
   background-color: $invalidField;
   color: $invalidColor;
+  transition: all 0.5s ease-in-out;
 }
 .valid {
   background-color: $validatedField;
   color: $validateColor;
+  transition: all 0.5s ease-in-out;
 }
