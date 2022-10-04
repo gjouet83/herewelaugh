@@ -41,6 +41,9 @@ exports.deleteSavedPost = (req, res, next) => {
       if (!savedPost) {
         return res.status(404).json({ error: 'Saved Post not found' });
       }
+      if (!req.auth.admin && savedPost.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
+      }
       savedPost
         .destroy()
         .then(() => {

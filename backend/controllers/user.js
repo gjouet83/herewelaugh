@@ -12,7 +12,7 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  db.User.findOne({ where: { id: req.query.id } })
+  db.User.findOne({ where: { id: req.params.user_id } })
     .then((user) => {
       res.status(200).json({ user });
     })
@@ -30,7 +30,7 @@ exports.updateProfil = (req, res, next) => {
         }/${req.file.filename}`,
       }
     : { ...req.body };
-  db.User.update({ ...updatedProfil }, { where: { id: req.query.id } })
+  db.User.update({ ...updatedProfil }, { where: { id: req.params.user_id } })
     .then(() => {
       res.status(200).json({ message: 'Profil updated successful' });
     })

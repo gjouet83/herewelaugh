@@ -76,7 +76,7 @@ exports.getPostsByUser = (req, res, next) => {
         attributes: ['username', 'avatar'],
       },
     ],
-    where: { userId: req.query.userId },
+    where: { userId: req.params.user_id },
     order: [['createdAt', 'DESC']],
   })
     .then((posts) => {
@@ -120,12 +120,14 @@ exports.createPost = (req, res, next) => {
   const newPost = req.file
     ? {
         ...req.body,
+        userId: req.auth.userId,
         attachment: `${req.protocol}://${req.get('host')}/medias/userId-${
-          req.body.userId
+          req.auth.userId
         }/${req.file.filename}`,
       }
     : {
         ...req.body,
+        userId: req.auth.userId,
       };
   db.Post.create({ ...newPost })
     .then(() => {
@@ -137,35 +139,49 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-  const updatedPost = req.file
-    ? {
-        ...req.body,
-        attachment: `${req.protocol}://${req.get('host')}/medias/userId-${
-          req.body.userId
-        }/${req.file.filename}`,
+  db.Post.findOne({
+    where: { id: req.params.post_id },
+  })
+    .then((post) => {
+      if (!req.auth.admin && post.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
       }
-    : { ...req.body };
-  db.Post.update({ ...updatedPost }, { where: { id: req.query.id } })
-    .then(() => {
-      res.status(200).json({ message: 'Post updated successful' });
+      const updatedPost = req.file
+        ? {
+            ...req.body,
+            attachment: `${req.protocol}://${req.get('host')}/medias/userId-${
+              req.auth.userId
+            }/${req.file.filename}`,
+          }
+        : { ...req.body };
+      db.Post.update({ ...updatedPost }, { where: { id: req.params.post_id } })
+        .then(() => {
+          res.status(200).json({ message: 'Post updated successful' });
+        })
+        .catch(() => {
+          res.status(400).json({ error: 'fail to update post' });
+        });
     })
-    .catch(() => {
-      res.status(400).json({ error: 'fail to update post' });
+    .catch((error) => {
+      res.status(400).json({ error: 'Post not found' });
     });
 };
 
 exports.deletePost = (req, res, next) => {
-  db.Post.findOne({ where: { id: req.query.id } })
+  db.Post.findOne({ where: { id: req.params.post_id } })
     .then((post) => {
       if (!post) {
         return res.status(404).json({ error: 'Post not found' });
       }
+      if (!req.auth.admin && post.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
+      }
       //on supprime le fichier
       if (post.attachment) {
         const filename = post.attachment.split(
-          `medias/userId-${req.body.userId}`
+          `medias/userId-${req.auth.userId}`
         )[1];
-        fs.unlink(`medias/userId-${req.body.userId}/${filename}`, () => {
+        fs.unlink(`medias/userId-${req.auth.userId}/${filename}`, () => {
           console.log('picture deleted');
         });
       }

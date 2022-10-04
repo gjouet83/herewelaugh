@@ -20,17 +20,21 @@ exports.getLikes = (req, res, next) => {
 
 exports.createLike = (req, res, next) => {
   db.Like.findOne({
-    where: { postId: req.body.postId, userId: req.body.userId },
+    where: { postId: req.body.postId, userId: req.auth.userId },
   }).then((exist) => {
     if (exist) {
       return res.status(200).json({ exist });
     }
-    db.Like.create({ ...req.body })
+    db.Like.create({
+      ...req.body,
+      userId: req.auth.userId,
+      like: 1,
+    })
       .then(() => {
         res.status(201).json({ message: 'liked' });
       })
       .catch(() => {
-        res.status(400).json({ error: 'failed to create like' });
+        res.status(400).json({ error: 'like failed' });
       });
   });
 };
@@ -45,6 +49,9 @@ exports.updateLike = (req, res, next) => {
     .then((like) => {
       if (!like) {
         return res.status(404).json({ error: 'like not found' });
+      }
+      if (!req.auth.admin && like.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
       }
       db.Like.update(
         {
