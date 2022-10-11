@@ -43,15 +43,12 @@ exports.updateLike = (req, res, next) => {
   db.Like.findOne({
     where: {
       postId: req.body.postId,
-      userId: req.body.userId,
+      userId: req.auth.userId,
     },
   })
     .then((like) => {
       if (!like) {
         return res.status(404).json({ error: 'like not found' });
-      }
-      if (!req.auth.admin && like.userId !== req.auth.userId) {
-        return res.status(403).json({ error: 'User not allowed' });
       }
       db.Like.update(
         {
@@ -60,7 +57,7 @@ exports.updateLike = (req, res, next) => {
         {
           where: {
             id: req.params.like_id,
-            userId: req.body.userId,
+            userId: req.auth.userId,
             postId: req.body.postId,
           },
         }

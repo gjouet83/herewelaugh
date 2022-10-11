@@ -21,14 +21,14 @@ router.post(
 
 router.put(
   '/login/:user_id',
-  auth,
+  auth.regularReq,
   validateInputs.email,
   validateInputs.newEmail,
   authCtrl.updateLogin
 );
 router.put(
   '/password/:user_id',
-  auth,
+  auth.regularReq,
   validateInputs.password,
   validateInputs.newPassword,
   authCtrl.updatePassword

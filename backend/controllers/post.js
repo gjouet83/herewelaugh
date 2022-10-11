@@ -150,7 +150,7 @@ exports.updatePost = (req, res, next) => {
         ? {
             ...req.body,
             attachment: `${req.protocol}://${req.get('host')}/medias/userId-${
-              req.auth.userId
+              post.userId
             }/${req.file.filename}`,
           }
         : { ...req.body };
@@ -179,9 +179,9 @@ exports.deletePost = (req, res, next) => {
       //on supprime le fichier
       if (post.attachment) {
         const filename = post.attachment.split(
-          `medias/userId-${req.auth.userId}`
+          `medias/userId-${post.userId}`
         )[1];
-        fs.unlink(`medias/userId-${req.auth.userId}/${filename}`, () => {
+        fs.unlink(`medias/userId-${post.userId}/${filename}`, () => {
           console.log('picture deleted');
         });
       }

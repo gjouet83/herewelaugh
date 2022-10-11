@@ -4,10 +4,10 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', auth, savedPostCtrl.getSavedPosts);
+router.get('/', auth.regularReq, savedPostCtrl.getSavedPosts);
 
-router.post('/', auth, savedPostCtrl.savePost);
+router.post('/', auth.regularReq, savedPostCtrl.savePost);
 
-router.delete('/:savedPost_id', auth, savedPostCtrl.deleteSavedPost);
+router.delete('/:savedPost_id', auth.regularReq, savedPostCtrl.deleteSavedPost);
 
 module.exports = router;

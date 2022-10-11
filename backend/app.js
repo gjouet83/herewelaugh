@@ -8,6 +8,7 @@ const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const savedPostRoutes = require('./routes/savedpost');
 const likeRoutes = require('./routes/like');
+const forgotPwdRoutes = require('./routes/forgot-pwd');
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(helmet());
 
 app.use('/medias', express.static(path.join(__dirname, 'medias')));
 app.use('/api/auth', authRoutes);
+app.use('/api/forgot-pwd', forgotPwdRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/savedposts', savedPostRoutes);

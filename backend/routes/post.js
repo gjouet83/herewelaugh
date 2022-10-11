@@ -9,12 +9,12 @@ const router = express.Router();
 router.get('/', postCtrl.getPosts);
 router.get('/order=asc', postCtrl.getPostsSortByMostOld);
 router.get('/sort=rate&order=desc', postCtrl.getPostsSortByRate);
-router.get('/:user_id', auth, postCtrl.getPostsByUser);
+router.get('/:user_id', auth.regularReq, postCtrl.getPostsByUser);
 router.get('/search/:keywords', validateInputs.content, postCtrl.searchPost);
 
 router.post(
   '/',
-  auth,
+  auth.regularReq,
   multer.post,
   validateInputs.content,
   postCtrl.createPost
@@ -22,12 +22,12 @@ router.post(
 
 router.put(
   '/:post_id',
-  auth,
+  auth.regularReq,
   multer.post,
   validateInputs.content,
   postCtrl.updatePost
 );
 
-router.delete('/:post_id', auth, postCtrl.deletePost);
+router.delete('/:post_id', auth.regularReq, postCtrl.deletePost);
 
 module.exports = router;

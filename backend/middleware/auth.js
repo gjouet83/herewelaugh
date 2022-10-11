@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+exports.regularReq = (req, res, next) => {
   try {
     //on récupère le token a droite de bearer dans le header authorization
     const token = req.headers.authorization.split(' ')[1];
@@ -11,6 +11,22 @@ module.exports = (req, res, next) => {
     req.auth = {
       userId: userId,
       admin: admin,
+    };
+    next();
+  } catch {
+    res.status(403).json({ error: 'User not allowed' });
+  }
+};
+
+exports.forgotPwdReq = (req, res, next) => {
+  try {
+    //on récupère le token a droite de bearer dans le header authorization
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.FORGOTPWD_TOKEN);
+    //on récupère le userId de l'object décodedToken et on le test dans le if
+    const email = decodedToken.key;
+    req.auth = {
+      email: email,
     };
     next();
   } catch {

@@ -173,15 +173,7 @@ const LogSignForm = ({ page }) => {
               />
             )}
           </div>
-          <span
-            className={
-              dirtyFields.password || errors.password
-                ? 'alerte'
-                : page + '__form__password__info'
-            }
-          >
-            {errors.confirmpassword?.message}
-          </span>
+          <span className="alerte">{errors.confirmpassword?.message}</span>
         </div>
       )}
       <input

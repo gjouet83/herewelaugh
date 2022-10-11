@@ -6,18 +6,23 @@ const multer = require('../middleware/multer-config');
 
 const router = express.Router();
 
-router.get('/', auth, userCtrl.getUsers);
-router.get('/:user_id', auth, userCtrl.getUser);
+router.get('/', auth.regularReq, userCtrl.getUsers);
+router.get('/:user_id', auth.regularReq, userCtrl.getUser);
 
 router.put(
   '/:user_id',
-  auth,
+  auth.regularReq,
   multer.avatar,
   validateInputs.profil,
   userCtrl.updateProfil
 );
-router.put('/:user_id/avatar', auth, multer.avatar, userCtrl.deleteAvatar);
+router.put(
+  '/:user_id/avatar',
+  auth.regularReq,
+  multer.avatar,
+  userCtrl.deleteAvatar
+);
 
-router.delete('/:user_id', auth, userCtrl.deleteUser);
+router.delete('/:user_id', auth.regularReq, userCtrl.deleteUser);
 
 module.exports = router;

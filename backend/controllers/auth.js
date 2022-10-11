@@ -90,13 +90,16 @@ exports.updateLogin = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: 'User unregistred' });
       }
+      if (!req.auth.admin && user.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
+      }
       db.User.update(
         {
           email: CryptoJS.AES.encrypt(req.body.newEmail, key, {
             iv: iv,
           }).toString(),
         },
-        { where: { id: req.body.userId } }
+        { where: { id: req.auth.userId } }
       )
         .then(() => {
           res.status(200).json({ message: 'Email updated successful' });
@@ -113,10 +116,13 @@ exports.updateLogin = (req, res, next) => {
 };
 
 exports.updatePassword = (req, res, next) => {
-  db.User.findOne({ where: { id: req.body.userId } })
+  db.User.findOne({ where: { id: req.params.userId } })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: 'User unregistred' });
+      }
+      if (!req.auth.admin && user.userId !== req.auth.userId) {
+        return res.status(403).json({ error: 'User not allowed' });
       }
       bcrypt
         //on compare le hash du password
@@ -133,7 +139,7 @@ exports.updatePassword = (req, res, next) => {
                 {
                   password: hash,
                 },
-                { where: { id: req.body.userId } }
+                { where: { id: req.auth.userId } }
               ).then(() => {
                 res
                   .status(200)

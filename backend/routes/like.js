@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get('/', likeCtrl.getLikes);
 
-router.post('/', auth, likeCtrl.createLike);
+router.post('/', auth.regularReq, likeCtrl.createLike);
 
-router.put('/:like_id', auth, likeCtrl.updateLike);
+router.put('/:like_id', auth.regularReq, likeCtrl.updateLike);
 
 module.exports = router;
