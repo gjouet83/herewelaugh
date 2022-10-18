@@ -3,7 +3,7 @@
   border: 1px solid grey;
   border-radius: 25px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 40%), 0 8px 16px rgb(0 0 0 / 40%);
-  padding: 50px 20px 50px 20px;
+  padding: 50px 3vw 50px 3vw;
   background-color: rgb(87, 183, 200);
   z-index: 2;
   &__username,
@@ -19,7 +19,10 @@
       left: 1rem;
     }
     &__input {
-      width: 80vw;
+      text-overflow: ellipsis;
+      padding-left: 10vw;
+      padding-right: 10vw;
+      width: 60vw;
       text-align: center;
       line-height: 3rem;
       font-size: 1.5rem;

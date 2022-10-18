@@ -160,10 +160,6 @@ const Login = () => {
                 />
               )}
             </div>
-            <div className={`login__form__password__forgotPwd`}>
-              <Link to="/forgotPwdSendMail">Mot de passe oublié ?</Link>
-            </div>
-
             <span
               className={
                 dirtyFields.password || errors.password
@@ -196,6 +192,9 @@ const Login = () => {
             }
           />
         </form>
+        <div className={`login__forgotPwd`}>
+          <Link to="/forgotPwdSendMail">Mot de passe oublié ?</Link>
+        </div>
         <div className="login__separate">
           <span className="login__separate__text">
             Si n'avez pas encore de compte
