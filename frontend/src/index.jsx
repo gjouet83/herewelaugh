@@ -6,6 +6,8 @@ import Header from './layout/Header';
 import Posts from './pages/Posts';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import ForgotPwd from './pages/ForgotPwd';
+import ForgotPwdSendMail from './pages/ForgotPwdSendMail';
 import Error from './pages/Error';
 import './sass/style.scss';
 
@@ -23,6 +25,12 @@ root.render(
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/forgotPwd">
+          <ForgotPwd />
+        </Route>
+        <Route path="/forgotPwdSendMail">
+          <ForgotPwdSendMail />
         </Route>
         <Route>
           <Error />

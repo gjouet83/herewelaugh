@@ -6,9 +6,11 @@
   padding: 50px 20px 50px 20px;
   background-color: rgb(87, 183, 200);
   z-index: 2;
+  &__username,
   &__email,
   &__password {
     position: relative;
+    &__icoUsername,
     &__icoPwd,
     &__icoMail {
       color: grey;
