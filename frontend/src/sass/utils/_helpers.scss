@@ -8,6 +8,16 @@
   font-size: 0.9rem;
   color: $invalidColor;
 }
+.succes {
+  display: block;
+  height: 50px;
+  width: 80vw;
+  font-weight: 400;
+  text-align: center;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  color: $validColor;
+}
 .error {
   background-color: $invalidField;
   color: $invalidColor;
@@ -15,6 +25,6 @@
 }
 .valid {
   background-color: $validatedField;
-  color: $validateColor;
+  color: $activLinkColor;
   transition: all 0.5s ease-in-out;
 }

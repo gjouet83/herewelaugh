@@ -1,4 +1,4 @@
-.login {
+.forgotPwdSendMail {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,6 +19,8 @@
     }
   }
   &__name {
+    margin-bottom: 10vh;
+    text-align: center;
     text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
       0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
@@ -41,46 +43,4 @@
     z-index: 1;
   }
   @import '../components/forms';
-  &__loginLink {
-    margin-bottom: 40px;
-    width: 80vw;
-    height: 3rem;
-    border-radius: 5px;
-    background-color: $linkButton;
-    & a {
-      display: block;
-      text-decoration: none;
-      line-height: 3rem;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: white;
-      text-align: center;
-    }
-  }
-  &__forgotPwd {
-    text-align: center;
-    line-height: 2rem;
-    font-weight: 400;
-    margin-top: 10px;
-    width: 200px;
-    border-radius: 25px;
-    background-color: $activLinkColor;
-    & a {
-      text-decoration: none;
-      color: white;
-    }
-  }
-  &__separate {
-    height: 2rem;
-    width: 100vw;
-    margin-top: 20px;
-    &__text {
-      display: block;
-      font-weight: 400;
-      color: black;
-      background-color: $primaryColor;
-      top: 20px;
-      text-align: center;
-    }
-  }
 }

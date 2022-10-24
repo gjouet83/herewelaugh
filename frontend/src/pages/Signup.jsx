@@ -109,8 +109,8 @@ const Signup = () => {
           />
         </div>
         <h1 className="signup__describ">
-          Avec HereWeLaugh, prenez un petit moment pour vous détendre en lisant
-          ou en partageant vos images, vidéos et histoires drôles.
+          Avec HereWeLaugh, prenez un petit moment pour vous détendre en
+          partageant vos images, vidéos et histoires drôles.
         </h1>
         <h2 className="signup__name">Inscription</h2>
         <form className={`signup__form`} onSubmit={handleSubmit(onSubmit)}>

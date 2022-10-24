@@ -15,7 +15,7 @@ exports.sendMail = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        return res.status(401).json({ errorMail: 'User unregistred' });
       }
       const token = jwt.sign(
         {
@@ -62,10 +62,10 @@ exports.sendMail = (req, res, next) => {
         background-color:#0395a0;">
         <img style="position:absolute; 
         left:10px; 
-        "src="cid:logo@herewelaugh" 
-        height=40px 
-        width=40px 
-        alt="Smiley qui pleure de rire"
+        "src="cid:logo@herewelaugh"; 
+        height=40px; 
+        width=40px; 
+        alt="Smiley qui pleure de rire";
         />
         <h1 style="font-size:14px;
         margin-left:10px; 
@@ -86,12 +86,12 @@ exports.sendMail = (req, res, next) => {
           <p style="font-size:14px;margin-top:40px;">
           Pour réinitialiser votre mot de passe : 
           </p>
-        <p>
+        <p style="text-align:center;">
         <a style="color: #0395a0; font-size:14px;" href=${
           req.protocol
         }://${req.get(
           'host'
-        )}forgot-pwd/reset/${token}>Cliquez ici pour réinitialiser votre mot de passe</a>
+        )}/forgotPwd/reset?token=${token}>Cliquez ici pour réinitialiser votre mot de passe</a>
         </p>`,
       };
       transporter.sendMail(message, (error) => {
@@ -100,7 +100,7 @@ exports.sendMail = (req, res, next) => {
           console.log(error.message);
           return process.exit(1);
         }
-        res.status(200).json({ message: 'Message sent successfully!' });
+        res.status(200).json({ messageMail: 'Message sent successfully!' });
 
         // only needed when using pooled connections
         transporter.close();
@@ -113,21 +113,22 @@ exports.sendMail = (req, res, next) => {
 
 exports.updateForgotPwd = (req, res, next) => {
   db.User.findOne({
-    where: { email: req.auth.key },
+    where: { email: req.auth.email },
   })
     .then((user) => {
+      console.log(req.body.password);
       if (!user) {
         return res.status(401).json({ errorMail: 'user unregistred' });
       }
       bcrypt
         // on hash le mot de passe
-        .hash(req.body.newPassword, 10)
+        .hash(req.body.password, 10)
         .then((hash) => {
           db.User.update(
             {
               password: hash,
             },
-            { where: { id: user.userId } }
+            { where: { id: user.id } }
           ).then(() => {
             res.status(200).json({ message: 'Password updated successful' });
           });

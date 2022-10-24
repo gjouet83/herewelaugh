@@ -95,8 +95,8 @@ const Login = () => {
           />
         </div>
         <h1 className="login__describ">
-          Avec HereWeLaugh, prenez un petit moment pour vous détendre en lisant
-          ou en partageant vos images, vidéos et histoires drôles.
+          Avec HereWeLaugh, prenez un petit moment pour vous détendre en
+          partageant vos images, vidéos et histoires drôles.
         </h1>
         <h2 className="login__name">Connexion</h2>
         <form className={`login__form`} onSubmit={handleSubmit(onSubmit)}>

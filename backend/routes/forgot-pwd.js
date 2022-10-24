@@ -7,10 +7,5 @@ const router = express.Router();
 
 router.post('/sendMail', validateInputs.email, forgotPwdCtrl.sendMail);
 
-router.put(
-  '/reset',
-  auth.forgotPwdReq,
-  validateInputs.password,
-  forgotPwdCtrl.updateForgotPwd
-);
+router.put('/reset', auth.forgotPwdReq, forgotPwdCtrl.updateForgotPwd);
 module.exports = router;

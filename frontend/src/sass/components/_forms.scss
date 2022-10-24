@@ -41,7 +41,7 @@
         top: 0.9rem;
         right: 5%;
         &__hidePwd {
-          color: $validateColor;
+          color: $activLinkColor;
         }
         &__showPwd {
           color: $invalidColor;
@@ -65,7 +65,7 @@
     font-size: 1.5rem;
     border: none;
     border-radius: 5px;
-    background-color: $validateColor;
+    background-color: $activLinkColor;
     color: white;
     transition: background-color 0.5s ease-in-out;
     &:disabled {
