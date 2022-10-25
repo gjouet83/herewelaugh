@@ -5,6 +5,7 @@
   box-shadow: 0 2px 4px rgb(0 0 0 / 40%), 0 8px 16px rgb(0 0 0 / 40%);
   padding: 50px 3vw 50px 3vw;
   background-color: rgb(87, 183, 200);
+  margin-bottom: 30px;
   z-index: 2;
   &__username,
   &__email,
@@ -53,7 +54,6 @@
       min-height: 50px;
       width: 80vw;
       text-align: center;
-      padding-top: 10px;
       font-size: 0.9rem;
     }
   }

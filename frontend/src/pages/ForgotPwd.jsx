@@ -128,13 +128,14 @@ const ForgotPwd = () => {
                   {backendMessage}
                 </span>
               )}
-              {(!backendMessage || !backendErr || errors.password) && (
-                <span>
-                  {!dirtyFields.password &&
-                    !errors.password &&
-                    '*Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
-                </span>
-              )}
+              {(!backendMessage || !backendErr || errors.password) &&
+                !dirtyFields.password &&
+                !errors.password && (
+                  <span>
+                    *Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de
+                    caractères spéciaux
+                  </span>
+                )}
             </div>
           </div>
           <div className={`forgotPwd__form__password`}>
