@@ -114,14 +114,14 @@ const Signup = () => {
         </h1>
         <h2 className="signup__name">Inscription</h2>
         <form className={`signup__form`} onSubmit={handleSubmit(onSubmit)}>
-          <div className={`signup__form__username`}>
+          <div className={`signup__form__field`}>
             <FontAwesomeIcon
-              className={`signup__form__username__icoUsername`}
+              className={`signup__form__field__ico`}
               icon={faUser}
               aria-label="Icone qui représente un bonhomme"
             ></FontAwesomeIcon>
             <input
-              className={`signup__form__username__input ${
+              className={`signup__form__field__input ${
                 errors.username && 'error'
               } ${dirtyFields.username && !errors.username && 'valid'}`}
               autoComplete="username"
@@ -139,14 +139,14 @@ const Signup = () => {
                 resBackErrUsername}
             </span>
           </div>
-          <div className={`signup__form__email`}>
+          <div className={`signup__form__field`}>
             <FontAwesomeIcon
-              className={`signup__form__email__icoMail`}
+              className={`signup__form__field__ico`}
               icon={faEnvelope}
               aria-label="Icone qui représente une enveloppe"
             ></FontAwesomeIcon>
             <input
-              className={`signup__form__email__input ${
+              className={`signup__form__field__input ${
                 errors.email && 'error'
               } ${dirtyFields.email && !errors.email && 'valid'}`}
               autoComplete="username"
@@ -164,14 +164,14 @@ const Signup = () => {
                 resBackErrMail}
             </span>
           </div>
-          <div className={`signup__form__password`}>
+          <div className={`signup__form__field`}>
             <FontAwesomeIcon
-              className={`signup__form__password__icoPwd`}
+              className={`signup__form__field__ico`}
               icon={faLock}
               aria-label="Icone qui représente un cadena"
             ></FontAwesomeIcon>
             <input
-              className={`signup__form__password__input ${
+              className={`signup__form__field__input ${
                 errors.password && 'error'
               } ${dirtyFields.password && !errors.password && 'valid'}`}
               autoComplete="current-password"
@@ -182,17 +182,17 @@ const Signup = () => {
               aria-label="Mot de passe"
               {...register('password')}
             />
-            <div className={`signup__form__password__input__switchButton`}>
+            <div className={`signup__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__password__input__switchButton__showPwd`}
+                  className={`signup__form__field__input__switchButton--showPwd`}
                   icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__password__input__switchButton__hidePwd`}
+                  className={`signup__form__field__input__switchButton--hidePwd`}
                   icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
@@ -202,7 +202,7 @@ const Signup = () => {
               className={
                 dirtyFields.password || errors.password
                   ? 'alerte'
-                  : 'signup__form__password__info'
+                  : 'signup__form__field__info'
               }
             >
               {!dirtyFields.password &&
@@ -211,9 +211,9 @@ const Signup = () => {
               {errors.password?.message}
             </span>
           </div>
-          <div className={`signup__form__password`}>
+          <div className={`signup__form__field`}>
             <input
-              className={`signup__form__password__input ${
+              className={`signup__form__field__input ${
                 errors.confirmpassword && 'error'
               } ${
                 dirtyFields.confirmpassword &&
@@ -228,17 +228,17 @@ const Signup = () => {
               aria-label="Confirmation de mot de passe"
               {...register('confirmpassword')}
             />
-            <div className={`signup__form__password__input__switchButton`}>
+            <div className={`signup__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__password__input__switchButton__showPwd`}
+                  className={`signup__form__field__input__switchButton--showPwd`}
                   icon={faEye}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}
               {switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__password__input__switchButton__hidePwd`}
+                  className={`signup__form__field__input__switchButton--hidePwd`}
                   icon={faEyeSlash}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
@@ -269,11 +269,9 @@ const Signup = () => {
             Si vous possédez déjà un compte
           </span>
         </div>
-        <div className="signup__signupLink">
+        <div className="signup__signupLink linkButton">
           <span>
-            <Link className="signup__signupLink__text" to="/login">
-              Se connecter
-            </Link>
+            <Link to="/login">Se connecter</Link>
           </span>
         </div>
       </section>

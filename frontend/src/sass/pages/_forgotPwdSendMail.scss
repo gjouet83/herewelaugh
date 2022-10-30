@@ -21,11 +21,7 @@
   &__name {
     margin-bottom: 10vh;
     text-align: center;
-    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white;
+    @extend %textShadow;
     z-index: 1;
   }
   &__describ {
@@ -35,12 +31,7 @@
     font-weight: bold;
     text-align: center;
     width: 90vw;
-    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white;
+    @extend %textShadow;
     z-index: 1;
   }
-  @import '../components/forms';
 }

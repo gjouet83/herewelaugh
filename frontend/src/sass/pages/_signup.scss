@@ -19,11 +19,7 @@
     }
   }
   &__name {
-    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white;
+    @extend %textShadow;
     z-index: 1;
   }
   &__describ {
@@ -33,30 +29,17 @@
     font-weight: bold;
     text-align: center;
     width: 90vw;
-    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-      0 0 2px white;
+    @extend %textShadow;
     z-index: 1;
   }
-  @import '../components/forms';
-  &__signupLink {
-    cursor: pointer;
-    margin-bottom: 40px;
-    width: 80vw;
-    height: 3rem;
-    border-radius: 5px;
-    background-color: $linkButton;
-    &__text {
-      display: block;
-      text-decoration: none;
-      line-height: 3rem;
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: white;
-      text-align: center;
-    }
+  &__signupLink a {
+    display: block;
+    text-decoration: none;
+    line-height: 3rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: $activColor;
+    text-align: center;
   }
   &__separate {
     height: 2rem;
@@ -65,9 +48,6 @@
     &__text {
       display: block;
       font-weight: 400;
-      color: black;
-      background-color: $primaryColor;
-      top: 20px;
       text-align: center;
     }
   }

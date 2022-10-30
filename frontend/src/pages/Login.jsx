@@ -100,14 +100,14 @@ const Login = () => {
         </h1>
         <h2 className="login__name">Connexion</h2>
         <form className={`login__form`} onSubmit={handleSubmit(onSubmit)}>
-          <div className={`login__form__email`}>
+          <div className={`login__form__field`}>
             <FontAwesomeIcon
-              className={`login__form__email__icoMail`}
+              className={`login__form__field__ico`}
               icon={faEnvelope}
               aria-label="Icone qui représente une enveloppe"
             ></FontAwesomeIcon>
             <input
-              className={`login__form__email__input ${
+              className={`login__form__field__input ${
                 errors.email && 'error'
               } ${dirtyFields.email && !errors.email && 'valid'}`}
               autoComplete="username"
@@ -126,14 +126,14 @@ const Login = () => {
               {errors.email && errors.email?.message}
             </span>
           </div>
-          <div className={`login__form__password`}>
+          <div className={`login__form__field`}>
             <FontAwesomeIcon
-              className={`login__form__password__icoPwd`}
+              className={`login__form__field__ico`}
               icon={faLock}
               aria-label="Icone qui représente un cadena"
             ></FontAwesomeIcon>
             <input
-              className={`login__form__password__input ${
+              className={`login__form__field__input ${
                 errors.password && 'error'
               } ${dirtyFields.password && !errors.password && 'valid'}`}
               autoComplete="current-password"
@@ -144,17 +144,17 @@ const Login = () => {
               aria-label="Mot de passe"
               {...register('password')}
             />
-            <div className={`login__form__password__input__switchButton`}>
+            <div className={`login__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`login__form__password__input__switchButton__showPwd`}
+                  className={`login__form__field__input__switchButton--showPwd`}
                   icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`login__form__password__input__switchButton__hidePwd`}
+                  className={`login__form__field__input__switchButton--hidePwd`}
                   icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
@@ -164,7 +164,7 @@ const Login = () => {
               className={
                 dirtyFields.password || errors.password
                   ? 'alerte'
-                  : 'login__form__password__info'
+                  : 'login__form__field__info'
               }
             >
               {!dirtyFields.password &&
@@ -200,7 +200,7 @@ const Login = () => {
             Si n'avez pas encore de compte
           </span>
         </div>
-        <div className="login__loginLink">
+        <div className="login__loginLink linkButton">
           <span>
             <Link to="/signup">S'inscrire</Link>
           </span>

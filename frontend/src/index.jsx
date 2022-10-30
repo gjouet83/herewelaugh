@@ -2,20 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import Header from './layout/Header';
 import Posts from './pages/Posts';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ForgotPwd from './pages/ForgotPwd';
 import ForgotPwdSendMail from './pages/ForgotPwdSendMail';
 import Error from './pages/Error';
-import './sass/style.scss';
+import './sass/main.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <Header />
       <Switch>
         <Route exact path="/">
           <Posts />
@@ -31,6 +29,9 @@ root.render(
         </Route>
         <Route path="/forgotPwdSendMail">
           <ForgotPwdSendMail />
+        </Route>
+        <Route path="/posts">
+          <Posts />
         </Route>
         <Route>
           <Error />

@@ -80,14 +80,14 @@ const ForgotPwd = () => {
           Saisissez votre nouveau mot de passe.
         </h2>
         <form className={`forgotPwd__form`} onSubmit={handleSubmit(onSubmit)}>
-          <div className={`forgotPwd__form__password`}>
+          <div className={`forgotPwd__form__field`}>
             <FontAwesomeIcon
-              className={`forgotPwd__form__password__icoPwd`}
+              className={`forgotPwd__form__field__ico`}
               icon={faLock}
               aria-label="Icone qui représente un cadena"
             ></FontAwesomeIcon>
             <input
-              className={`forgotPwd__form__password__input ${
+              className={`forgotPwd__form__field__input ${
                 errors.password && 'error'
               } ${dirtyFields.password && !errors.password && 'valid'}`}
               autoComplete="current-password"
@@ -98,23 +98,23 @@ const ForgotPwd = () => {
               aria-label="Mot de passe"
               {...register('password')}
             />
-            <div className={`forgotPwd__form__password__input__switchButton`}>
+            <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__password__input__switchButton__showPwd`}
+                  className={`forgotPwd__form__field__input__switchButton--showPwd`}
                   icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__password__input__switchButton__hidePwd`}
+                  className={`forgotPwd__form__field__input__switchButton--hidePwd`}
                   icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
             </div>
-            <div className="forgotPwd__form__password__info">
+            <div className="forgotPwd__form__field__info">
               {(dirtyFields.password || errors.password) && (
                 <span
                   className={
@@ -138,9 +138,9 @@ const ForgotPwd = () => {
                 )}
             </div>
           </div>
-          <div className={`forgotPwd__form__password`}>
+          <div className={`forgotPwd__form__field`}>
             <input
-              className={`forgotPwd__form__password__input ${
+              className={`forgotPwd__form__field__input ${
                 errors.confirmpassword && 'error'
               } ${
                 dirtyFields.confirmpassword &&
@@ -155,17 +155,17 @@ const ForgotPwd = () => {
               aria-label="Confirmation de mot de passe"
               {...register('confirmpassword')}
             />
-            <div className={`forgotPwd__form__password__input__switchButton`}>
+            <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__password__input__switchButton__showPwd`}
+                  className={`forgotPwd__form__field__input__switchButton--showPwd`}
                   icon={faEye}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}
               {switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__password__input__switchButton__hidePwd`}
+                  className={`forgotPwd__form__field__input__switchButton--hidePwd`}
                   icon={faEyeSlash}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />

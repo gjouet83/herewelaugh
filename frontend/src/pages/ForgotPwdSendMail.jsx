@@ -76,14 +76,14 @@ const ForgotPwdSendMail = () => {
           className="forgotPwdSendMail__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="forgotPwdSendMail__form__email">
+          <div className="forgotPwdSendMail__form__field">
             <FontAwesomeIcon
-              className="forgotPwdSendMail__form__email__icoMail"
+              className="forgotPwdSendMail__form__field__ico"
               icon={faEnvelope}
               aria-label="Icone qui représente une enveloppe"
             ></FontAwesomeIcon>
             <input
-              className={`forgotPwdSendMail__form__email__input ${
+              className={`forgotPwdSendMail__form__field__input ${
                 errors.email && 'error'
               } ${dirtyFields.email && !errors.email && 'valid'}`}
               autoComplete="username"
@@ -94,7 +94,7 @@ const ForgotPwdSendMail = () => {
               aria-label="e-mail"
               {...register('email')}
             />
-            <div className="forgotPwdSendMail__form__email__info">
+            <div className="forgotPwdSendMail__form__field__info">
               <span
                 className={
                   (dirtyFields.email || errors.email) && !resBackMessageMail
