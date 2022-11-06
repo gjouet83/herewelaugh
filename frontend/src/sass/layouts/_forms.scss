@@ -14,44 +14,48 @@
     &__field {
       position: relative;
       &__ico {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
         color: $placeHolderColor;
         position: absolute;
-        top: 1rem;
-        left: 1rem;
       }
       &__input {
         text-overflow: ellipsis;
+        padding-top: 0;
+        padding-bottom: 0;
         padding-left: 10vw;
         padding-right: 10vw;
         width: 60vw;
         text-align: center;
-        line-height: 3rem;
-        font-size: 1.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
         border: none;
         border-radius: 5px;
         transition: background-color 0.5s ease-in-out;
         &::placeholder {
-          font-size: 1.5rem;
-          line-height: 3rem;
+          font-family: 'Poppins', sans-serif;
+          font-size: 1rem;
         }
         &__switchButton {
-          width: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 2.5rem;
+          height: 2.5rem;
           cursor: pointer;
           overflow: hidden;
           position: absolute;
-          top: 0.9rem;
-          right: 5%;
-          &--hidePwd {
-            color: $activLinkColor;
-          }
-          &--showPwd {
-            color: $invalidColor;
-          }
+          top: 0;
+          right: 0;
+          color: $placeHolderColor;
         }
       }
       &__info {
         display: block;
-        min-height: 50px;
+        min-height: 2rem;
         width: 80vw;
         text-align: center;
         font-size: 0.9rem;
@@ -59,9 +63,8 @@
     }
     &__validate {
       cursor: pointer;
-      height: 3rem;
+      height: 2.5rem;
       width: 80vw;
-      line-height: 3rem;
       font-size: 1.5rem;
       border: none;
       border-radius: 5px;
@@ -69,9 +72,7 @@
       color: $activColor;
       transition: background-color 0.5s ease-in-out;
       &:disabled {
-        cursor: inherit;
-        background-color: $disabledLinkColor;
-        color: $disabledColor;
+        @extend %disabledButton;
       }
     }
   }
@@ -83,7 +84,7 @@
   @include message($validColor);
 }
 .error {
-  @include input-context($invalidField, $invalidColor);
+  @include input-context($invalidField);
 }
 .valid {
   @include input-context($validField, $activLinkColor);

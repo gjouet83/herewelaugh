@@ -36,7 +36,7 @@ exports.newEmail = [
 
 exports.username = [
   body('username')
-    .isLength({ min: 2, max: 15 })
+    .isLength({ min: 2, max: 30 })
     .withMessage('incorrect number of characters')
     .not()
     .isEmpty()
@@ -54,7 +54,7 @@ exports.username = [
 exports.profil = [
   body('username')
     .if(body('username').exists())
-    .isLength({ min: 2, max: 15 })
+    .isLength({ min: 2, max: 30 })
     .withMessage('incorrect number of characters')
     .trim()
     .escape()
@@ -77,7 +77,7 @@ exports.profil = [
 ];
 
 exports.password = [
-  body('password').isLength({ min: 9 }).isAlphanumeric(),
+  body('password').isStrongPassword().trim().isLength({ min: 12, max: 64 }),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -87,7 +87,7 @@ exports.password = [
 ];
 
 exports.newPassword = [
-  body('newPassword').isLength({ min: 9 }).isAlphanumeric(),
+  body('newPassword').isStrongPassword().trim().isLength({ min: 12, max: 64 }),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())

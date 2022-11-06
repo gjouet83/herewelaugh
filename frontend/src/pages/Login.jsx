@@ -27,9 +27,14 @@ const Login = () => {
       .required("l'email est obligatoire"),
     password: Yup.string()
       .required('Mot de passe est obligatoire')
+      .matches(/(^\S)/, 'space')
+      .matches(/(\S$)/, 'space')
+      .matches(/([!@#$%^~`_+'/&*()°,.?":{}|<>-])/, 'Special')
       .matches(/([0-9])/, 'Au moins un entier')
-      .min(9, 'Mot de passe doit être plus grand que 8 caractères')
-      .max(50, 'Mot de passe doit être plus petit que 50 caractères'),
+      .matches(/([A-Z])/, 'Au moins une majuscule')
+      .matches(/([a-z])/, 'Lowercase')
+      .min(12, 'Mot de passe doit contenir au moins 12 caractères')
+      .max(64, 'Mot de passe doit contenir un maximum 64 caractères'),
   });
 
   const {
@@ -101,11 +106,12 @@ const Login = () => {
         <h2 className="login__name">Connexion</h2>
         <form className={`login__form`} onSubmit={handleSubmit(onSubmit)}>
           <div className={`login__form__field`}>
-            <FontAwesomeIcon
-              className={`login__form__field__ico`}
-              icon={faEnvelope}
-              aria-label="Icone qui représente une enveloppe"
-            ></FontAwesomeIcon>
+            <div className={`login__form__field__ico`}>
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                aria-label="Icone qui représente une enveloppe"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`login__form__field__input ${
                 errors.email && 'error'
@@ -127,11 +133,12 @@ const Login = () => {
             </span>
           </div>
           <div className={`login__form__field`}>
-            <FontAwesomeIcon
-              className={`login__form__field__ico`}
-              icon={faLock}
-              aria-label="Icone qui représente un cadena"
-            ></FontAwesomeIcon>
+            <div className={`login__form__field__ico`}>
+              <FontAwesomeIcon
+                icon={faLock}
+                aria-label="Icone qui représente un cadena"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`login__form__field__input ${
                 errors.password && 'error'
@@ -147,15 +154,13 @@ const Login = () => {
             <div className={`login__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`login__form__field__input__switchButton--showPwd`}
-                  icon={faEye}
+                  icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`login__form__field__input__switchButton--hidePwd`}
-                  icon={faEyeSlash}
+                  icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}

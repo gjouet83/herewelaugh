@@ -77,11 +77,12 @@ const ForgotPwdSendMail = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="forgotPwdSendMail__form__field">
-            <FontAwesomeIcon
-              className="forgotPwdSendMail__form__field__ico"
-              icon={faEnvelope}
-              aria-label="Icone qui représente une enveloppe"
-            ></FontAwesomeIcon>
+            <div className="forgotPwdSendMail__form__field__ico">
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                aria-label="Icone qui représente une enveloppe"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`forgotPwdSendMail__form__field__input ${
                 errors.email && 'error'

@@ -13,6 +13,7 @@ import {
   faLock,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { ErrorMessage } from '@hookform/error-message';
 
 const Signup = () => {
   const [resBackErrUsername, setResBackErrUsername] = useState('');
@@ -30,9 +31,14 @@ const Signup = () => {
       .required("l'email est obligatoire"),
     password: Yup.string()
       .required('Mot de passe est obligatoire')
+      .matches(/(^\S)/, 'space')
+      .matches(/(\S$)/, 'space')
+      .matches(/([!@#$%^~`_+'/&*()°,.?":{}|<>-])/, 'Special')
       .matches(/([0-9])/, 'Au moins un entier')
-      .min(9, 'Mot de passe doit être plus grand que 8 caractères')
-      .max(50, 'Mot de passe doit être plus petit que 50 caractères'),
+      .matches(/([A-Z])/, 'Au moins une majuscule')
+      .matches(/([a-z])/, 'Lowercase')
+      .min(12, 'Mot de passe doit contenir au moins 12 caractères')
+      .max(64, 'Mot de passe doit contenir un maximum 64 caractères'),
     confirmpassword: Yup.string()
       .required('Mot de passe est obligatoire')
       .oneOf([Yup.ref('password')], 'Le mot de passe ne correspond pas'),
@@ -53,6 +59,7 @@ const Signup = () => {
     },
     mode: 'onChange',
     shouldFocusError: true,
+    criteriaMode: 'all',
   });
 
   const email = watch('email');
@@ -98,6 +105,7 @@ const Signup = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  console.log(errors.password);
   return (
     <main>
       <section className="signup">
@@ -115,11 +123,12 @@ const Signup = () => {
         <h2 className="signup__name">Inscription</h2>
         <form className={`signup__form`} onSubmit={handleSubmit(onSubmit)}>
           <div className={`signup__form__field`}>
-            <FontAwesomeIcon
-              className={`signup__form__field__ico`}
-              icon={faUser}
-              aria-label="Icone qui représente un bonhomme"
-            ></FontAwesomeIcon>
+            <div className={`signup__form__field__ico`}>
+              <FontAwesomeIcon
+                icon={faUser}
+                aria-label="Icone qui représente un bonhomme"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`signup__form__field__input ${
                 errors.username && 'error'
@@ -140,11 +149,12 @@ const Signup = () => {
             </span>
           </div>
           <div className={`signup__form__field`}>
-            <FontAwesomeIcon
-              className={`signup__form__field__ico`}
-              icon={faEnvelope}
-              aria-label="Icone qui représente une enveloppe"
-            ></FontAwesomeIcon>
+            <div className={`signup__form__field__ico`}>
+              <FontAwesomeIcon
+                icon={faEnvelope}
+                aria-label="Icone qui représente une enveloppe"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`signup__form__field__input ${
                 errors.email && 'error'
@@ -165,11 +175,12 @@ const Signup = () => {
             </span>
           </div>
           <div className={`signup__form__field`}>
-            <FontAwesomeIcon
-              className={`signup__form__field__ico`}
-              icon={faLock}
-              aria-label="Icone qui représente un cadena"
-            ></FontAwesomeIcon>
+            <div className={`signup__form__field__ico`}>
+              <FontAwesomeIcon
+                icon={faLock}
+                aria-label="Icone qui représente un cadena"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`signup__form__field__input ${
                 errors.password && 'error'
@@ -185,15 +196,13 @@ const Signup = () => {
             <div className={`signup__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__field__input__switchButton--showPwd`}
-                  icon={faEye}
+                  icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__field__input__switchButton--hidePwd`}
-                  icon={faEyeSlash}
+                  icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
@@ -207,8 +216,17 @@ const Signup = () => {
             >
               {!dirtyFields.password &&
                 !errors.password &&
-                '*Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
-              {errors.password?.message}
+                '*Au moins 8 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
+              <ErrorMessage
+                errors={errors}
+                name="password"
+                render={({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                }
+              />
             </span>
           </div>
           <div className={`signup__form__field`}>
@@ -231,15 +249,13 @@ const Signup = () => {
             <div className={`signup__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__field__input__switchButton--showPwd`}
-                  icon={faEye}
+                  icon={faEyeSlash}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}
               {switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`signup__form__field__input__switchButton--hidePwd`}
-                  icon={faEyeSlash}
+                  icon={faEye}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}

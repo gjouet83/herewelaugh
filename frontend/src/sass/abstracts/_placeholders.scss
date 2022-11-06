@@ -5,3 +5,8 @@
     0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
     0 0 2px white;
 }
+%disabledButton {
+  cursor: inherit;
+  background-color: $disabledLinkColor;
+  color: $disabledColor;
+}

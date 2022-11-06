@@ -81,11 +81,12 @@ const ForgotPwd = () => {
         </h2>
         <form className={`forgotPwd__form`} onSubmit={handleSubmit(onSubmit)}>
           <div className={`forgotPwd__form__field`}>
-            <FontAwesomeIcon
-              className={`forgotPwd__form__field__ico`}
-              icon={faLock}
-              aria-label="Icone qui représente un cadena"
-            ></FontAwesomeIcon>
+            <div className="forgotPwdSendMail__form__field__ico">
+              <FontAwesomeIcon
+                icon={faLock}
+                aria-label="Icone qui représente un cadena"
+              ></FontAwesomeIcon>
+            </div>
             <input
               className={`forgotPwd__form__field__input ${
                 errors.password && 'error'
@@ -101,15 +102,13 @@ const ForgotPwd = () => {
             <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__field__input__switchButton--showPwd`}
-                  icon={faEye}
+                  icon={faEyeSlash}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
               {switchHidePwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__field__input__switchButton--hidePwd`}
-                  icon={faEyeSlash}
+                  icon={faEye}
                   onClick={() => setSwitchHidePwd(!switchHidePwd)}
                 />
               )}
@@ -158,15 +157,13 @@ const ForgotPwd = () => {
             <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__field__input__switchButton--showPwd`}
-                  icon={faEye}
+                  icon={faEyeSlash}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}
               {switchHideConfPwd && (
                 <FontAwesomeIcon
-                  className={`forgotPwd__form__field__input__switchButton--hidePwd`}
-                  icon={faEyeSlash}
+                  icon={faEye}
                   onClick={() => setSwitchHideConfPwd(!switchHideConfPwd)}
                 />
               )}
