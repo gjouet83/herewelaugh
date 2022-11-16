@@ -32,15 +32,6 @@
     @extend %textShadow;
     z-index: 1;
   }
-  &__loginLink a {
-    display: block;
-    text-decoration: none;
-    line-height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: $activColor;
-    text-align: center;
-  }
   &__forgotPwd {
     text-align: center;
     line-height: 2rem;

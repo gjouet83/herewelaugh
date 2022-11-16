@@ -306,9 +306,7 @@ const Signup = () => {
           </span>
         </div>
         <div className="signup__signupLink linkButton">
-          <span>
-            <Link to="/login">Se connecter</Link>
-          </span>
+          <Link to="/login">Se connecter</Link>
         </div>
       </section>
     </main>

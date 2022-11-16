@@ -212,9 +212,7 @@ const Login = () => {
           </span>
         </div>
         <div className="login__loginLink linkButton">
-          <span>
-            <Link to="/signup">S'inscrire</Link>
-          </span>
+          <Link to="/signup">S'inscrire</Link>
         </div>
       </section>
     </main>
