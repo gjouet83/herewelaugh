@@ -92,6 +92,9 @@ exports.sendMail = (req, res, next) => {
         }://${req.get(
           'host'
         )}/forgotPwd/reset?token=${token}>Cliquez ici pour réinitialiser votre mot de passe</a>
+        </p>
+        <p style="font-size:14px; text-align:center;margin-top:40px;">
+        Pour des raisons de securité, ce lien sera valable 15min.
         </p>`,
       };
       transporter.sendMail(message, (error) => {
