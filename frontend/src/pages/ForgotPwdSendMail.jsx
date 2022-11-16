@@ -85,9 +85,13 @@ const ForgotPwdSendMail = () => {
             </div>
             <input
               className={`forgotPwdSendMail__form__field__input ${
-                errors.email && 'error'
-              } ${dirtyFields.email && !errors.email && 'valid'}`}
-              autoComplete="username"
+                (errors.email || resBackErrMail) && 'error'
+              } ${
+                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
+                  (email !== emailToCompare && !errors.email)) &&
+                'valid'
+              }`}
+              autoComplete="email"
               id="email"
               name="email"
               type="email"
@@ -95,21 +99,14 @@ const ForgotPwdSendMail = () => {
               aria-label="e-mail"
               {...register('email')}
             />
-            <div className="forgotPwdSendMail__form__field__info">
-              <span
-                className={
-                  (dirtyFields.email || errors.email) && !resBackMessageMail
-                    ? 'alerte'
-                    : 'succes'
-                }
-              >
-                {errors.email?.message}
-                {resBackErrMail !== '' &&
-                  email === emailToCompare &&
-                  resBackErrMail}
-                {resBackMessageMail}
-              </span>
-            </div>
+
+            <span className="alerte">
+              {resBackErrMail !== '' &&
+                email === emailToCompare &&
+                resBackErrMail}
+              {errors.email && errors.email?.message}
+              {resBackMessageMail}
+            </span>
           </div>
           <input
             className="forgotPwdSendMail__form__validate"

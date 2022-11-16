@@ -27,12 +27,15 @@ const Login = () => {
       .required("l'email est obligatoire"),
     password: Yup.string()
       .required('Mot de passe est obligatoire')
-      .matches(/(^\S)/, 'space')
-      .matches(/(\S$)/, 'space')
-      .matches(/([!@#$%^~`_+'/&*()°,.?":{}|<>-])/, 'Special')
+      .matches(/(^\S)/, "Pas d'espace au début")
+      .matches(/(\S$)/, "Pas d'espace à la fin")
+      .matches(
+        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
+        'Au moins un caractère special'
+      )
       .matches(/([0-9])/, 'Au moins un entier')
       .matches(/([A-Z])/, 'Au moins une majuscule')
-      .matches(/([a-z])/, 'Lowercase')
+      .matches(/([a-z])/, 'Au moins une minuscule')
       .min(12, 'Mot de passe doit contenir au moins 12 caractères')
       .max(64, 'Mot de passe doit contenir un maximum 64 caractères'),
   });
@@ -47,6 +50,7 @@ const Login = () => {
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
     shouldFocusError: true,
+    criteriaMode: 'all',
   });
 
   const email = watch('email');
@@ -88,7 +92,6 @@ const Login = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <main>
       <section className="login">
@@ -114,9 +117,13 @@ const Login = () => {
             </div>
             <input
               className={`login__form__field__input ${
-                errors.email && 'error'
-              } ${dirtyFields.email && !errors.email && 'valid'}`}
-              autoComplete="username"
+                (errors.email || resBackErrMail) && 'error'
+              } ${
+                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
+                  (email !== emailToCompare && !errors.email)) &&
+                'valid'
+              }`}
+              autoComplete="email"
               id="email"
               name="email"
               type="email"
@@ -141,8 +148,12 @@ const Login = () => {
             </div>
             <input
               className={`login__form__field__input ${
-                errors.password && 'error'
-              } ${dirtyFields.password && !errors.password && 'valid'}`}
+                (errors.password || resBackErrPwd) && 'error'
+              } ${
+                ((dirtyFields.password && !errors.password && !resBackErrPwd) ||
+                  (password !== pwdToCompare && !errors.password)) &&
+                'valid'
+              }`}
               autoComplete="current-password"
               id="password"
               name="password"
@@ -165,21 +176,16 @@ const Login = () => {
                 />
               )}
             </div>
-            <span
-              className={
-                dirtyFields.password || errors.password
-                  ? 'alerte'
-                  : 'login__form__field__info'
-              }
-            >
-              {!dirtyFields.password &&
-                !errors.password &&
-                '*Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
-              {errors.password?.message}
+            <div className="login__form__field__errors alerte">
+              {!password && (
+                <span className="alerte">
+                  {errors?.password?.types?.required}
+                </span>
+              )}
               {resBackErrPwd !== '' &&
                 password === pwdToCompare &&
                 resBackErrPwd}
-            </span>
+            </div>
           </div>
           <input
             className={`login__form__validate`}

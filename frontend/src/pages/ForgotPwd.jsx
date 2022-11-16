@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { ErrorMessage } from '@hookform/error-message';
 
 const ForgotPwd = () => {
   const [switchHidePwd, setSwitchHidePwd] = useState(true);
@@ -18,9 +19,17 @@ const ForgotPwd = () => {
   const validationSchema = Yup.object().shape({
     password: Yup.string()
       .required('Mot de passe est obligatoire')
+      .matches(/(^\S)/, "Pas d'espace au début")
+      .matches(/(\S$)/, "Pas d'espace à la fin")
+      .matches(
+        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
+        'Au moins un caractère spécial'
+      )
       .matches(/([0-9])/, 'Au moins un entier')
-      .min(9, 'Mot de passe doit être plus grand que 8 caractères')
-      .max(50, 'Mot de passe doit être plus petit que 50 caractères'),
+      .matches(/([A-Z])/, 'Au moins une majuscule')
+      .matches(/([a-z])/, 'Au moins une minuscule')
+      .min(12, 'Au moins 12 caractères')
+      .max(64, 'Au maximum 64 caractères'),
     confirmpassword: Yup.string()
       .required('Mot de passe est obligatoire')
       .oneOf([Yup.ref('password')], 'Le mot de passe ne correspond pas'),
@@ -29,20 +38,23 @@ const ForgotPwd = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, dirtyFields, touchedFields },
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: { password: '', confirmpassword: '' },
     mode: 'onChange',
     shouldFocusError: true,
+    criteriaMode: 'all',
   });
+
+  const password = watch('password');
 
   const onSubmit = (data) => {
     sendForm(data);
   };
 
   const sendForm = (data) => {
-    console.log(token);
     axios({
       method: 'put',
       url: `${process.env.REACT_APP_REQ_URL}/api/forgot-pwd/reset`,
@@ -113,29 +125,42 @@ const ForgotPwd = () => {
                 />
               )}
             </div>
-            <div className="forgotPwd__form__field__info">
-              {(dirtyFields.password || errors.password) && (
-                <span
-                  className={
-                    (dirtyFields.password || errors.password) && !backendMessage
-                      ? 'alerte'
-                      : 'succes'
+            {!password && (
+              <span className="alerte">
+                {errors?.password?.types?.required}
+              </span>
+            )}
+            {password && (
+              <div className="signup__form__field__errors alerte">
+                <ul className="signup__form__field__errors__list">
+                  {
+                    <ErrorMessage
+                      errors={errors}
+                      name="password"
+                      render={({ messages }) =>
+                        messages &&
+                        Array.isArray(messages?.matches) &&
+                        Object.entries(messages?.matches).map(
+                          ([type, message]) => <li key={type}>{message}</li>
+                        )
+                      }
+                    />
                   }
-                >
-                  {errors.password?.message}
-                  {!errors.password && backendErr}
-                  {backendMessage}
-                </span>
-              )}
-              {(!backendMessage || !backendErr || errors.password) &&
-                !dirtyFields.password &&
-                !errors.password && (
-                  <span>
-                    *Au moins 9 Caractères dont 1 majuscule, 1 chiffre, pas de
-                    caractères spéciaux
-                  </span>
-                )}
-            </div>
+                  {!Array.isArray(errors?.password?.types?.matches) &&
+                    errors?.password?.types?.matches && (
+                      <li>{errors?.password?.types?.matches}</li>
+                    )}
+                  {errors?.password?.types?.min && (
+                    <li>{errors?.password?.types?.min}</li>
+                  )}
+                  {errors?.password?.types?.max && (
+                    <li>{errors?.password?.types?.max}</li>
+                  )}
+                </ul>
+                {!errors.password && backendErr}
+                {backendMessage}
+              </div>
+            )}
           </div>
           <div className={`forgotPwd__form__field`}>
             <input

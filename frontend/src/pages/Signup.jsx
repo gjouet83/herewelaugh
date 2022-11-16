@@ -31,14 +31,17 @@ const Signup = () => {
       .required("l'email est obligatoire"),
     password: Yup.string()
       .required('Mot de passe est obligatoire')
-      .matches(/(^\S)/, 'space')
-      .matches(/(\S$)/, 'space')
-      .matches(/([!@#$%^~`_+'/&*()°,.?":{}|<>-])/, 'Special')
+      .matches(/(^\S)/, "Pas d'espace au début")
+      .matches(/(\S$)/, "Pas d'espace à la fin")
+      .matches(
+        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
+        'Au moins un caractère spécial'
+      )
       .matches(/([0-9])/, 'Au moins un entier')
       .matches(/([A-Z])/, 'Au moins une majuscule')
-      .matches(/([a-z])/, 'Lowercase')
-      .min(12, 'Mot de passe doit contenir au moins 12 caractères')
-      .max(64, 'Mot de passe doit contenir un maximum 64 caractères'),
+      .matches(/([a-z])/, 'Au moins une minuscule')
+      .min(12, 'Au moins 12 caractères')
+      .max(64, 'Au maximum 64 caractères'),
     confirmpassword: Yup.string()
       .required('Mot de passe est obligatoire')
       .oneOf([Yup.ref('password')], 'Le mot de passe ne correspond pas'),
@@ -64,6 +67,7 @@ const Signup = () => {
 
   const email = watch('email');
   const username = watch('username');
+  const password = watch('password');
 
   const onSubmit = (data) => {
     setResBackErrUsername('');
@@ -105,7 +109,6 @@ const Signup = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(errors.password);
   return (
     <main>
       <section className="signup">
@@ -137,7 +140,7 @@ const Signup = () => {
               id="username"
               name="username"
               type="text"
-              placeholder="Nom d'utilisateur"
+              placeholder={"Nom d'utilisateur"}
               aria-label="Username"
               {...register('username')}
             />
@@ -157,9 +160,13 @@ const Signup = () => {
             </div>
             <input
               className={`signup__form__field__input ${
-                errors.email && 'error'
-              } ${dirtyFields.email && !errors.email && 'valid'}`}
-              autoComplete="username"
+                (errors.email || resBackErrMail) && 'error'
+              } ${
+                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
+                  (email !== emailToCompare && !errors.email)) &&
+                'valid'
+              }`}
+              autoComplete="email"
               id="email"
               name="email"
               type="email"
@@ -207,27 +214,40 @@ const Signup = () => {
                 />
               )}
             </div>
-            <span
-              className={
-                dirtyFields.password || errors.password
-                  ? 'alerte'
-                  : 'signup__form__field__info'
-              }
-            >
-              {!dirtyFields.password &&
-                !errors.password &&
-                '*Au moins 8 Caractères dont 1 majuscule, 1 chiffre, pas de caractères spéciaux'}
-              <ErrorMessage
-                errors={errors}
-                name="password"
-                render={({ messages }) =>
-                  messages &&
-                  Object.entries(messages).map(([type, message]) => (
-                    <p key={type}>{message}</p>
-                  ))
-                }
-              />
-            </span>
+            {!password && (
+              <span className="alerte">
+                {errors?.password?.types?.required}
+              </span>
+            )}
+            {password && (
+              <div className="signup__form__field__errors alerte">
+                <ul className="signup__form__field__errors__list">
+                  {
+                    <ErrorMessage
+                      errors={errors}
+                      name="password"
+                      render={({ messages }) =>
+                        messages &&
+                        Array.isArray(messages?.matches) &&
+                        Object.entries(messages?.matches).map(
+                          ([type, message]) => <li key={type}>{message}</li>
+                        )
+                      }
+                    />
+                  }
+                  {!Array.isArray(errors?.password?.types?.matches) &&
+                    errors?.password?.types?.matches && (
+                      <li>{errors?.password?.types?.matches}</li>
+                    )}
+                  {errors?.password?.types?.min && (
+                    <li>{errors?.password?.types?.min}</li>
+                  )}
+                  {errors?.password?.types?.max && (
+                    <li>{errors?.password?.types?.max}</li>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
           <div className={`signup__form__field`}>
             <input
