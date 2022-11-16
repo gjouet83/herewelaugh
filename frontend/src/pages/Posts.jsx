@@ -12,11 +12,10 @@ const Posts = () => {
     axios
       .get('http://localhost:3000/api/posts/')
       .then((datas) => {
-        console.log(datas);
         setPosts(datas.data);
       })
       .catch((errors) => {
-        console.log(errors);
+        console.warn(errors);
       });
   };
 
@@ -29,6 +28,7 @@ const Posts = () => {
       <Header />
       <main>
         <section className="posts">
+          <div className="posts__background"></div>
           {posts.map((post) => (
             <Post
               key={post.id}

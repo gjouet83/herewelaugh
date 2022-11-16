@@ -1,7 +1,11 @@
 .posts {
   &__post {
-    height: 100px;
-    width: 100px;
-    backdrop-filter: blur(10px);
+    width: 90vw;
+    background-color: white;
+    &__content {
+      color: black;
+      z-index: 1;
+      position: relative;
+    }
   }
 }
