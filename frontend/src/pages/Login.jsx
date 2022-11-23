@@ -73,6 +73,7 @@ const Login = () => {
       .then((res) => {
         //on stocke le token dans le localstorage
         localStorage.setItem('user', JSON.stringify(res.data.token));
+        window.location.assign('/posts');
       })
       .catch((error) => {
         if (error.response.status === 401 && error.response.data.errorMail) {

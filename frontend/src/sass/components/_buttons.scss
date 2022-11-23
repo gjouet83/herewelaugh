@@ -5,13 +5,14 @@
   height: 3rem;
   border-radius: 5px;
   background-color: $linkButton;
+  box-shadow: $boxShadow;
   & a {
     display: block;
     text-decoration: none;
     line-height: 3rem;
     font-size: 1.5rem;
     font-weight: 400;
-    color: $activColor;
+    color: $textColorLight;
     text-align: center;
   }
 }

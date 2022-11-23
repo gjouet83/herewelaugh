@@ -1,12 +1,18 @@
 %textShadow {
-  text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-    0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-    0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-    0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white,
-    0 0 2px white;
+  text-shadow: 0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark,
+    0 0 3px $textShadowColorDark, 0 0 3px $textShadowColorDark;
 }
 %disabledButton {
   cursor: inherit;
   background-color: $disabledLinkColor;
   color: $disabledColor;
+  box-shadow: none;
 }

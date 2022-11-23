@@ -81,6 +81,7 @@
       background-color: $activLinkColor;
       color: $activColor;
       transition: background-color 0.5s ease-in-out;
+      box-shadow: $boxShadow;
       &:disabled {
         @extend %disabledButton;
       }

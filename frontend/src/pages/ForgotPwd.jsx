@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage } from '@hookform/error-message';
+import { Link } from 'react-router-dom';
 
 const ForgotPwd = () => {
   const [switchHidePwd, setSwitchHidePwd] = useState(true);
@@ -211,6 +212,9 @@ const ForgotPwd = () => {
             }
           />
         </form>
+        <div className="forgotPwd__signupLink linkButton">
+          <Link to="/login">Se connecter</Link>
+        </div>
       </section>
     </main>
   );

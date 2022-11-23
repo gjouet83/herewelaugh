@@ -22,6 +22,7 @@
     margin-bottom: 10vh;
     text-align: center;
     @extend %textShadow;
+    color: $textColorLight;
     z-index: 1;
   }
   &__describ {
@@ -32,6 +33,7 @@
     text-align: center;
     width: 90vw;
     @extend %textShadow;
+    color: $textColorLight;
     z-index: 1;
   }
 }
