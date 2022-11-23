@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 app.use('/medias', express.static(path.join(__dirname, 'medias')));
 app.use('/api/auth', authRoutes);
