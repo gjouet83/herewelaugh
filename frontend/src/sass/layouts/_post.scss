@@ -1,9 +1,35 @@
 .posts {
   &__post {
-    width: 90vw;
-    background-color: white;
+    box-shadow: $boxShadow;
+    width: 100vw;
+    background-color: rgba($color: rgb(255, 255, 255), $alpha: 0.2);
+    backdrop-filter: blur(5px);
+    margin: 10px;
+    padding: 10px;
+    color: $textColorLight;
+    &__header {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px 10px 10px;
+      &__user {
+        text-align: center;
+        &__avatar {
+          margin: 0;
+          &__img {
+            background-color: white;
+            border-radius: 25px;
+          }
+        }
+      }
+    }
     &__content {
-      color: black;
+      box-shadow: $boxShadow;
+      background-color: white;
+      color: $textColorDark;
+      padding: 10px;
+      font-weight: bolder;
       z-index: 1;
       position: relative;
     }

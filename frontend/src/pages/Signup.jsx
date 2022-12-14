@@ -134,8 +134,13 @@ const Signup = () => {
             </div>
             <input
               className={`signup__form__field__input ${
-                errors.username && 'error'
-              } ${dirtyFields.username && !errors.username && 'valid'}`}
+                (errors.username || resBackErrUsername) && 'error'
+              } ${
+                dirtyFields.username &&
+                !errors.username &&
+                !resBackErrUsername &&
+                'valid'
+              }`}
               autoComplete="username"
               id="username"
               name="username"
