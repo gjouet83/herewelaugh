@@ -18,6 +18,20 @@ exports.getLikes = (req, res, next) => {
     });
 };
 
+//on recupère les likes et dislike d'un utilisateur
+exports.getLikesByUser = (req, res, next) => {
+  console.log(req.query);
+  db.Like.findOne({
+    where: { postId: req.query.postId, userId: req.query.userId },
+  })
+    .then((likes) => {
+      res.status(200).json(likes);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
 exports.createLike = (req, res, next) => {
   db.Like.findOne({
     where: { postId: req.body.postId, userId: req.auth.userId },
@@ -40,6 +54,7 @@ exports.createLike = (req, res, next) => {
 };
 
 exports.updateLike = (req, res, next) => {
+  console.log(req.auth.userId);
   db.Like.findOne({
     where: {
       postId: req.body.postId,
@@ -56,7 +71,6 @@ exports.updateLike = (req, res, next) => {
         },
         {
           where: {
-            id: req.params.like_id,
             userId: req.auth.userId,
             postId: req.body.postId,
           },

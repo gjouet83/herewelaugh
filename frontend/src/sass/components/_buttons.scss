@@ -16,3 +16,24 @@
     text-align: center;
   }
 }
+.footerButtons {
+  display: flex;
+  align-items: center;
+  background-color: $voteButton;
+  line-height: 30px;
+  min-height: 54px;
+  min-width: 62px;
+  padding: 5px;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: $boxShadow;
+  &__addVote {
+    padding-left: 3px;
+    align-self: flex-end;
+  }
+  &__checkVote {
+    padding-left: 3px;
+    padding-top: 10px;
+  }
+}
