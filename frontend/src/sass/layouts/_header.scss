@@ -1,8 +1,23 @@
 header {
   position: fixed;
+  display: flex;
+  justify-content: space-betweena;
   top: 0;
   left: 0;
   height: 100px;
   width: 100vw;
-  background-color: grey;
+  background-color: $primaryColor;
+  box-shadow: $boxShadow;
+  z-index: 1;
+  .logo {
+    &__img {
+      height: 96px;
+      width: 96px;
+    }
+  }
+  .user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }

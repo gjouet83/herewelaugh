@@ -10,7 +10,6 @@
       display: grid;
       grid-template-columns: 3fr 3fr fit-content(20px);
       align-items: center;
-
       padding: 10px;
       &__user {
         grid-column: 1;
@@ -50,7 +49,6 @@
       color: $textColorDark;
       padding: 10px;
       font-weight: bolder;
-      z-index: 1;
       position: relative;
       &__text {
         margin: 10px;
