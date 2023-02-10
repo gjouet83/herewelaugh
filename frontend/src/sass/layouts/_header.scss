@@ -1,7 +1,8 @@
-header {
+.header {
   position: fixed;
-  display: flex;
-  justify-content: space-betweena;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  align-items: center;
   top: 0;
   left: 0;
   height: 100px;
@@ -9,15 +10,20 @@ header {
   background-color: $primaryColor;
   box-shadow: $boxShadow;
   z-index: 1;
-  .logo {
-    &__img {
-      height: 96px;
-      width: 96px;
-    }
+  &__logo {
+    grid-row: 1;
+    grid-column: 1;
+    margin-right: auto;
+    height: 96px;
+    width: 96px;
   }
-  .user {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  &__userWelcome {
+    font-size: 16px;
+    text-align: center;
+    grid-row: 1;
+    grid-column: 2;
+    margin-right: auto;
+    margin-left: auto;
+    color: $textColorLight;
   }
 }

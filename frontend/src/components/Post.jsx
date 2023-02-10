@@ -9,14 +9,11 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 const Post = ({ post, postsUpdate, setPostsUpdate }) => {
-  console.log(post);
   const [likeStatus, setLikeStatus] = useState(0);
   const currentUser =
     localStorage.getItem('user') !== 'undefined' &&
     JSON.parse(localStorage.getItem('user'));
   const currentUserdecoded = currentUser && jwt_decode(currentUser);
-
-  console.log(currentUser);
 
   const handleClick = () => {
     if (currentUser) {
@@ -33,7 +30,6 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
         params: { postId: post.id, userId: currentUserdecoded.userId },
       })
       .then((likeStatus) => {
-        console.log(likeStatus);
         if (likeStatus.data === null) {
           setLikeStatus(2);
         } else if (likeStatus.data.like === 1) {
@@ -145,7 +141,11 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
         </div>
       </div>
       <div className="posts__post__footer">
-        <button className="footerButtons" onClick={() => handleClick()}>
+        <button
+          className="footerButtons"
+          aria-label="boutton vote"
+          onClick={() => handleClick()}
+        >
           {likeStatus === 0 && (
             <FontAwesomeIcon
               icon={farFaceGrinTears}

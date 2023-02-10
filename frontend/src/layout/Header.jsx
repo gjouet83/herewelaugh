@@ -1,15 +1,56 @@
 import logo from '../assets/Logonew_transparent.webp';
+import React, { useState } from 'react';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import Navbar from '../components/Navbar';
 
 const Header = () => {
+  const [user, setUser] = useState();
+  const [toggle, setToggle] = useState(false);
+
+  const currentUser =
+    localStorage.getItem('user') !== 'undefined' &&
+    JSON.parse(localStorage.getItem('user'));
+  const currentUserdecoded = currentUser && jwt_decode(currentUser);
+
+  const getUser = () => {
+    axios
+      .get(`http://localhost:3000/api/users/${currentUserdecoded.userId}`, {
+        headers: { Authorization: `Bearer ${currentUser}` },
+      })
+      .then((user) => {
+        setUser(user.data.user.username);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getUser();
+
   return (
-    <header>
-      <img className="logo__img" src={logo} alt="emojoi qui pleur de rire" />
-      <div className="user">
-        <div className="user__welcom">
-          <span>Bienvenue</span>
-        </div>
-        <nav></nav>
-      </div>
+    <header className="header">
+      <img className="header__logo" src={logo} alt="emojoi qui pleur de rire" />
+      <h1 className="header__userWelcome">
+        Bienvenue sur HereWeLaugh, {user} !
+      </h1>
+      <button
+        className="menuButton"
+        name="menu"
+        onClick={() => setToggle(true)}
+      >
+        <FontAwesomeIcon
+          className="menuButton__ico"
+          icon={faBars}
+          size="xl"
+          aria-label="icone représentant des bars horizontales"
+        ></FontAwesomeIcon>
+      </button>
+      <nav>
+        <Navbar user={user} toggle={toggle} setToggle={setToggle} />
+      </nav>
     </header>
   );
 };

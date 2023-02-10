@@ -19,12 +19,12 @@
 .footerButtons {
   display: flex;
   align-items: center;
-  background-color: $voteButton;
+  background-color: $primaryColor;
   line-height: 30px;
   min-height: 54px;
   min-width: 62px;
   padding: 5px;
-  color: white;
+  color: $textColorLight;
   border: none;
   border-radius: 15px;
   box-shadow: $boxShadow;
@@ -35,5 +35,20 @@
   &__checkVote {
     padding-left: 3px;
     padding-top: 10px;
+  }
+}
+.menuButton {
+  grid-row: 1;
+  grid-column: 3;
+  margin-left: auto;
+  margin-right: 20px;
+  color: none;
+  border: none;
+  background-color: transparent;
+  height: 48px;
+  width: 48px;
+  &__ico {
+    font-size: 2rem;
+    color: $textColorLight;
   }
 }
