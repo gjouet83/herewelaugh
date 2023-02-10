@@ -23,28 +23,7 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
     }
   };
 
-  const getLikeStatus = () => {
-    axios
-      .get('http://localhost:3000/api/likes/user', {
-        headers: { Authorization: `Bearer ${currentUser}` },
-        params: { postId: post.id, userId: currentUserdecoded.userId },
-      })
-      .then((likeStatus) => {
-        if (likeStatus.data === null) {
-          setLikeStatus(2);
-        } else if (likeStatus.data.like === 1) {
-          setLikeStatus(1);
-        } else if (likeStatus.data.like === 0) {
-          setLikeStatus(0);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const sendLike = () => {
-    console.log(likeStatus);
     if (likeStatus === 2) {
       const like = {
         userId: currentUserdecoded.userId,
@@ -97,10 +76,29 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
   };
 
   useEffect(() => {
+    const getLikeStatus = () => {
+      axios
+        .get('http://localhost:3000/api/likes/user', {
+          headers: { Authorization: `Bearer ${currentUser}` },
+          params: { postId: post.id, userId: currentUserdecoded.userId },
+        })
+        .then((likeStatus) => {
+          if (likeStatus.data === null) {
+            setLikeStatus(2);
+          } else if (likeStatus.data.like === 1) {
+            setLikeStatus(1);
+          } else if (likeStatus.data.like === 0) {
+            setLikeStatus(0);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     if (currentUser != null) {
       getLikeStatus();
     }
-  }, [postsUpdate]);
+  }, [postsUpdate, currentUser, post.id, currentUserdecoded.userId]);
 
   return (
     <div className="posts__post">
