@@ -83,6 +83,7 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
           params: { postId: post.id, userId: currentUserdecoded.userId },
         })
         .then((likeStatus) => {
+          console.log(likeStatus);
           if (likeStatus.data === null) {
             setLikeStatus(2);
           } else if (likeStatus.data.like === 1) {
@@ -144,14 +145,14 @@ const Post = ({ post, postsUpdate, setPostsUpdate }) => {
           aria-label="boutton vote"
           onClick={() => handleClick()}
         >
-          {likeStatus === 0 && (
+          {(likeStatus === 0 || likeStatus === 2) && (
             <FontAwesomeIcon
               icon={farFaceGrinTears}
               size="2xl"
               aria-label="Icone qui représente un smiley qui pleure de rire"
             ></FontAwesomeIcon>
           )}
-          {likeStatus === 0 && (
+          {(likeStatus === 0 || likeStatus === 2) && (
             <span className="footerButtons__addVote">+1</span>
           )}
           {likeStatus === 1 && (
