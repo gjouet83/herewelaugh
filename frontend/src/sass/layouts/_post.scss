@@ -6,6 +6,7 @@
     backdrop-filter: blur(5px);
     margin: 10px;
     color: $textColorLight;
+    z-index: -1;
     &__header {
       display: grid;
       grid-template-columns: 3fr 3fr fit-content(20px);

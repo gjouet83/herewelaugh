@@ -1,0 +1,25 @@
+.nav {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  width: 300px;
+  font-weight: bolder;
+  background-color: lighten($color: $primaryColor, $amount: 70%);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  box-shadow: $boxShadow;
+  &__li {
+    line-height: 4rem;
+    font-size: 1.2rem;
+    padding-bottom: 20px;
+  }
+}
+
+.show {
+  right: 0;
+  transition: all 500ms ease-in-out;
+}
+.hide {
+  transform: translateX(305px);
+  transition: all 500ms ease-in-out;
+}

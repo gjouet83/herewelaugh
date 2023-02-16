@@ -28,7 +28,6 @@ const Posts = () => {
       <Header />
       <main>
         <section className="posts">
-          <div className="posts__background"></div>
           {posts.map((post) => (
             <Post
               key={post.id}

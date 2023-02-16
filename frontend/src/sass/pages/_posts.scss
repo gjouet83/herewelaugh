@@ -1,5 +1,4 @@
 .posts {
-  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -10,7 +9,6 @@
     filter: opacity(40%);
     height: 100vh;
     width: 100vw;
-    z-index: -1;
     position: fixed;
     top: 0;
     left: 0;

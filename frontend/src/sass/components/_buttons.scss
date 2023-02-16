@@ -41,14 +41,28 @@
   grid-row: 1;
   grid-column: 3;
   margin-left: auto;
-  margin-right: 20px;
   color: none;
   border: none;
   background-color: transparent;
   height: 48px;
   width: 48px;
+  color: $textColorLight;
   &__ico {
     font-size: 2rem;
+    color: $textColorLight;
+  }
+}
+.closeNavbar {
+  display: block;
+  margin-left: auto;
+  border: none;
+  height: 48px;
+  width: 48px;
+  background-color: $primaryColor;
+  color: $textColorLight;
+  padding: 0;
+  border-radius: 25px;
+  &__ico {
     color: $textColorLight;
   }
 }

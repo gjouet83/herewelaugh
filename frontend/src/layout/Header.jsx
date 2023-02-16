@@ -1,5 +1,5 @@
 import logo from '../assets/Logonew_transparent.webp';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,26 +15,27 @@ const Header = () => {
     JSON.parse(localStorage.getItem('user'));
   const currentUserdecoded = currentUser && jwt_decode(currentUser);
 
-  const getUser = () => {
-    axios
-      .get(`http://localhost:3000/api/users/${currentUserdecoded.userId}`, {
-        headers: { Authorization: `Bearer ${currentUser}` },
-      })
-      .then((user) => {
-        setUser(user.data.user.username);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  getUser();
+  useEffect(() => {
+    const getUser = () => {
+      axios
+        .get(`http://localhost:3000/api/users/${currentUserdecoded.userId}`, {
+          headers: { Authorization: `Bearer ${currentUser}` },
+        })
+        .then((user) => {
+          setUser(user.data.user.username);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
+  }, [currentUser, currentUserdecoded.userId]);
 
   return (
     <header className="header">
       <img className="header__logo" src={logo} alt="emojoi qui pleur de rire" />
       <h1 className="header__userWelcome">
-        Bienvenue sur HereWeLaugh, {user} !
+        Bienvenue sur HereWeLaugh {user} !
       </h1>
       <button
         className="menuButton"
@@ -48,9 +49,7 @@ const Header = () => {
           aria-label="icone représentant des bars horizontales"
         ></FontAwesomeIcon>
       </button>
-      <nav>
-        <Navbar user={user} toggle={toggle} setToggle={setToggle} />
-      </nav>
+      <Navbar user={user} toggle={toggle} setToggle={setToggle} />
     </header>
   );
 };
