@@ -2,24 +2,23 @@
   position: absolute;
   top: 25px;
   right: 0;
-  width: 300px;
   font-weight: bolder;
-  background-color: lighten($color: $primaryColor, $amount: 70%);
+  background: linear-gradient(to top, $lightning-yellow, $broom);
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   box-shadow: $boxShadow;
+  overscroll-behavior: none;
   &__li {
     line-height: 4rem;
     font-size: 1.2rem;
-    padding-bottom: 20px;
   }
 }
 
-.show {
+.showNav {
   right: 0;
   transition: all 500ms ease-in-out;
 }
-.hide {
+.hideNav {
   transform: translateX(305px);
   transition: all 500ms ease-in-out;
 }

@@ -1,0 +1,103 @@
+.AddNewPost {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .newPost {
+    height: fit-content;
+    top: -130px;
+    position: fixed;
+    z-index: 1;
+    &__buttonContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__hideButton {
+        position: relative;
+        height: 48px;
+        width: 48px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-style: none;
+        color: $outer-space;
+        @extend %textShadow;
+        font-weight: 900;
+        background: $lightning-yellow;
+        box-shadow: $boxShadow;
+        &::before {
+          position: absolute;
+          top: 0px;
+          left: -12px;
+          content: '';
+          background-color: transparent;
+          height: 24px;
+          width: 12px;
+          border-top-right-radius: 15px;
+          box-shadow: 0 -10px 0 0 $lightning-yellow;
+        }
+        &::after {
+          position: absolute;
+          top: 0px;
+          right: -12px;
+          content: '';
+          background-color: transparent;
+          height: 24px;
+          width: 12px;
+          border-top-left-radius: 15px;
+          box-shadow: 0 -10px 0 0 $lightning-yellow;
+        }
+      }
+    }
+    &__formContainer {
+      width: 100vw;
+      height: 160px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background: $lightning-yellow; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to top,
+        $broom,
+        $lightning-yellow
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to top, $lightning-yellow, $broom);
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      &__form {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &__textArea {
+          padding: 10px;
+          font-size: 14px;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 400;
+          width: 70%;
+          height: 135px;
+          border-radius: 15px;
+        }
+        &__send {
+          width: 48px;
+          height: 48px;
+          border-radius: 25px;
+          text-align: center;
+          border-style: none;
+          background-color: $java;
+          &__ico {
+            color: $textColorLight;
+          }
+        }
+      }
+    }
+  }
+}
+
+.showNewPost {
+  padding: 0;
+  transform: translateY(230px);
+  transition: all 500ms ease-in-out;
+}
+
+.hideNewPost {
+  transform: translateY(50px);
+  transition: all 500ms ease-in-out;
+}

@@ -4,16 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceGrinTears as farFaceGrinTears } from '@fortawesome/free-regular-svg-icons';
 import { faFaceGrinTears, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-const Post = ({ post, postsUpdate, setPostsUpdate }) => {
+const Post = ({
+  post,
+  postsUpdate,
+  setPostsUpdate,
+  currentUser,
+  currentUserdecoded,
+}) => {
   const [likeStatus, setLikeStatus] = useState(0);
-  const currentUser =
-    localStorage.getItem('user') !== 'undefined' &&
-    JSON.parse(localStorage.getItem('user'));
-  const currentUserdecoded = currentUser && jwt_decode(currentUser);
 
   const handleClick = () => {
     if (currentUser) {

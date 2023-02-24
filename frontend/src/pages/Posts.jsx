@@ -3,10 +3,16 @@ import axios from 'axios';
 
 import Header from '../layout/Header';
 import Post from '../components/Post';
+import AddNewPost from '../components/AddNewPost';
+import jwt_decode from 'jwt-decode';
 
 const Posts = () => {
   const [postsUpdate, setPostsUpdate] = useState(true);
   const [posts, setPosts] = useState([]);
+  const currentUser =
+    localStorage.getItem('user') !== 'undefined' &&
+    JSON.parse(localStorage.getItem('user'));
+  const currentUserdecoded = currentUser && jwt_decode(currentUser);
 
   const getPosts = () => {
     axios
@@ -27,6 +33,14 @@ const Posts = () => {
     <>
       <Header />
       <main>
+        <section className="AddNewPost">
+          <AddNewPost
+            postsUpdate={postsUpdate}
+            setPostsUpdate={setPostsUpdate}
+            currentUser={currentUser}
+            currentUserdecoded={currentUserdecoded}
+          />
+        </section>
         <section className="posts">
           {posts.map((post) => (
             <Post
@@ -34,6 +48,8 @@ const Posts = () => {
               post={post}
               postsUpdate={postsUpdate}
               setPostsUpdate={setPostsUpdate}
+              currentUser={currentUser}
+              currentUserdecoded={currentUserdecoded}
             />
           ))}
         </section>

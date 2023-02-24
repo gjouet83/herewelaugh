@@ -7,7 +7,7 @@ const Navbar = ({ user, toggle, setToggle }) => {
   };
 
   return (
-    <nav className={`nav ${toggle ? 'show' : 'hide'}`}>
+    <nav className={`nav ${toggle ? 'showNav' : 'hideNav'}`}>
       <button className="closeNavbar" name="fermer" onClick={handleClick}>
         <FontAwesomeIcon
           className="closeNavbar__ico"
