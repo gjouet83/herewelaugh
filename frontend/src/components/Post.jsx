@@ -6,6 +6,7 @@ import { faFaceGrinTears, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { decode } from 'html-entities';
 
 const Post = ({
   post,
@@ -20,7 +21,7 @@ const Post = ({
     if (currentUser) {
       sendLike();
     } else {
-      console.log('vous devez etre connecté');
+      window.location.assign('/login');
     }
   };
 
@@ -39,7 +40,9 @@ const Post = ({
           setPostsUpdate(!postsUpdate);
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response.data.error === 'TokenExpiredError') {
+            window.location.assign('/login');
+          }
         });
     } else if (likeStatus === 0) {
       const like = {
@@ -55,7 +58,9 @@ const Post = ({
           setPostsUpdate(!postsUpdate);
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response.data.error === 'TokenExpiredError') {
+            window.location.assign('/login');
+          }
         });
     } else {
       const like = {
@@ -71,7 +76,9 @@ const Post = ({
           setPostsUpdate(!postsUpdate);
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response.data.error === 'TokenExpiredError') {
+            window.location.assign('/login');
+          }
         });
     }
   };
@@ -84,7 +91,6 @@ const Post = ({
           params: { postId: post.id, userId: currentUserdecoded.userId },
         })
         .then((likeStatus) => {
-          console.log(likeStatus);
           if (likeStatus.data === null) {
             setLikeStatus(2);
           } else if (likeStatus.data.like === 1) {
@@ -100,7 +106,8 @@ const Post = ({
     if (currentUser != null) {
       getLikeStatus();
     }
-  }, [postsUpdate, currentUser, post.id, currentUserdecoded.userId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postsUpdate, currentUser, post.id]);
 
   return (
     <div className="posts__post">
@@ -135,7 +142,7 @@ const Post = ({
         </div>
       </div>
       <div className="posts__post__content">
-        <div className="posts__post__content__text">{post.content}</div>
+        <div className="posts__post__content__text">{decode(post.content)}</div>
         <div className="posts__post__content__media">
           <img src="http://localhost:3000/medias/IMG_0063.JPG" alt="" />
         </div>

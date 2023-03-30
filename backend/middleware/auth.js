@@ -13,8 +13,8 @@ exports.regularReq = (req, res, next) => {
       admin: admin,
     };
     next();
-  } catch {
-    res.status(403).json({ error: 'User not allowed' });
+  } catch (error) {
+    res.status(403).json({ error: error.name });
   }
 };
 

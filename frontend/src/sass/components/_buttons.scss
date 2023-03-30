@@ -66,3 +66,20 @@
     color: $textColorDark;
   }
 }
+.addPostButton {
+  position: fixed;
+  height: 48px;
+  width: 48px;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 25px;
+  border-style: none;
+  background: $lightning-yellow; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    $broom,
+    $lightning-yellow
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, $lightning-yellow, $broom);
+  box-shadow: $boxShadow;
+}

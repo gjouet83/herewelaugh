@@ -24,12 +24,18 @@ const Header = () => {
         .then((user) => {
           setUser(user.data.user.username);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          localStorage.removeItem('user');
+          if (error.response.data.error === 'TokenExpiredError') {
+            window.location.assign('/login');
+          }
         });
     };
-    getUser();
-  }, [currentUser, currentUserdecoded.userId]);
+    if (currentUser) {
+      getUser();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   return (
     <header className="header">
