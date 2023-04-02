@@ -87,6 +87,7 @@ const Signup = () => {
       .then((res) => {
         //on stocke le token dans le localstorage
         localStorage.setItem('user', JSON.stringify(res.data.token));
+        window.location.assign('/login');
       })
       .catch((error) => {
         if (

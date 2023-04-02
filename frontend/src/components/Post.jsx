@@ -16,6 +16,7 @@ const Post = ({
   currentUserdecoded,
 }) => {
   const [likeStatus, setLikeStatus] = useState(0);
+  const [fileType, setFileType] = useState('');
 
   const handleClick = () => {
     if (currentUser) {
@@ -106,6 +107,7 @@ const Post = ({
     if (currentUser != null) {
       getLikeStatus();
     }
+    setFileType(post.attachment?.split('_')[1]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postsUpdate, currentUser, post.id]);
 
@@ -142,10 +144,25 @@ const Post = ({
         </div>
       </div>
       <div className="posts__post__content">
-        <div className="posts__post__content__text">{decode(post.content)}</div>
-        <div className="posts__post__content__media">
-          <img src="http://localhost:3000/medias/IMG_0063.JPG" alt="" />
-        </div>
+        {post.content !== ('undefined' || '') && (
+          <div className="posts__post__content__text">
+            {decode(post.content)}
+          </div>
+        )}
+        {post.attachment !== ('null' || '' || 'undefined') &&
+          fileType.split('/')[0] === 'image' && (
+            <div className="posts__post__content__media">
+              <img src={post.attachment} alt="illustration du post" />
+            </div>
+          )}
+        {post.attachment !== ('null' || '' || 'undefined') &&
+          fileType.split('/')[0] === 'video' && (
+            <div className="posts__post__content__media">
+              <video controls controlsList="nodownload" width="100%">
+                <source src={post.attachment} />
+              </video>
+            </div>
+          )}
       </div>
       <div className="posts__post__footer">
         <button

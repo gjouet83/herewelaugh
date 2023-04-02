@@ -47,6 +47,9 @@
           &__ico {
             color: $textColorLight;
           }
+          &:disabled {
+            @extend %disabledButton;
+          }
         }
       }
     }

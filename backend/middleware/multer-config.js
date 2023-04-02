@@ -79,7 +79,15 @@ const storagePost = multer.diskStorage({
     //on crée un nom de fichier constitué du userId, de la date et de l'extention
     callback(
       null,
-      'userId-' + req.body.userId + 'posts' + Date.now() + '.' + extension
+      'userId-' +
+        req.body.userId +
+        'posts' +
+        '_' +
+        file.mimetype.split('/')[0] +
+        '_' +
+        Date.now() +
+        '.' +
+        extension
     );
   },
 });
@@ -88,9 +96,11 @@ const uploadMediaPost = multer({
   storage: storagePost,
   fileFilter: (req, file, callback) => {
     if (
-      !file.originalname.match(
-        /\.(jpeg|jpg|tif|tiff|png|svg|gif|bmp|webp|avif|ico|3gp|3gp2|avi|mp4|mpeg|ogv|ts|webm|flv|mov|wmv)$/
-      )
+      !file.originalname
+        .toLocaleLowerCase()
+        .match(
+          /\.(jpeg|jpg|tif|tiff|png|svg|gif|bmp|webp|avif|ico|3gp|3gp2|avi|mp4|mpeg|ogv|ts|webm|flv|mov|wmv)$/
+        )
     ) {
       return callback(new Error('File is not valid'));
     }
