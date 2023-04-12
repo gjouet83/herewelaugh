@@ -6,36 +6,48 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Header from '../layout/Header';
 import Post from '../components/Post';
 import AddNewPost from '../components/AddNewPost';
+import Sort from '../components/Sort';
 import jwt_decode from 'jwt-decode';
 
 const Posts = () => {
   const [postsUpdate, setPostsUpdate] = useState(true);
   const [posts, setPosts] = useState([]);
   const [showHideTextArea, setShowHideTextArea] = useState(true);
+  const [sortBy, setSortBy] = useState('newer');
   const currentUser =
     localStorage.getItem('user') !== 'undefined' &&
     JSON.parse(localStorage.getItem('user'));
   const currentUserdecoded = currentUser && jwt_decode(currentUser);
 
   const getPosts = () => {
-    axios
-      .get('http://localhost:3000/api/posts/')
-      .then((datas) => {
-        setPosts(datas.data);
-      })
-      .catch((errors) => {
-        console.warn(errors);
-      });
+    sortBy === 'newer'
+      ? axios
+          .get('http://localhost:3000/api/posts')
+          .then((datas) => {
+            setPosts(datas.data);
+          })
+          .catch((errors) => {
+            console.warn(errors);
+          })
+      : axios
+          .get('http://localhost:3000/api/posts/sort=rate&order=desc')
+          .then((datas) => {
+            setPosts(datas.data);
+          })
+          .catch((errors) => {
+            console.warn(errors);
+          });
   };
 
   useEffect(() => {
     getPosts();
-  }, [postsUpdate]);
+  }, [postsUpdate, sortBy]);
 
   return (
     <>
       <Header />
       <main>
+        <Sort sortBy={sortBy} setSortBy={setSortBy} />
         <section className="posts">
           {posts.map((post) => (
             <Post

@@ -125,9 +125,7 @@ const Post = ({
             aria-label="Icone qui représente un pouce en l'air"
           ></FontAwesomeIcon>
         </span>
-        <span className="posts__post__header__likeNb">
-          {post.Likes.map((nb) => nb.like).reduce((total, nb) => total + nb, 0)}
-        </span>
+        <span className="posts__post__header__likeNb">{post.sumLikes}</span>
         <div className="posts__post__header__user">
           <figure className="posts__post__header__user__avatar">
             <img

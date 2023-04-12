@@ -1,19 +1,31 @@
 const db = require('../models/index');
 const { Op } = require('sequelize');
+const Sequelize = require('sequelize');
 const fs = require('fs');
 
 exports.getPosts = (req, res, next) => {
   db.Post.findAll({
+    attributes: [
+      'content',
+      'attachment',
+      'userId',
+      'id',
+      'createdAt',
+      'updatedAt',
+      //on fait la somme des likes
+      [Sequelize.fn('sum', Sequelize.col('Likes.like')), 'sumLikes'],
+    ],
     include: [
       {
-        model: db.User,
-        attributes: ['username', 'avatar'],
+        model: db.Like,
+        attributes: [],
       },
       {
-        model: db.Like,
-        attributes: ['like'],
+        model: db.User,
+        attributes: ['id', 'username', 'avatar'],
       },
     ],
+    group: ['Likes.like', 'post.id'],
     order: [['createdAt', 'DESC']],
   })
     .then((posts) => {
@@ -48,17 +60,28 @@ exports.getPostsSortByMostOld = (req, res, next) => {
 
 exports.getPostsSortByRate = (req, res, next) => {
   db.Post.findAll({
+    attributes: [
+      'content',
+      'attachment',
+      'userId',
+      'id',
+      'createdAt',
+      'updatedAt',
+      //on fait la somme des likes
+      [Sequelize.fn('sum', Sequelize.col('Likes.like')), 'sumLikes'],
+    ],
     include: [
       {
-        model: db.User,
-        attributes: ['username', 'avatar'],
+        model: db.Like,
+        attributes: [],
       },
       {
-        model: db.Like,
-        attributes: ['like'],
+        model: db.User,
+        attributes: ['id', 'username', 'avatar'],
       },
     ],
-    order: [['like', 'DESC']],
+    group: ['Likes.like', 'post.id'],
+    order: [['sumLikes', 'DESC']],
   })
     .then((posts) => {
       res.status(200).json(posts);

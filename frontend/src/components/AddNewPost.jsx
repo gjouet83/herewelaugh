@@ -24,7 +24,6 @@ const AddNewPost = ({
   const cancelImage = () => {
     setImage();
     imageRef.current.value = '';
-    setPostsUpdate(!postsUpdate);
   };
 
   const cancelPost = () => {
@@ -33,7 +32,6 @@ const AddNewPost = ({
     setPostContent();
     contentRef.current.value = '';
     setShowHideTextArea(!showHideTextArea);
-    setPostsUpdate(!postsUpdate);
   };
 
   const handleClick = (e) => {
