@@ -12,23 +12,23 @@ const AddNewPost = ({
   setShowHideTextArea,
 }) => {
   const [postContent, setPostContent] = useState('');
-  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState(null);
   const contentRef = useRef('');
-  const imageRef = useRef('');
+  const mediaRef = useRef('');
 
   const post = new FormData();
   post.append('userId', currentUserdecoded.userId);
   post.append('content', postContent);
-  post.append('attachment', image);
+  post.append('attachment', media);
 
-  const cancelImage = () => {
-    setImage();
-    imageRef.current.value = '';
+  const cancelMedia = () => {
+    setMedia();
+    mediaRef.current.value = '';
   };
 
   const cancelPost = () => {
-    setImage();
-    imageRef.current.value = '';
+    setMedia();
+    mediaRef.current.value = '';
     setPostContent();
     contentRef.current.value = '';
     setShowHideTextArea(!showHideTextArea);
@@ -47,8 +47,8 @@ const AddNewPost = ({
         setShowHideTextArea(!showHideTextArea);
         setPostsUpdate(!postsUpdate);
         setPostContent('');
-        setImage('');
-        imageRef.current.value = '';
+        setMedia('');
+        mediaRef.current.value = '';
         contentRef.current.value = '';
       })
       .catch((error) => {
@@ -74,7 +74,7 @@ const AddNewPost = ({
         </button>
         <button
           disabled={
-            contentRef.current.value === '' && imageRef.current.value === ''
+            contentRef.current.value === '' && mediaRef.current.value === ''
               ? true
               : false
           }
@@ -90,23 +90,23 @@ const AddNewPost = ({
         </button>
         <div className="posts__createone__addfile">
           <label className="posts__createone__addfile__lbl">
-            Choisir une image
+            Choisir une media
             <input
               className="posts__createone__addfile__input"
               type="file"
               accept="image/*, video/*"
-              onChange={(e) => setImage(e.target.files[0])}
-              ref={imageRef}
+              onChange={(e) => setMedia(e.target.files[0])}
+              ref={mediaRef}
             />
           </label>
           <span className="posts__createone__addfile__name">
-            {image && image.name}
+            {media && media.name}
           </span>
-          {image && (
+          {media && (
             <button
               className="posts__createone__addfile__cancel"
               type="button"
-              onClick={cancelImage}
+              onClick={cancelMedia}
             >
               Annuler la Sélection
             </button>

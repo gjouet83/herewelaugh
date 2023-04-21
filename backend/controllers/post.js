@@ -25,7 +25,7 @@ exports.getPosts = (req, res, next) => {
         attributes: ['id', 'username', 'avatar'],
       },
     ],
-    group: ['Likes.like', 'post.id'],
+    group: ['Likes.postId', 'post.id'],
     order: [['createdAt', 'DESC']],
   })
     .then((posts) => {
@@ -80,7 +80,7 @@ exports.getPostsSortByRate = (req, res, next) => {
         attributes: ['id', 'username', 'avatar'],
       },
     ],
-    group: ['Likes.like', 'post.id'],
+    group: ['Likes.postId', 'post.id'],
     order: [['sumLikes', 'DESC']],
   })
     .then((posts) => {

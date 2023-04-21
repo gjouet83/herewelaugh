@@ -20,7 +20,6 @@ exports.getLikes = (req, res, next) => {
 
 //on recupère les likes et dislike d'un utilisateur
 exports.getLikesByUser = (req, res, next) => {
-  console.log(req.query);
   db.Like.findOne({
     where: { postId: req.query.postId, userId: req.query.userId },
   })
@@ -54,7 +53,6 @@ exports.createLike = (req, res, next) => {
 };
 
 exports.updateLike = (req, res, next) => {
-  console.log(req.auth.userId);
   db.Like.findOne({
     where: {
       postId: req.body.postId,
