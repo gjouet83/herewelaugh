@@ -8,7 +8,6 @@ const AddLike = ({
   currentUser,
   currentUserdecoded,
   post,
-  likeUpdatePost,
   setLikeUpdatePost,
 }) => {
   const [likeStatus, setLikeStatus] = useState(0);
@@ -35,7 +34,6 @@ const AddLike = ({
   const handleClick = () => {
     if (currentUser) {
       sendLike();
-      setLikeUpdatePost(!likeUpdatePost);
     } else {
       window.location.assign('/login');
     }
@@ -61,7 +59,7 @@ const AddLike = ({
         })
         .then(() => {
           setLikeStatus(1);
-          setLikeUpdatePost(!likeUpdatePost);
+          setLikeUpdatePost(1);
         })
         .catch((error) => {
           if (error.response.data.error === 'TokenExpiredError') {
@@ -80,7 +78,7 @@ const AddLike = ({
         })
         .then(() => {
           setLikeStatus(1);
-          setLikeUpdatePost(!likeUpdatePost);
+          setLikeUpdatePost(1);
         })
         .catch((error) => {
           if (error.response.data.error === 'TokenExpiredError') {
@@ -99,7 +97,7 @@ const AddLike = ({
         })
         .then(() => {
           setLikeStatus(0);
-          setLikeUpdatePost(!likeUpdatePost);
+          setLikeUpdatePost(0);
         })
         .catch((error) => {
           if (error.response.data.error === 'TokenExpiredError') {

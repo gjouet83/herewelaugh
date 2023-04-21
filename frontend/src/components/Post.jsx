@@ -7,15 +7,12 @@ import { useEffect } from 'react';
 import { decode } from 'html-entities';
 import AddLike from './AddLike';
 
-const Post = ({
-  post,
-  postsUpdate,
-  setPostsUpdate,
-  currentUser,
-  currentUserdecoded,
-}) => {
+const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
   const [fileType, setFileType] = useState('');
-  const [likeUpdatePost, setLikeUpdatePost] = useState(false);
+  const [likeUpdatePost, setLikeUpdatePost] = useState();
+  const [likes, setLikes] = useState(
+    post.sumLikes ? parseInt(post.sumLikes) : 0
+  );
 
   useEffect(() => {
     setFileType(post.attachment?.split('_')[1]);
@@ -23,7 +20,9 @@ const Post = ({
   }, [postsUpdate, currentUser, post.id]);
 
   useEffect(() => {
-    setPostsUpdate(!postsUpdate);
+    likeUpdatePost === 1
+      ? setLikes(likes + 1)
+      : likeUpdatePost === 0 && setLikes(likes - 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likeUpdatePost]);
 
@@ -41,9 +40,7 @@ const Post = ({
             aria-label="Icone qui représente un pouce en l'air"
           ></FontAwesomeIcon>
         </span>
-        <span className="posts__post__header__likeNb">
-          {post.sumLikes ? post.sumLikes : '0'}
-        </span>
+        <span className="posts__post__header__likeNb">{likes}</span>
         <div className="posts__post__header__user">
           <figure className="posts__post__header__user__avatar">
             <img
