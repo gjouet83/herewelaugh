@@ -21,22 +21,43 @@ exports.getSavedPosts = (req, res, next) => {
     });
 };
 
-exports.savePost = (req, res, next) => {
-  const newSavedPost = {
-    userId: req.body.userId,
-    postId: req.body.postId,
-  };
-  db.SavedPost.create({ ...newSavedPost })
-    .then(() => {
-      res.status(201).json({ message: 'Post saved successful' });
+exports.getSavedPostsByUser = (req, res, next) => {
+  db.SavedPost.findOne({
+    where: { postId: req.query.postId, userId: req.query.userId },
+  })
+    .then((savedPosts) => {
+      res.status(200).json(savedPosts);
     })
-    .catch(() => {
-      res.status(400).json({ error: 'Fail to save post' });
+    .catch((error) => {
+      res.status(500).json({ error });
     });
 };
 
+exports.savePost = (req, res, next) => {
+  db.SavedPost.findOne({
+    where: { postId: req.body.postId, userId: req.body.userId },
+  }).then((exist) => {
+    if (exist) {
+      return res.status(200).json({ exist });
+    }
+    const newSavedPost = {
+      userId: req.body.userId,
+      postId: req.body.postId,
+    };
+    db.SavedPost.create({ ...newSavedPost })
+      .then(() => {
+        res.status(201).json({ message: 'Post saved successful' });
+      })
+      .catch(() => {
+        res.status(400).json({ error: 'Fail to save post' });
+      });
+  });
+};
+
 exports.deleteSavedPost = (req, res, next) => {
-  db.SavedPost.findOne({ where: { id: req.params.savedPost_id } })
+  db.SavedPost.findOne({
+    where: { postId: req.query.postId, userId: req.query.userId },
+  })
     .then((savedPost) => {
       if (!savedPost) {
         return res.status(404).json({ error: 'Saved Post not found' });

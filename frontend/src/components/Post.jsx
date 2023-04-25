@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { decode } from 'html-entities';
 import AddLike from './AddLike';
+import SavePost from './SavePost';
 
 const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
   const [fileType, setFileType] = useState('');
@@ -84,8 +85,12 @@ const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
           currentUser={currentUser}
           currentUserdecoded={currentUserdecoded}
           post={post}
-          likeUpdatePost={likeUpdatePost}
           setLikeUpdatePost={setLikeUpdatePost}
+        />
+        <SavePost
+          currentUser={currentUser}
+          currentUserdecoded={currentUserdecoded}
+          post={post}
         />
       </div>
     </div>
