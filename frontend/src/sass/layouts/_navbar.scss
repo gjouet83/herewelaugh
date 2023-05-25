@@ -11,6 +11,7 @@
   &__li {
     line-height: 4rem;
     font-size: 1.2rem;
+    padding-right: 15px;
   }
 }
 
@@ -19,6 +20,6 @@
   transition: all 500ms ease-in-out;
 }
 .hideNav {
-  transform: translateX(305px);
+  transform: translateX(320px);
   transition: all 500ms ease-in-out;
 }

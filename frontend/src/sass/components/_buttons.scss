@@ -84,3 +84,36 @@
   background: linear-gradient(to top, $lightning-yellow, $broom);
   box-shadow: $boxShadow;
 }
+
+.cancelButton {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  right: -20px;
+  top: -5px;
+  border: none;
+  background-color: $tall-poppy;
+  border-radius: 25px;
+  font-size: 1.5rem;
+  color: $textColorLight;
+}
+
+.deleteButton {
+  border: none;
+  margin-bottom: 40px;
+  width: 80vw;
+  height: 3rem;
+  border-radius: 5px;
+  background-color: $tall-poppy;
+  box-shadow: $boxShadow;
+  line-height: 3rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: $textColorLight;
+  text-align: center;
+  margin-bottom: 20px;
+  align-self: center;
+  &:disabled {
+    @extend %disabledButton;
+  }
+}

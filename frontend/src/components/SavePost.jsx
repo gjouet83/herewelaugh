@@ -12,7 +12,7 @@ const SavePost = ({ currentUser, currentUserdecoded, post }) => {
       axios
         .get('http://localhost:3000/api/savedposts/user', {
           headers: { Authorization: `Bearer ${currentUser}` },
-          params: { postId: post.id, userId: currentUserdecoded.userId },
+          params: { postId: post.id, userId: currentUserdecoded?.userId },
         })
         .then((status) => {
           if (status.data) {
@@ -28,7 +28,7 @@ const SavePost = ({ currentUser, currentUserdecoded, post }) => {
     if (currentUser != null) {
       getSavePostStatus();
     }
-  }, [currentUser, currentUserdecoded.userId, post.id]);
+  }, [currentUser, currentUserdecoded?.userId, post.id]);
 
   const savePost = () => {
     const savedPost = { userId: currentUserdecoded.userId, postId: post.id };

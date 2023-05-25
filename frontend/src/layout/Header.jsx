@@ -5,8 +5,9 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-const Header = () => {
+const Header = ({ updateFromProfil }) => {
   const [user, setUser] = useState();
   const [toggle, setToggle] = useState(false);
 
@@ -35,11 +36,17 @@ const Header = () => {
       getUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [updateFromProfil]);
 
   return (
     <header className="header">
-      <img className="header__logo" src={logo} alt="emojoi qui pleur de rire" />
+      <Link to="/posts">
+        <img
+          className="header__logo"
+          src={logo}
+          alt="emojoi qui pleur de rire"
+        />
+      </Link>
       <h1 className="header__userWelcome">
         Bienvenue sur HereWeLaugh {user} !
       </h1>

@@ -16,7 +16,7 @@ const MIME_TYPES_AVATAR = {
 
 const storageAvatar = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, `medias/userId-${req.body.userId}`);
+    callback(null, `medias/userId-${req.params.user_id}`);
   },
   filename: (req, file, callback) => {
     //on crée l'extension grace au mimetypes
@@ -24,7 +24,7 @@ const storageAvatar = multer.diskStorage({
     //on crée un nom de fichier constitué du userId, de la date et de l'extention
     callback(
       null,
-      'userId-' + req.body.userId + 'avatar' + Date.now() + '.' + extension
+      'userId-' + req.params.user_id + 'avatar' + Date.now() + '.' + extension
     );
   },
 });
@@ -33,9 +33,9 @@ const uploadMediaAvatar = multer({
   storage: storageAvatar,
   fileFilter: (req, file, callback) => {
     if (
-      !file.originalname.match(
-        /\.(jpeg|jpg|tif|tiff|png|svg|gif|bmp|webp|avif|ico)$/
-      )
+      !file.originalname
+        .toLocaleLowerCase()
+        .match(/\.(jpeg|jpg|tif|tiff|png|svg|gif|bmp|webp|avif|ico)$/)
     ) {
       return callback(new Error('File is not valid'));
     }

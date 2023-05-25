@@ -63,11 +63,7 @@ exports.profil = [
   body('firstname').if(body('firstname').exists()).trim().escape(),
   body('lastname').if(body('lastname').exists()).trim().escape(),
   body('birthdate').if(body('birthdate').exists().trim().isDate()),
-  body('describ')
-    .if(body('describ').exists())
-    .isLength({ min: 3 })
-    .trim()
-    .escape(),
+  body('describ').if(body('describ').exists()).trim().escape(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())

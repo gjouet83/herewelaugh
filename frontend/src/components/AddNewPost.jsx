@@ -90,7 +90,7 @@ const AddNewPost = ({
         </button>
         <div className="posts__createone__addfile">
           <label className="posts__createone__addfile__lbl">
-            Choisir une media
+            Choisir un media
             <input
               className="posts__createone__addfile__input"
               type="file"

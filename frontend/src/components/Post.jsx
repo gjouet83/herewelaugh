@@ -52,9 +52,9 @@ const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
               alt={`avatar de profil de ${post.User.username}`}
             />
           </figure>
-          <figcaption className="posts__post__header__user__name">
+          <h2 className="posts__post__header__user__name">
             {post.User.username}
-          </figcaption>
+          </h2>
         </div>
       </div>
       <div className="posts__post__content">

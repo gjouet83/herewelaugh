@@ -88,6 +88,64 @@
     }
   }
 }
+
+.profil {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 90vw;
+    &__lbl {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 20px;
+      color: $textColorLight;
+      font-weight: 400;
+      font-size: large;
+      position: relative;
+    }
+    &__input {
+      height: 3rem;
+      border-radius: 5px;
+      border-style: none;
+      font-size: large;
+      font-family: $default-font;
+      padding-left: 5px;
+    }
+    &__textArea {
+      height: 10rem;
+      border-radius: 5px;
+      border-style: none;
+      font-size: large;
+      font-family: $default-font;
+      padding-left: 5px;
+      position: relative;
+    }
+    &__lblFile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+    }
+    &__inputFile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    &__submit {
+      margin-top: 20px;
+      border-style: none;
+      align-self: center;
+    }
+  }
+}
+
 .alerte {
   @include message($invalidColor);
 }

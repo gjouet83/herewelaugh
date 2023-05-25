@@ -21,6 +21,9 @@ exports.signup = (req, res, next) => {
         }).toString(),
         password: hash,
         avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
+        firstname: '',
+        lastname: '',
+        describ: '',
       })
         .then(() => {
           res.status(201).json({ message: 'user created successful' });

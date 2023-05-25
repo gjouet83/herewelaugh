@@ -24,14 +24,14 @@ exports.getUser = (req, res, next) => {
 exports.updateProfil = (req, res, next) => {
   db.User.findOne({ where: { id: req.params.user_id } })
     .then((user) => {
-      if (!req.auth.admin && user.userId !== req.auth.userId) {
+      if (!req.auth.admin && user.id !== req.auth.userId) {
         return res.status(403).json({ error: 'User not allowed' });
       }
       const updatedProfil = req.file
         ? {
             ...req.body,
             avatar: `${req.protocol}://${req.get('host')}/medias/userId-${
-              req.params.userId
+              req.params.user_id
             }/${req.file.filename}`,
           }
         : { ...req.body };
@@ -54,14 +54,14 @@ exports.updateProfil = (req, res, next) => {
 exports.deleteAvatar = (req, res, next) => {
   db.User.findOne({ where: { id: req.params.user_id } })
     .then((user) => {
-      if (!req.auth.admin && user.userId !== req.auth.userId) {
+      if (!req.auth.admin && user.id !== req.auth.userId) {
         return res.status(403).json({ error: 'User not allowed' });
       }
       db.User.update(
         {
           avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
         },
-        { where: { id: req.params.userId } }
+        { where: { id: req.params.user_id } }
       )
         .then(() => {
           res.status(200).json({ message: 'Profil updated successful' });
@@ -82,7 +82,7 @@ exports.deleteUser = (req, res, next) => {
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
-      if (!req.auth.admin && user.userId !== req.auth.userId) {
+      if (!req.auth.admin && user.id !== req.auth.userId) {
         return res.status(403).json({ error: 'User not allowed' });
       }
       //on supprime le dossier du user correspondant

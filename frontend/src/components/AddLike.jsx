@@ -25,7 +25,7 @@ const AddLike = ({
       axios
         .get('http://localhost:3000/api/likes/user', {
           headers: { Authorization: `Bearer ${currentUser}` },
-          params: { postId: post.id, userId: currentUserdecoded.userId },
+          params: { postId: post.id, userId: currentUserdecoded?.userId },
         })
         .then((likeStatus) => {
           if (likeStatus.data === null) {
@@ -43,7 +43,7 @@ const AddLike = ({
     if (currentUser != null) {
       getLikeStatus();
     }
-  }, [currentUser, currentUserdecoded.userId, post.id]);
+  }, [currentUser, currentUserdecoded?.userId, post.id]);
 
   const sendLike = () => {
     if (likeStatus === 2) {
