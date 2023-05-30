@@ -56,14 +56,19 @@ exports.profil = [
     .if(body('username').exists())
     .isLength({ min: 2, max: 30 })
     .withMessage('incorrect number of characters')
+    .not()
+    .isEmpty()
     .trim()
     .escape()
-    .isAlphanumeric('fr-FR', { ignore: ' -_' })
-    .withMessage('Invalid characters'),
+    .withMessage('Invalid characters!'),
   body('firstname').if(body('firstname').exists()).trim().escape(),
   body('lastname').if(body('lastname').exists()).trim().escape(),
   body('birthdate').if(body('birthdate').exists().trim().isDate()),
-  body('describ').if(body('describ').exists()).trim().escape(),
+  body('describ')
+    .if(body('describ').exists())
+    .isLength({ min: 3 })
+    .trim()
+    .escape(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())

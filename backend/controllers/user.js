@@ -42,8 +42,10 @@ exports.updateProfil = (req, res, next) => {
         .then(() => {
           res.status(200).json({ message: 'Profil updated successful' });
         })
-        .catch(() => {
-          res.status(400).json({ error: 'Profil update failed' });
+        .catch((error) => {
+          res
+            .status(400)
+            .json({ errno: error.parent.errno, errField: error.fields });
         });
     })
     .catch((error) => {

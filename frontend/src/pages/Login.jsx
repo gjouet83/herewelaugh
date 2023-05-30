@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useYupLoginValidation } from '../components/YupValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEyeSlash,
@@ -19,26 +19,7 @@ const Login = () => {
   const [switchHidePwd, setSwitchHidePwd] = useState(true);
   const [emailToCompare, setEmailToCompare] = useState('');
   const [pwdToCompare, setPwdToCompare] = useState('');
-
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .lowercase()
-      .email('email invalide')
-      .required("l'email est obligatoire"),
-    password: Yup.string()
-      .required('Mot de passe est obligatoire')
-      .matches(/(^\S)/, "Pas d'espace au début")
-      .matches(/(\S$)/, "Pas d'espace à la fin")
-      .matches(
-        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
-        'Au moins un caractère special'
-      )
-      .matches(/([0-9])/, 'Au moins un entier')
-      .matches(/([A-Z])/, 'Au moins une majuscule')
-      .matches(/([a-z])/, 'Au moins une minuscule')
-      .min(12, 'Mot de passe doit contenir au moins 12 caractères')
-      .max(64, 'Mot de passe doit contenir un maximum 64 caractères'),
-  });
+  const validationSchema = useYupLoginValidation();
 
   const {
     register,

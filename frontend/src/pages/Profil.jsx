@@ -16,6 +16,7 @@ const Profil = () => {
   const [prevUser, setPrevUser] = useState({});
   const [updateHeader, setUpdateHeader] = useState(true);
   const [avatar, setAvatar] = useState();
+  const [errors, setErrors] = useState();
   const avatarRef = useRef();
   const usernameRef = useRef();
   const lastnameRef = useRef();
@@ -24,10 +25,7 @@ const Profil = () => {
   const describRef = useRef();
 
   let updatedUser = new FormData();
-  updatedUser.append(
-    'username',
-    user.username === '' ? prevUser.username : user.username
-  );
+  updatedUser.append('username', user.username);
   updatedUser.append('lastname', user.lastname);
   updatedUser.append('firstname', user.firstname);
   updatedUser.append('birthdate', user.birthdate);
@@ -39,15 +37,20 @@ const Profil = () => {
     axios({
       headers: { Authorization: `Bearer ${currentUser}` },
       'Content-Type': 'application/json',
-      url: 'http://localhost:3000/api/users/' + currentUserdecoded.userId,
+      url:
+        `${process.env.REACT_APP_REQ_URL}/api/users/` +
+        currentUserdecoded.userId,
       method: 'PUT',
       data: updatedUser,
     })
       .then(() => {
         setUpdateHeader(!updateHeader);
       })
-      .catch((errors) => {
-        console.log(errors);
+      .catch((error) => {
+        setErrors(error.response.data);
+        if (error.response.data.error === 'TokenExpiredError') {
+          window.location.assign('/login');
+        }
       });
   };
 
@@ -55,7 +58,7 @@ const Profil = () => {
     axios({
       headers: { Authorization: `Bearer ${currentUser}` },
       'Content-Type': 'application/json',
-      url: `http://localhost:3000/api/users/${currentUserdecoded.userId}/avatar`,
+      url: `${process.env.REACT_APP_REQ_URL}/api/users/${currentUserdecoded.userId}/avatar`,
       method: 'PUT',
     })
       .then(() => {
@@ -65,14 +68,21 @@ const Profil = () => {
       })
       .catch((errors) => {
         console.log(errors);
+        if (errors.response.data.error === 'TokenExpiredError') {
+          window.location.assign('/login');
+        }
       });
   };
 
   const deleteAccount = () => {
     axios
-      .delete('http://localhost:3000/api/users/' + currentUserdecoded.userId, {
-        headers: { Authorization: `Bearer ${currentUser}` },
-      })
+      .delete(
+        `${process.env.REACT_APP_REQ_URL}/api/users/` +
+          currentUserdecoded.userId,
+        {
+          headers: { Authorization: `Bearer ${currentUser}` },
+        }
+      )
       .then(() => {
         console.warn('Account deleted');
         localStorage.removeItem('user');
@@ -86,9 +96,13 @@ const Profil = () => {
   useEffect(() => {
     const getUser = () => {
       axios
-        .get('http://localhost:3000/api/users/' + currentUserdecoded.userId, {
-          headers: { Authorization: `Bearer ${currentUser}` },
-        })
+        .get(
+          `${process.env.REACT_APP_REQ_URL}/api/users/` +
+            currentUserdecoded.userId,
+          {
+            headers: { Authorization: `Bearer ${currentUser}` },
+          }
+        )
         .then((user) => {
           setAvatar();
           setUser(user.data.user);
@@ -96,13 +110,13 @@ const Profil = () => {
         })
         .catch((errors) => {
           console.log(errors);
+          if (errors.response.data.error === 'TokenExpiredError') {
+            window.location.assign('/login');
+          }
         });
     };
     getUser();
   }, [currentUser, currentUserdecoded.userId, updateHeader]);
-
-  console.log(user.avatar);
-  console.log(avatar);
 
   return (
     <>
@@ -165,10 +179,14 @@ const Profil = () => {
               className="profil__form__input"
               name="username"
               defaultValue={prevUser?.username}
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              onChange={(e) => {
+                setUser({ ...user, username: e.target.value });
+                setErrors();
+              }}
               ref={usernameRef}
             ></input>
-            {user.username === '' && 'nan'}
+            {user.username === '' && "le nom d'utilisateur est obligatoire"}
+            {errors?.errno === 1062 && "Ce nom d'utilisateur existe déjà"}
             {user.username !== prevUser.username && (
               <button
                 className="cancelButton"

@@ -22,7 +22,7 @@ const Posts = () => {
   const getPosts = () => {
     sortBy === 'newer'
       ? axios
-          .get('http://localhost:3000/api/posts')
+          .get(`${process.env.REACT_APP_REQ_URL}/api/posts`)
           .then((datas) => {
             setPosts(datas.data);
           })
@@ -30,7 +30,9 @@ const Posts = () => {
             console.warn(errors);
           })
       : axios
-          .get('http://localhost:3000/api/posts/sort=rate&order=desc')
+          .get(
+            `${process.env.REACT_APP_REQ_URL}/api/posts/sort=rate&order=desc`
+          )
           .then((datas) => {
             setPosts(datas.data);
           })

@@ -19,9 +19,12 @@ const Header = ({ updateFromProfil }) => {
   useEffect(() => {
     const getUser = () => {
       axios
-        .get(`http://localhost:3000/api/users/${currentUserdecoded.userId}`, {
-          headers: { Authorization: `Bearer ${currentUser}` },
-        })
+        .get(
+          `${process.env.REACT_APP_REQ_URL}/api/users/${currentUserdecoded.userId}`,
+          {
+            headers: { Authorization: `Bearer ${currentUser}` },
+          }
+        )
         .then((user) => {
           setUser(user.data.user.username);
         })

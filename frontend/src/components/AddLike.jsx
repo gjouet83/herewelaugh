@@ -23,7 +23,7 @@ const AddLike = ({
   useEffect(() => {
     const getLikeStatus = () => {
       axios
-        .get('http://localhost:3000/api/likes/user', {
+        .get(`${process.env.REACT_APP_REQ_URL}/api/likes/user`, {
           headers: { Authorization: `Bearer ${currentUser}` },
           params: { postId: post.id, userId: currentUserdecoded?.userId },
         })
@@ -53,7 +53,7 @@ const AddLike = ({
         like: 1,
       };
       axios
-        .post('http://localhost:3000/api/likes/', like, {
+        .post(`${process.env.REACT_APP_REQ_URL}/api/likes/`, like, {
           headers: { Authorization: `Bearer ${currentUser}` },
         })
         .then(() => {
@@ -72,7 +72,7 @@ const AddLike = ({
         like: 1,
       };
       axios
-        .put('http://localhost:3000/api/likes', like, {
+        .put(`${process.env.REACT_APP_REQ_URL}/api/likes`, like, {
           headers: { Authorization: `Bearer ${currentUser}` },
         })
         .then(() => {
@@ -91,7 +91,7 @@ const AddLike = ({
         like: 0,
       };
       axios
-        .put('http://localhost:3000/api/likes', like, {
+        .put(`${process.env.REACT_APP_REQ_URL}/api/likes`, like, {
           headers: { Authorization: `Bearer ${currentUser}` },
         })
         .then(() => {

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEyeSlash,
@@ -14,6 +13,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage } from '@hookform/error-message';
+import { useYupSignupValidation } from '../components/YupValidation';
 
 const Signup = () => {
   const [resBackErrUsername, setResBackErrUsername] = useState('');
@@ -22,30 +22,7 @@ const Signup = () => {
   const [switchHideConfPwd, setSwitchHideConfPwd] = useState(true);
   const [emailToCompare, setEmailToCompare] = useState('');
   const [usernameToCompare, setUsernameToCompare] = useState('');
-
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required("veuillez choisir un nom d'utilisateur"),
-    email: Yup.string()
-      .lowercase()
-      .email('email invalide')
-      .required("l'email est obligatoire"),
-    password: Yup.string()
-      .required('Mot de passe est obligatoire')
-      .matches(/(^\S)/, "Pas d'espace au début")
-      .matches(/(\S$)/, "Pas d'espace à la fin")
-      .matches(
-        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
-        'Au moins un caractère spécial'
-      )
-      .matches(/([0-9])/, 'Au moins un entier')
-      .matches(/([A-Z])/, 'Au moins une majuscule')
-      .matches(/([a-z])/, 'Au moins une minuscule')
-      .min(12, 'Au moins 12 caractères')
-      .max(64, 'Au maximum 64 caractères'),
-    confirmpassword: Yup.string()
-      .required('Mot de passe est obligatoire')
-      .oneOf([Yup.ref('password')], 'Le mot de passe ne correspond pas'),
-  });
+  const validationSchema = useYupSignupValidation();
 
   const {
     register,

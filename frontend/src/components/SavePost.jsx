@@ -10,7 +10,7 @@ const SavePost = ({ currentUser, currentUserdecoded, post }) => {
   useEffect(() => {
     const getSavePostStatus = () => {
       axios
-        .get('http://localhost:3000/api/savedposts/user', {
+        .get(`${process.env.REACT_APP_REQ_URL}/api/savedposts/user`, {
           headers: { Authorization: `Bearer ${currentUser}` },
           params: { postId: post.id, userId: currentUserdecoded?.userId },
         })
@@ -33,7 +33,7 @@ const SavePost = ({ currentUser, currentUserdecoded, post }) => {
   const savePost = () => {
     const savedPost = { userId: currentUserdecoded.userId, postId: post.id };
     axios
-      .post('http://localhost:3000/api/savedposts/', savedPost, {
+      .post(`${process.env.REACT_APP_REQ_URL}/api/savedposts/`, savedPost, {
         headers: { Authorization: `Bearer ${currentUser}` },
       })
       .then(() => {
@@ -48,7 +48,7 @@ const SavePost = ({ currentUser, currentUserdecoded, post }) => {
 
   const deleteSavedPost = () => {
     axios
-      .delete('http://localhost:3000/api/savedposts/:savedPost_id', {
+      .delete(`${process.env.REACT_APP_REQ_URL}/api/savedposts/:savedPost_id`, {
         headers: { Authorization: `Bearer ${currentUser}` },
         params: {
           postId: post.id,

@@ -37,7 +37,7 @@ const AddNewPost = ({
   const handleClick = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/posts/', post, {
+      .post(`${process.env.REACT_APP_REQ_URL}/api/posts/`, post, {
         headers: {
           Authorization: `Bearer ${currentUser}`,
           'Content-Type': 'application/json',
