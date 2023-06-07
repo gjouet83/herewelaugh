@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage } from '@hookform/error-message';
 import { useYupSignupValidation } from '../components/YupValidation';
+import FormsInputs from '../components/FormsInputs';
 
 const Signup = () => {
   const [resBackErrUsername, setResBackErrUsername] = useState('');
@@ -110,29 +111,17 @@ const Signup = () => {
                 aria-label="Icone qui représente un bonhomme"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`signup__form__field__input ${
-                (errors.username || resBackErrUsername) && 'error'
-              } ${
-                dirtyFields.username &&
-                !errors.username &&
-                !resBackErrUsername &&
-                'valid'
-              }`}
-              autoComplete="username"
-              id="username"
-              name="username"
+            <FormsInputs
               type="text"
-              placeholder={"Nom d'utilisateur"}
-              aria-label="Username"
-              {...register('username')}
+              errors={errors.username}
+              dirtyFields={dirtyFields.username}
+              resBackErr={resBackErrUsername}
+              page="signup"
+              inputName="username"
+              register={{ ...register('username') }}
+              input={username}
+              inputToCompare={usernameToCompare}
             />
-            <span className="alerte">
-              {errors.username?.message}
-              {resBackErrUsername !== '' &&
-                username === usernameToCompare &&
-                resBackErrUsername}
-            </span>
           </div>
           <div className={`signup__form__field`}>
             <div className={`signup__form__field__ico`}>
@@ -141,28 +130,17 @@ const Signup = () => {
                 aria-label="Icone qui représente une enveloppe"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`signup__form__field__input ${
-                (errors.email || resBackErrMail) && 'error'
-              } ${
-                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
-                  (email !== emailToCompare && !errors.email)) &&
-                'valid'
-              }`}
-              autoComplete="email"
-              id="email"
-              name="email"
+            <FormsInputs
               type="email"
-              placeholder="Adresse e-mail"
-              aria-label="e-mail"
-              {...register('email')}
+              errors={errors.email}
+              dirtyFields={dirtyFields.email}
+              resBackErr={resBackErrMail}
+              page="signup"
+              inputName="email"
+              register={{ ...register('email') }}
+              input={email}
+              inputToCompare={emailToCompare}
             />
-            <span className="alerte">
-              {errors.email?.message}
-              {resBackErrMail !== '' &&
-                email === emailToCompare &&
-                resBackErrMail}
-            </span>
           </div>
           <div className={`signup__form__field`}>
             <div className={`signup__form__field__ico`}>
@@ -171,17 +149,14 @@ const Signup = () => {
                 aria-label="Icone qui représente un cadena"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`signup__form__field__input ${
-                errors.password && 'error'
-              } ${dirtyFields.password && !errors.password && 'valid'}`}
-              autoComplete="current-password"
-              id="password"
-              name="password"
+            <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              placeholder="Mot de passe*"
-              aria-label="Mot de passe"
-              {...register('password')}
+              errors={errors.password}
+              dirtyFields={dirtyFields.password}
+              page="signup"
+              inputName="password"
+              input={password}
+              register={{ ...register('password') }}
             />
             <div className={`signup__form__field__input__switchButton`}>
               {!switchHidePwd && (
@@ -197,11 +172,6 @@ const Signup = () => {
                 />
               )}
             </div>
-            {!password && (
-              <span className="alerte">
-                {errors?.password?.types?.required}
-              </span>
-            )}
             {password && (
               <div className="signup__form__field__errors alerte">
                 <ul className="signup__form__field__errors__list">
@@ -233,21 +203,13 @@ const Signup = () => {
             )}
           </div>
           <div className={`signup__form__field`}>
-            <input
-              className={`signup__form__field__input ${
-                errors.confirmpassword && 'error'
-              } ${
-                dirtyFields.confirmpassword &&
-                !errors.confirmpassword &&
-                'valid'
-              }`}
-              autoComplete="confirmpassword"
-              id="confirmpassword"
-              name="confirmpassword"
+            <FormsInputs
               type={switchHideConfPwd ? 'password' : 'text'}
-              placeholder="Confirmation"
-              aria-label="Confirmation de mot de passe"
-              {...register('confirmpassword')}
+              errors={errors.confirmpassword}
+              dirtyFields={dirtyFields.confirmpassword}
+              page="signup"
+              inputName="confirmpassword"
+              register={{ ...register('confirmpassword') }}
             />
             <div className={`signup__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
@@ -263,7 +225,6 @@ const Signup = () => {
                 />
               )}
             </div>
-            <span className="alerte">{errors.confirmpassword?.message}</span>
           </div>
           <input
             className={`signup__form__validate`}

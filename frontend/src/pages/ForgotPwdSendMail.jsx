@@ -3,21 +3,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { useYupSendMailValidation } from '../components/YupValidation';
+import FormsInputs from '../components/FormsInputs';
 
 const ForgotPwdSendMail = () => {
   const [resBackErrMail, setResBackErrMail] = useState('');
   const [resBackMessageMail, setResBackMessageMail] = useState('');
   const [emailToCompare, setEmailToCompare] = useState('');
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .lowercase()
-      .email('email invalide')
-      .required("l'email est obligatoire"),
-  });
+  const validationSchema = useYupSendMailValidation();
 
   const {
     register,
@@ -26,7 +22,7 @@ const ForgotPwdSendMail = () => {
     formState: { errors, dirtyFields },
   } = useForm({
     resolver: yupResolver(validationSchema),
-    defaultValues: { email: '', password: '', confirmpassword: '' },
+    defaultValues: { email: '' },
     mode: 'onChange',
     shouldFocusError: true,
   });
@@ -83,30 +79,18 @@ const ForgotPwdSendMail = () => {
                 aria-label="Icone qui représente une enveloppe"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`forgotPwdSendMail__form__field__input ${
-                (errors.email || resBackErrMail) && 'error'
-              } ${
-                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
-                  (email !== emailToCompare && !errors.email)) &&
-                'valid'
-              }`}
-              autoComplete="email"
-              id="email"
-              name="email"
+            <FormsInputs
               type="email"
-              placeholder="Adresse e-mail"
-              aria-label="e-mail"
-              {...register('email')}
+              errors={errors.email}
+              dirtyFields={dirtyFields.email}
+              resBackErr={resBackErrMail}
+              page="forgotPwdSendMail"
+              inputName="email"
+              register={{ ...register('email') }}
+              input={email}
+              inputToCompare={emailToCompare}
+              resBackMessageMail={resBackMessageMail}
             />
-
-            <span className="alerte">
-              {resBackErrMail !== '' &&
-                email === emailToCompare &&
-                resBackErrMail}
-              {errors.email && errors.email?.message}
-              {resBackMessageMail}
-            </span>
           </div>
           <input
             className="forgotPwdSendMail__form__validate"

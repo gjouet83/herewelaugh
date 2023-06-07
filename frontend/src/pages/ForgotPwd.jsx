@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useYupFgtPwdValidation } from '../components/YupValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage } from '@hookform/error-message';
 import { Link } from 'react-router-dom';
+import FormsInputs from '../components/FormsInputs';
 
 const ForgotPwd = () => {
   const [switchHidePwd, setSwitchHidePwd] = useState(true);
@@ -17,24 +18,7 @@ const ForgotPwd = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const token = queryParams.get('token');
 
-  const validationSchema = Yup.object().shape({
-    password: Yup.string()
-      .required('Mot de passe est obligatoire')
-      .matches(/(^\S)/, "Pas d'espace au début")
-      .matches(/(\S$)/, "Pas d'espace à la fin")
-      .matches(
-        /([!@#$%^~`_+'/&*()°,.?":{}|<>-])/,
-        'Au moins un caractère spécial'
-      )
-      .matches(/([0-9])/, 'Au moins un entier')
-      .matches(/([A-Z])/, 'Au moins une majuscule')
-      .matches(/([a-z])/, 'Au moins une minuscule')
-      .min(12, 'Au moins 12 caractères')
-      .max(64, 'Au maximum 64 caractères'),
-    confirmpassword: Yup.string()
-      .required('Mot de passe est obligatoire')
-      .oneOf([Yup.ref('password')], 'Le mot de passe ne correspond pas'),
-  });
+  const validationSchema = useYupFgtPwdValidation();
 
   const {
     register,
@@ -100,17 +84,14 @@ const ForgotPwd = () => {
                 aria-label="Icone qui représente un cadena"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`forgotPwd__form__field__input ${
-                errors.password && 'error'
-              } ${dirtyFields.password && !errors.password && 'valid'}`}
-              autoComplete="current-password"
-              id="password"
-              name="password"
+            <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              placeholder="Mot de passe*"
-              aria-label="Mot de passe"
-              {...register('password')}
+              errors={errors.password}
+              dirtyFields={dirtyFields.password}
+              page="forgotPwd"
+              inputName="password"
+              input={password}
+              register={{ ...register('password') }}
             />
             <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHidePwd && (
@@ -126,11 +107,6 @@ const ForgotPwd = () => {
                 />
               )}
             </div>
-            {!password && (
-              <span className="alerte">
-                {errors?.password?.types?.required}
-              </span>
-            )}
             {password && (
               <div className="signup__form__field__errors alerte">
                 <ul className="signup__form__field__errors__list">

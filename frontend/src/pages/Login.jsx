@@ -12,6 +12,7 @@ import {
   faEnvelope,
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
+import FormsInputs from '../components/FormsInputs';
 
 const Login = () => {
   const [resBackErrMail, setResBackErrMail] = useState('');
@@ -97,29 +98,17 @@ const Login = () => {
                 aria-label="Icone qui représente une enveloppe"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`login__form__field__input ${
-                (errors.email || resBackErrMail) && 'error'
-              } ${
-                ((dirtyFields.email && !errors.email && !resBackErrMail) ||
-                  (email !== emailToCompare && !errors.email)) &&
-                'valid'
-              }`}
-              autoComplete="email"
-              id="email"
-              name="email"
+            <FormsInputs
               type="email"
-              placeholder="Adresse e-mail"
-              aria-label="e-mail"
-              {...register('email')}
+              errors={errors.email}
+              dirtyFields={dirtyFields.email}
+              resBackErr={resBackErrMail}
+              page="login"
+              inputName="email"
+              register={{ ...register('email') }}
+              input={email}
+              inputToCompare={emailToCompare}
             />
-
-            <span className="alerte">
-              {resBackErrMail !== '' &&
-                email === emailToCompare &&
-                resBackErrMail}
-              {errors.email && errors.email?.message}
-            </span>
           </div>
           <div className={`login__form__field`}>
             <div className={`login__form__field__ico`}>
@@ -128,21 +117,16 @@ const Login = () => {
                 aria-label="Icone qui représente un cadena"
               ></FontAwesomeIcon>
             </div>
-            <input
-              className={`login__form__field__input ${
-                (errors.password || resBackErrPwd) && 'error'
-              } ${
-                ((dirtyFields.password && !errors.password && !resBackErrPwd) ||
-                  (password !== pwdToCompare && !errors.password)) &&
-                'valid'
-              }`}
-              autoComplete="current-password"
-              id="password"
-              name="password"
+            <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              placeholder="Mot de passe*"
-              aria-label="Mot de passe"
-              {...register('password')}
+              errors={errors.password}
+              dirtyFields={dirtyFields.password}
+              page="login"
+              inputName="password"
+              input={password}
+              inputToCompare={pwdToCompare}
+              resBackErr={resBackErrPwd}
+              register={{ ...register('password') }}
             />
             <div className={`login__form__field__input__switchButton`}>
               {!switchHidePwd && (
@@ -158,16 +142,9 @@ const Login = () => {
                 />
               )}
             </div>
-            <div className="login__form__field__errors alerte">
-              {!password && (
-                <span className="alerte">
-                  {errors?.password?.types?.required}
-                </span>
-              )}
-              {resBackErrPwd !== '' &&
-                password === pwdToCompare &&
-                resBackErrPwd}
-            </div>
+            {password && (
+              <div className="login__form__field__errors alerte"></div>
+            )}
           </div>
           <input
             className={`login__form__validate`}
