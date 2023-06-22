@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
         avatar: `${req.protocol}://${req.get('host')}/medias/user-solid.svg`,
         firstname: '',
         lastname: '',
+        birthdate: '0001-01-01',
         describ: '',
       })
         .then(() => {
@@ -91,14 +92,14 @@ exports.updateLogin = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(401).json({ error: 'User unregistred' });
+        return res.status(401).json({ errorMail: 'User unregistred' });
       }
-      if (!req.auth.admin && user.userId !== req.auth.userId) {
-        return res.status(403).json({ error: 'User not allowed' });
+      if (!req.auth.admin && user.id !== req.auth.userId) {
+        return res.status(403).json({ errorMail: 'User not allowed' });
       }
       db.User.update(
         {
-          email: CryptoJS.AES.encrypt(req.body.newEmail, key, {
+          email: CryptoJS.AES.encrypt(req.body.newemail, key, {
             iv: iv,
           }).toString(),
         },
@@ -119,12 +120,13 @@ exports.updateLogin = (req, res, next) => {
 };
 
 exports.updatePassword = (req, res, next) => {
-  db.User.findOne({ where: { id: req.params.userId } })
+  console.log(req.body);
+  db.User.findOne({ where: { id: req.params.user_id } })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: 'User unregistred' });
       }
-      if (!req.auth.admin && user.userId !== req.auth.userId) {
+      if (!req.auth.admin && user.id !== req.auth.userId) {
         return res.status(403).json({ error: 'User not allowed' });
       }
       bcrypt
@@ -136,7 +138,7 @@ exports.updatePassword = (req, res, next) => {
           }
           bcrypt
             // on hash le mot de passe
-            .hash(req.body.newPassword, 10)
+            .hash(req.body.newpassword, 10)
             .then((hash) => {
               db.User.update(
                 {

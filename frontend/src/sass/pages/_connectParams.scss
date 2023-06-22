@@ -1,0 +1,12 @@
+.connectParams {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  align-items: center;
+  color: $textColorLight;
+  position: relative;
+  &__title {
+    max-width: 80vw;
+    text-align: center;
+  }
+}

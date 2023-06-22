@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useYupSendMailValidation } from '../components/YupValidation';
+import { useYupValidation } from '../components/YupValidation';
 import FormsInputs from '../components/FormsInputs';
 
 const ForgotPwdSendMail = () => {
@@ -13,7 +13,7 @@ const ForgotPwdSendMail = () => {
   const [resBackMessageMail, setResBackMessageMail] = useState('');
   const [emailToCompare, setEmailToCompare] = useState('');
 
-  const validationSchema = useYupSendMailValidation();
+  const validationSchema = useYupValidation();
 
   const {
     register,
@@ -81,7 +81,7 @@ const ForgotPwdSendMail = () => {
             </div>
             <FormsInputs
               type="email"
-              errors={errors.email}
+              errors={errors}
               dirtyFields={dirtyFields.email}
               resBackErr={resBackErrMail}
               page="forgotPwdSendMail"
@@ -89,7 +89,7 @@ const ForgotPwdSendMail = () => {
               register={{ ...register('email') }}
               input={email}
               inputToCompare={emailToCompare}
-              resBackMessageMail={resBackMessageMail}
+              resBackMessage={resBackMessageMail}
             />
           </div>
           <input

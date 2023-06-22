@@ -67,7 +67,6 @@ const Profil = () => {
         setUpdateHeader(!updateHeader);
       })
       .catch((errors) => {
-        console.log(errors);
         if (errors.response.data.error === 'TokenExpiredError') {
           window.location.assign('/login');
         }

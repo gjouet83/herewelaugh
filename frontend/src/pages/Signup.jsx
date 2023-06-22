@@ -12,8 +12,7 @@ import {
   faLock,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { ErrorMessage } from '@hookform/error-message';
-import { useYupSignupValidation } from '../components/YupValidation';
+import { useYupValidation } from '../components/YupValidation';
 import FormsInputs from '../components/FormsInputs';
 
 const Signup = () => {
@@ -23,7 +22,7 @@ const Signup = () => {
   const [switchHideConfPwd, setSwitchHideConfPwd] = useState(true);
   const [emailToCompare, setEmailToCompare] = useState('');
   const [usernameToCompare, setUsernameToCompare] = useState('');
-  const validationSchema = useYupSignupValidation();
+  const validationSchema = useYupValidation();
 
   const {
     register,
@@ -58,9 +57,7 @@ const Signup = () => {
   const sendForm = (data) => {
     axios
       .post(`${process.env.REACT_APP_REQ_URL}/api/auth/signup`, {
-        username: data.username,
-        email: data.email,
-        password: data.password,
+        ...data,
       })
       .then((res) => {
         //on stocke le token dans le localstorage
@@ -87,7 +84,6 @@ const Signup = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <main>
       <section className="signup">
@@ -113,7 +109,7 @@ const Signup = () => {
             </div>
             <FormsInputs
               type="text"
-              errors={errors.username}
+              errors={errors}
               dirtyFields={dirtyFields.username}
               resBackErr={resBackErrUsername}
               page="signup"
@@ -132,7 +128,7 @@ const Signup = () => {
             </div>
             <FormsInputs
               type="email"
-              errors={errors.email}
+              errors={errors}
               dirtyFields={dirtyFields.email}
               resBackErr={resBackErrMail}
               page="signup"
@@ -151,7 +147,7 @@ const Signup = () => {
             </div>
             <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              errors={errors.password}
+              errors={errors}
               dirtyFields={dirtyFields.password}
               page="signup"
               inputName="password"
@@ -172,40 +168,11 @@ const Signup = () => {
                 />
               )}
             </div>
-            {password && (
-              <div className="signup__form__field__errors alerte">
-                <ul className="signup__form__field__errors__list">
-                  {
-                    <ErrorMessage
-                      errors={errors}
-                      name="password"
-                      render={({ messages }) =>
-                        messages &&
-                        Array.isArray(messages?.matches) &&
-                        Object.entries(messages?.matches).map(
-                          ([type, message]) => <li key={type}>{message}</li>
-                        )
-                      }
-                    />
-                  }
-                  {!Array.isArray(errors?.password?.types?.matches) &&
-                    errors?.password?.types?.matches && (
-                      <li>{errors?.password?.types?.matches}</li>
-                    )}
-                  {errors?.password?.types?.min && (
-                    <li>{errors?.password?.types?.min}</li>
-                  )}
-                  {errors?.password?.types?.max && (
-                    <li>{errors?.password?.types?.max}</li>
-                  )}
-                </ul>
-              </div>
-            )}
           </div>
           <div className={`signup__form__field`}>
             <FormsInputs
               type={switchHideConfPwd ? 'password' : 'text'}
-              errors={errors.confirmpassword}
+              errors={errors}
               dirtyFields={dirtyFields.confirmpassword}
               page="signup"
               inputName="confirmpassword"
@@ -232,8 +199,10 @@ const Signup = () => {
             type="submit"
             value="S'inscrire"
             disabled={
+              errors.username ||
               errors.email ||
               errors.password ||
+              !dirtyFields.username ||
               !dirtyFields.password ||
               !dirtyFields.email ||
               (!touchedFields.email && !touchedFields.password) ||
@@ -243,6 +212,13 @@ const Signup = () => {
                 : false
             }
           />
+          <span className="alerte">
+            {(!dirtyFields.confirmpassword ||
+              !dirtyFields.email ||
+              !dirtyFields.password ||
+              !dirtyFields.username) &&
+              'Tous les champs sont obligatoires'}
+          </span>
         </form>
         <div className="signup__separate">
           <span className="signup__separate__text">

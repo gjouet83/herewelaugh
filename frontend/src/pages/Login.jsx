@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useYupLoginValidation } from '../components/YupValidation';
+import { useYupValidation } from '../components/YupValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEyeSlash,
@@ -20,7 +20,7 @@ const Login = () => {
   const [switchHidePwd, setSwitchHidePwd] = useState(true);
   const [emailToCompare, setEmailToCompare] = useState('');
   const [pwdToCompare, setPwdToCompare] = useState('');
-  const validationSchema = useYupLoginValidation();
+  const validationSchema = useYupValidation();
 
   const {
     register,
@@ -49,8 +49,7 @@ const Login = () => {
   const sendForm = (data) => {
     axios
       .post(`${process.env.REACT_APP_REQ_URL}/api/auth/login`, {
-        email: data.email,
-        password: data.password,
+        ...data,
       })
       .then((res) => {
         //on stocke le token dans le localstorage
@@ -100,7 +99,7 @@ const Login = () => {
             </div>
             <FormsInputs
               type="email"
-              errors={errors.email}
+              errors={errors}
               dirtyFields={dirtyFields.email}
               resBackErr={resBackErrMail}
               page="login"
@@ -119,7 +118,7 @@ const Login = () => {
             </div>
             <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              errors={errors.password}
+              errors={errors}
               dirtyFields={dirtyFields.password}
               page="login"
               inputName="password"
@@ -142,9 +141,6 @@ const Login = () => {
                 />
               )}
             </div>
-            {password && (
-              <div className="login__form__field__errors alerte"></div>
-            )}
           </div>
           <input
             className={`login__form__validate`}
@@ -161,6 +157,10 @@ const Login = () => {
                 : false
             }
           />
+          <span className="alerte">
+            {(!dirtyFields.email || !dirtyFields.password) &&
+              'Tous les champs sont obligatoires'}
+          </span>
         </form>
         <div className={`login__forgotPwd`}>
           <Link to="/forgotPwdSendMail">Mot de passe oublié ?</Link>

@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useYupFgtPwdValidation } from '../components/YupValidation';
+import { useYupValidation } from '../components/YupValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-import { ErrorMessage } from '@hookform/error-message';
 import { Link } from 'react-router-dom';
 import FormsInputs from '../components/FormsInputs';
 
@@ -18,7 +17,7 @@ const ForgotPwd = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const token = queryParams.get('token');
 
-  const validationSchema = useYupFgtPwdValidation();
+  const validationSchema = useYupValidation();
 
   const {
     register,
@@ -54,10 +53,13 @@ const ForgotPwd = () => {
       })
       .catch((err) => {
         if (err.response.data.error === 'jwt expired') {
-          setBackendErr('Le lien à expiré.');
+          setBackendErr('Délais expiré.');
         }
-        if (err.response.data.error === 'invalid token') {
-          setBackendErr("Le lien n'est pas valide.");
+        if (
+          err.response.data.error === 'invalid token' ||
+          err.response.data.error === 'jwt malformed'
+        ) {
+          setBackendErr('Utilisateur non autorisé');
         }
       });
   };
@@ -86,7 +88,7 @@ const ForgotPwd = () => {
             </div>
             <FormsInputs
               type={switchHidePwd ? 'password' : 'text'}
-              errors={errors.password}
+              errors={errors}
               dirtyFields={dirtyFields.password}
               page="forgotPwd"
               inputName="password"
@@ -107,54 +109,18 @@ const ForgotPwd = () => {
                 />
               )}
             </div>
-            {password && (
-              <div className="signup__form__field__errors alerte">
-                <ul className="signup__form__field__errors__list">
-                  {
-                    <ErrorMessage
-                      errors={errors}
-                      name="password"
-                      render={({ messages }) =>
-                        messages &&
-                        Array.isArray(messages?.matches) &&
-                        Object.entries(messages?.matches).map(
-                          ([type, message]) => <li key={type}>{message}</li>
-                        )
-                      }
-                    />
-                  }
-                  {!Array.isArray(errors?.password?.types?.matches) &&
-                    errors?.password?.types?.matches && (
-                      <li>{errors?.password?.types?.matches}</li>
-                    )}
-                  {errors?.password?.types?.min && (
-                    <li>{errors?.password?.types?.min}</li>
-                  )}
-                  {errors?.password?.types?.max && (
-                    <li>{errors?.password?.types?.max}</li>
-                  )}
-                </ul>
-                {!errors.password && backendErr}
-                {backendMessage}
-              </div>
-            )}
           </div>
           <div className={`forgotPwd__form__field`}>
-            <input
-              className={`forgotPwd__form__field__input ${
-                errors.confirmpassword && 'error'
-              } ${
-                dirtyFields.confirmpassword &&
-                !errors.confirmpassword &&
-                'valid'
-              }`}
-              autoComplete="confirmpassword"
-              id="confirmpassword"
-              name="confirmpassword"
-              type={switchHideConfPwd ? 'password' : 'text'}
-              placeholder="Confirmation"
-              aria-label="Confirmation de mot de passe"
-              {...register('confirmpassword')}
+            <FormsInputs
+              type={switchHidePwd ? 'password' : 'text'}
+              errors={errors}
+              dirtyFields={dirtyFields.confirmpassword}
+              page="forgotPwd"
+              inputName="confirmpassword"
+              input={password}
+              register={{ ...register('confirmpassword') }}
+              resBackErr={backendErr}
+              resBackMessage={backendMessage}
             />
             <div className={`forgotPwd__form__field__input__switchButton`}>
               {!switchHideConfPwd && (
@@ -170,7 +136,6 @@ const ForgotPwd = () => {
                 />
               )}
             </div>
-            <span className="alerte">{errors.confirmpassword?.message}</span>
           </div>
           <input
             className={`forgotPwd__form__validate`}
@@ -187,6 +152,10 @@ const ForgotPwd = () => {
                 : false
             }
           />
+          <span className="alerte">
+            {(!dirtyFields.confirmpassword || !dirtyFields.password) &&
+              'Tous les champs sont obligatoires'}
+          </span>
         </form>
         <div className="forgotPwd__signupLink linkButton">
           <Link to="/login">Se connecter</Link>
