@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import { decode } from 'html-entities';
 
 const AddNewPost = ({
+  mode,
   postsUpdate,
+  postToUpdate,
   setPostsUpdate,
   currentUser,
   currentUserdecoded,
@@ -18,8 +21,8 @@ const AddNewPost = ({
 
   const post = new FormData();
   post.append('userId', currentUserdecoded.userId);
-  post.append('content', postContent);
-  post.append('attachment', media);
+  post.append('content', postContent ? postContent : postToUpdate?.content);
+  post.append('attachment', media ? media : postToUpdate?.attachment);
 
   const cancelMedia = () => {
     setMedia();
@@ -27,34 +30,66 @@ const AddNewPost = ({
   };
 
   const cancelPost = () => {
-    setMedia();
-    mediaRef.current.value = '';
     setPostContent();
     contentRef.current.value = '';
+    setMedia();
+    mediaRef.current.value = '';
     setShowHideTextArea(!showHideTextArea);
   };
 
   const handleClick = (e) => {
     e.preventDefault();
-    axios
-      .post(`${process.env.REACT_APP_REQ_URL}/api/posts/`, post, {
-        headers: {
-          Authorization: `Bearer ${currentUser}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(() => {
-        setShowHideTextArea(!showHideTextArea);
-        setPostsUpdate(!postsUpdate);
-        setPostContent('');
-        setMedia('');
-        mediaRef.current.value = '';
-        contentRef.current.value = '';
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    mode === 'update'
+      ? axios
+          .put(
+            `${process.env.REACT_APP_REQ_URL}/api/posts/` + postToUpdate.id,
+            post,
+            {
+              headers: {
+                Authorization: `Bearer ${currentUser}`,
+                'Content-Type': 'application/json',
+              },
+            }
+          )
+          .then(() => {
+            setShowHideTextArea(!showHideTextArea);
+            setPostsUpdate(!postsUpdate);
+            setPostContent('');
+            setMedia('');
+            mediaRef.current.value = '';
+            contentRef.current.value = '';
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      : axios
+          .post(`${process.env.REACT_APP_REQ_URL}/api/posts/`, post, {
+            headers: {
+              Authorization: `Bearer ${currentUser}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(() => {
+            setShowHideTextArea(!showHideTextArea);
+            setPostsUpdate(!postsUpdate);
+            setPostContent('');
+            setMedia('');
+            mediaRef.current.value = '';
+            contentRef.current.value = '';
+          })
+          .catch((error) => {
+            console.log(error);
+          });
   };
+
+  useEffect(() => {
+    if (mode === 'update') {
+      contentRef.current.value =
+        postToUpdate.content !== 'undefined'
+          ? decode(postToUpdate.content)
+          : '';
+    }
+  }, [mode, postToUpdate]);
 
   return (
     <div className="newPost__formContainer">
@@ -101,6 +136,10 @@ const AddNewPost = ({
           </label>
           <span className="posts__createone__addfile__name">
             {media && media.name}
+            {!media &&
+              mode === 'update' &&
+              postToUpdate.attachment &&
+              postToUpdate.attachment.split('posts_')[1]}
           </span>
           {media && (
             <button

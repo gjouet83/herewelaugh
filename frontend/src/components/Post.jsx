@@ -27,6 +27,9 @@ const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likeUpdatePost]);
 
+  console.log(post.content);
+  console.log(post.attachment);
+
   return (
     <div className="posts__post">
       <div className="posts__post__header">
@@ -63,22 +66,18 @@ const Post = ({ post, postsUpdate, currentUser, currentUserdecoded }) => {
             {decode(post.content)}
           </div>
         )}
-        {post.attachment !== ('null' || '' || 'undefined') &&
-          post.attachment &&
-          fileType.split('/')[0] === 'image' && (
-            <div className="posts__post__content__media">
-              <img src={post.attachment} alt="illustration du post" />
-            </div>
-          )}
-        {post.attachment !== ('null' || '' || 'undefined') &&
-          post.attachment &&
-          fileType.split('/')[0] === 'video' && (
-            <div className="posts__post__content__media">
-              <video controls controlsList="nodownload" width="100%">
-                <source src={post.attachment} />
-              </video>
-            </div>
-          )}
+        {fileType?.split('/')[0] === 'image' && (
+          <div className="posts__post__content__media">
+            <img src={post.attachment} alt="illustration du post" />
+          </div>
+        )}
+        {fileType?.split('/')[0] === 'video' && (
+          <div className="posts__post__content__media">
+            <video controls controlsList="nodownload" width="100%">
+              <source src={post.attachment} />
+            </video>
+          </div>
+        )}
       </div>
       <div className="posts__post__footer">
         <AddLike

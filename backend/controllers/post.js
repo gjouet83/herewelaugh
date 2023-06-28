@@ -93,13 +93,28 @@ exports.getPostsSortByRate = (req, res, next) => {
 
 exports.getPostsByUser = (req, res, next) => {
   db.Post.findAll({
+    attributes: [
+      'content',
+      'attachment',
+      'userId',
+      'id',
+      'createdAt',
+      'updatedAt',
+      //on fait la somme des likes
+      [Sequelize.fn('sum', Sequelize.col('Likes.like')), 'sumLikes'],
+    ],
     include: [
       {
+        model: db.Like,
+        attributes: [],
+      },
+      {
         model: db.User,
-        attributes: ['username', 'avatar'],
+        attributes: ['id', 'username', 'avatar'],
       },
     ],
     where: { userId: req.params.user_id },
+    group: ['Likes.postId', 'post.id'],
     order: [['createdAt', 'DESC']],
   })
     .then((posts) => {

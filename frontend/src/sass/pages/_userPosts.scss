@@ -1,0 +1,25 @@
+.userposts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  align-items: center;
+  color: $textColorLight;
+  &__title {
+    text-align: center;
+  }
+  &__edit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #458086;
+    backdrop-filter: blur(5px);
+    padding-bottom: 20px;
+    width: 100vw;
+    top: -12px;
+    &__update {
+    }
+    &__delete {
+    }
+  }
+}
